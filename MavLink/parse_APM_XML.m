@@ -47,16 +47,32 @@ return
 function genScript(Mess)
     global SWAP;
     global VERSION;
+    
     if (SWAP)
         disp('Offset SWAPPING')
     end
+    
     switch (VERSION)
         case 0.9
-            %fp = fopen('parseMavLinkPacket_APM_2_23.m','w');
-            fp = fopen('parseMavLink_0_9_Packet.m','w');
+            dDir = 'MatLab\\Mav09';
+        case 1.0
+            dDir = 'MatLab\\Mav10';
+        otherwise
+            disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
+            return
+    end
+    if (isempty(dir(dDir)))
+        mkdir(dDir);
+    end
+
+    
+%% Decode Messages
+    switch (VERSION)
+        case 0.9
+            fp = fopen(sprintf('%s\\parseMavLink_0_9_Packet.m',dDir),'w');
             fprintf(fp,'function S = parseMavLink_0_9_Packet(S,p)\n');
         case 1.0
-            fp = fopen('parseMavLink_1_0_Packet.m','w');
+            fp = fopen(sprintf('%s\\parseMavLink_1_0_Packet.m',dDir),'w');
             fprintf(fp,'function S = parseMavLink_1_0_Packet(S,p)\n');
         otherwise
             disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
@@ -67,21 +83,23 @@ function genScript(Mess)
     for i=1:K
         fprintf(fp,sprintf('\t\tcase %s\n',Mess(i).id));
         fprintf(fp,sprintf('%s',Mess(i).cdesc));
-        fprintf(fp,sprintf('\t\t\tS.%s = parse_%s(S.%s,p);\n',Mess(i).name,Mess(i).name,Mess(i).name));
+        fprintf(fp,sprintf('\t\t\tS.%s = parse_%s(S.%s,p);\n\n',Mess(i).name,Mess(i).name,Mess(i).name));
     end
     fprintf(fp,'\t\totherwise\n');
     fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',p.messid))\n');
     fprintf(fp,'\tend\n');
-    fprintf(fp,'return\n');
+    fprintf(fp,'return\n\n');
+    fclose(fp);
+
     for i=1:K
-        fprintf(fp,'\n');
-        fprintf(fp,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
-        fprintf(fp,sprintf('%s',Mess(i).fdesc));
-        fprintf(fp,sprintf('function S = parse_%s(S,p)\n',Mess(i).name));
+        fpm = fopen(sprintf('%s\\parse_%s.m',dDir,Mess(i).name),'w');
+        fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
+        fprintf(fpm,sprintf('%s',Mess(i).fdesc));
+        fprintf(fpm,sprintf('function S = parse_%s(S,p)\n',Mess(i).name));
         N = size(Mess(i).fields.name,1);
 
         %% name member
-        fprintf(fp,'\tname = [ ...\n');
+        fprintf(fpm,'\tname = [ ...\n');
         ml = 0;
         for j=1:N
             ml = max([ml length(Mess(i).fields.name{j})]);
@@ -91,59 +109,124 @@ function genScript(Mess)
         for j=1:N
             padL = ceil((ml-length(Mess(i).fields.name{j}))/4);
             pad = char(9*ones(1,padL));
-            fprintf(fp,sprintf('\t\t{''%s''}%s ... ',Mess(i).fields.name{j},pad));
+            fprintf(fpm,sprintf('\t\t{''%s''}%s ... ',Mess(i).fields.name{j},pad));
             if ~isempty(Mess(i).fields.desc{j})
-                fprintf(fp,'%%%% ');
-                fprintf(fp,Mess(i).fields.desc{j});
+                fprintf(fpm,'%%%% ');
+                fprintf(fpm,Mess(i).fields.desc{j});
             end
-            fprintf(fp,'\n');
+            fprintf(fpm,'\n');
         end
-        fprintf(fp,'\t\t];\n');
-
-%         %% byte member
-%         fprintf(fp,'\tbyte = [ ...\n');
-%         for j=1:N
-%             fprintf(fp,sprintf('\t\t%d ...\n',Mess(i).fields.matByte{j}));
-%         end
-%         fprintf(fp,'\t\t];\n');
-% 
-%         %% type member
-%         fprintf(fp,'\ttype = [ ...\n');
-%         for j=1:N
-%             fprintf(fp,sprintf('\t\t{''%s''} ...\n',Mess(i).fields.matType{j}));
-%         end
-%         fprintf(fp,'\t\t];\n');
+        fprintf(fpm,'\t\t];\n');
 
         %% byte member
-        fprintf(fp,'\tbyte = [ ');
+        fprintf(fpm,'\tbyte = [ ');
         for j=1:N
-            fprintf(fp,sprintf('%d ',Mess(i).fields.matByte{j}));
+            fprintf(fpm,sprintf('%d ',Mess(i).fields.matByte{j}));
         end
-        fprintf(fp,'];\n');
+        fprintf(fpm,'];\n');
 
         %% type member
-        fprintf(fp,'\ttype = [ ');
+        fprintf(fpm,'\ttype = [ ');
         for j=1:N
-            fprintf(fp,sprintf('{''%s''} ',Mess(i).fields.matType{j}));
+            fprintf(fpm,sprintf('{''%s''} ',Mess(i).fields.matType{j}));
         end
-        fprintf(fp,'];\n');
+        fprintf(fpm,'];\n');
         
-        fprintf(fp,'\tif (sum(byte) == p.len)\n');
-        fprintf(fp,'\t\tS = buildStruct(S,byte,name,type,p);\n');
-        fprintf(fp,'\telse\n');
-        fprintf(fp,'\t\tdisp(''bytes in packet did not match structure size'')\n');
-        fprintf(fp,'\tend\n');
+        fprintf(fpm,'\tif (sum(byte) == p.len)\n');
+        fprintf(fpm,'\t\tS = buildStruct(S,byte,name,type,p);\n');
+        fprintf(fpm,'\telse\n');
+        fprintf(fpm,'\t\tdisp(''bytes in packet did not match structure size'')\n');
+        fprintf(fpm,'\tend\n');
 
-        fprintf(fp,'return\n\n');
+        fprintf(fpm,'return\n\n');
+        fclose(fpm);
     end
-    fclose(fp);
     
+%% Encode Messages
     switch (VERSION)
         case 0.9
-            fp = fopen('initMavLink_0_9.m','w');
+            fp = fopen(sprintf('%s\\encodeMavLink_0_9_Packet.m',dDir),'w');
+            fprintf(fp,'function p = encodeMavLink_0_9_Packet(ID,S)\n');
+        case 1.0
+            fp = fopen(sprintf('%s\\encodeMavLink_1_0_Packet.m',dDir),'w');
+            fprintf(fp,'function p = encodeMavLink_1_0_Packet(ID,S)\n');
+        otherwise
+            disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
+            return
+    end
+    fprintf(fp,'\tswitch(ID)\n');
+    K = length(Mess);
+    for i=1:K
+        fprintf(fp,sprintf('\t\tcase %s\n',Mess(i).id));
+        fprintf(fp,sprintf('%s',Mess(i).cdesc));
+        fprintf(fp,sprintf('\t\t\tp = encode_%s(S);\n\n',Mess(i).name));
+    end
+    fprintf(fp,'\t\totherwise\n');
+    fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',p.messid))\n');
+    fprintf(fp,'\tend\n');
+    fprintf(fp,'return\n\n');
+    fclose(fp);
+
+    for i=1:K
+        fpm = fopen(sprintf('%s\\encode_%s.m',dDir,Mess(i).name),'w');
+        fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
+        fprintf(fpm,sprintf('%s',Mess(i).fdesc));
+        fprintf(fpm,sprintf('function p = encode_%s(S)\n',Mess(i).name));
+        N = size(Mess(i).fields.name,1);
+
+        %% name member
+        fprintf(fpm,'\tname = [ ...\n');
+        ml = 0;
+        for j=1:N
+            ml = max([ml length(Mess(i).fields.name{j})]);
+        end
+        ml = 4*ceil(ml/4);
+
+        for j=1:N
+            padL = ceil((ml-length(Mess(i).fields.name{j}))/4);
+            pad = char(9*ones(1,padL));
+            fprintf(fpm,sprintf('\t\t{''%s''}%s ... ',Mess(i).fields.name{j},pad));
+            if ~isempty(Mess(i).fields.desc{j})
+                fprintf(fpm,'%%%% ');
+                fprintf(fpm,Mess(i).fields.desc{j});
+            end
+            fprintf(fpm,'\n');
+        end
+        fprintf(fpm,'\t\t];\n');
+
+        %% byte member
+        fprintf(fpm,'\tbyte = [ ');
+        for j=1:N
+            fprintf(fpm,sprintf('%d ',Mess(i).fields.matByte{j}));
+        end
+        fprintf(fpm,'];\n');
+
+        %% type member
+        fprintf(fpm,'\ttype = [ ');
+        for j=1:N
+            fprintf(fpm,sprintf('{''%s''} ',Mess(i).fields.matType{j}));
+        end
+        fprintf(fpm,'];\n\n');
+        
+        p = [];
+        REM = '%%';
+        for j=1:N
+            fprintf(fpm,'\t%s Encode %s data field\n',REM,Mess(i).fields.name{j});
+            fprintf(fpm,'\tval = typecast(S.%s,''%s'');\n',Mess(i).fields.name{j},Mess(i).fields.matType{j});
+            fprintf(fpm,'\tval = reshape(val,1,length(val));\n');
+            fprintf(fpm,'\tp = [p typecast(val,''uint8'')];\n\n');
+        end
+        fprintf(fpm,'return\n');
+        fclose(fpm);
+    end
+
+    %% initMavLink
+    switch (VERSION)
+        case 0.9
+            fp = fopen(sprintf('%s\\initMavLink_0_9.m',dDir),'w');
             fprintf(fp,'function MavLink = initMavLink_0_9()\n');
         case 1.0
-            fp = fopen('initMavLink_1_0.m','w');
+            fp = fopen(sprintf('%s\\initMavLink_1_0.m',dDir),'w');
             fprintf(fp,'function MavLink = initMavLink_1_0()\n');
         otherwise
             disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
@@ -166,7 +249,6 @@ function genScript(Mess)
             return
     end
 return
-
 %% Generate Java Code based on XML data
 function genJavaCode(Mess)
     global SWAP;
@@ -998,7 +1080,6 @@ function genJavaCode(Mess)
             return
     end
 return
-
 %% Generate APM Code based on XML data
 function genAPMCode(Mess)
     global SWAP;
@@ -1683,7 +1764,6 @@ function genAPMCode(Mess)
             return
     end
 return
-
 %% Generate GroundStation Code based on XML data
 function genGSCode(Mess)
     global SWAP;
@@ -1884,7 +1964,6 @@ function Mess = parseXML(file)
     end   
     Mess = Mess(:);
 return
-
 %%
 function Mess = MavLinkSort(Mess)
     %[~, Mess.idx] = sort(cell2mat(Mess.byte),'descend');
@@ -1901,7 +1980,6 @@ function Mess = MavLinkSort(Mess)
     Mess.needSwap = ~all(Mess.soffset==Mess.uoffset);
 %     disp([Mess.soffset Mess.uoffset])
 return
-
 %%
 function str = cleanupDesc(dstr,indentFlag)
     if (indentFlag), indent = '\t\t\t'; c=' '; else indent = ''; c='~ '; end
@@ -1928,7 +2006,6 @@ function str = cleanupDesc(dstr,indentFlag)
     end
     str = [indent '%%' nstr];
 return
-
 %%
 function str = cleanupField(dstr)
     tf = isstrprop(dstr, 'cntrl');
@@ -1945,7 +2022,6 @@ function str = cleanupField(dstr)
     end
     str = dstr;
 return
-
 %%
 function fields = parseType(fields,n)
     if (isempty(fields.type{n}))
