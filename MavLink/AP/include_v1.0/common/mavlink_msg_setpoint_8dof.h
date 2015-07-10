@@ -5,7 +5,6 @@
 
 typedef struct __mavlink_setpoint_8dof_t 
 { 
-  uint8_t target_system;  ///< System ID
   float val1;  ///< Value 1
   float val2;  ///< Value 2
   float val3;  ///< Value 3
@@ -14,6 +13,7 @@ typedef struct __mavlink_setpoint_8dof_t
   float val6;  ///< Value 6
   float val7;  ///< Value 7
   float val8;  ///< Value 8
+  uint8_t target_system;  ///< System ID
 } mavlink_setpoint_8dof_t;
 
 #define MAVLINK_MSG_ID_SETPOINT_8DOF_LEN 33
@@ -27,15 +27,15 @@ typedef struct __mavlink_setpoint_8dof_t
   "SETPOINT_8DOF", \
   9, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_setpoint_8dof_t, target_system) }, \
-    { "val1", NULL, MAVLINK_TYPE_FLOAT, 0, 1, offsetof(mavlink_setpoint_8dof_t, val1) }, \
-    { "val2", NULL, MAVLINK_TYPE_FLOAT, 0, 5, offsetof(mavlink_setpoint_8dof_t, val2) }, \
-    { "val3", NULL, MAVLINK_TYPE_FLOAT, 0, 9, offsetof(mavlink_setpoint_8dof_t, val3) }, \
-    { "val4", NULL, MAVLINK_TYPE_FLOAT, 0, 13, offsetof(mavlink_setpoint_8dof_t, val4) }, \
-    { "val5", NULL, MAVLINK_TYPE_FLOAT, 0, 17, offsetof(mavlink_setpoint_8dof_t, val5) }, \
-    { "val6", NULL, MAVLINK_TYPE_FLOAT, 0, 21, offsetof(mavlink_setpoint_8dof_t, val6) }, \
-    { "val7", NULL, MAVLINK_TYPE_FLOAT, 0, 25, offsetof(mavlink_setpoint_8dof_t, val7) }, \
-    { "val8", NULL, MAVLINK_TYPE_FLOAT, 0, 29, offsetof(mavlink_setpoint_8dof_t, val8) }, \
+    { "val1", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_setpoint_8dof_t, val1) }, \
+    { "val2", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_setpoint_8dof_t, val2) }, \
+    { "val3", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_setpoint_8dof_t, val3) }, \
+    { "val4", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_setpoint_8dof_t, val4) }, \
+    { "val5", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_setpoint_8dof_t, val5) }, \
+    { "val6", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_setpoint_8dof_t, val6) }, \
+    { "val7", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_setpoint_8dof_t, val7) }, \
+    { "val8", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_setpoint_8dof_t, val8) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 32, offsetof(mavlink_setpoint_8dof_t, target_system) }, \
   } \
 }
 
@@ -73,20 +73,19 @@ static inline uint16_t mavlink_msg_setpoint_8dof_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SETPOINT_8DOF_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_float(buf, 1, val1);
-	_mav_put_float(buf, 5, val2);
-	_mav_put_float(buf, 9, val3);
-	_mav_put_float(buf, 13, val4);
-	_mav_put_float(buf, 17, val5);
-	_mav_put_float(buf, 21, val6);
-	_mav_put_float(buf, 25, val7);
-	_mav_put_float(buf, 29, val8);
+	_mav_put_float(buf, 0, val1);
+	_mav_put_float(buf, 4, val2);
+	_mav_put_float(buf, 8, val3);
+	_mav_put_float(buf, 12, val4);
+	_mav_put_float(buf, 16, val5);
+	_mav_put_float(buf, 20, val6);
+	_mav_put_float(buf, 24, val7);
+	_mav_put_float(buf, 28, val8);
+	_mav_put_uint8_t(buf, 32, target_system);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SETPOINT_8DOF_LEN);
 #else
 	mavlink_setpoint_8dof_t packet;
-	packet.target_system = target_system;
 	packet.val1 = val1;
 	packet.val2 = val2;
 	packet.val3 = val3;
@@ -95,6 +94,7 @@ static inline uint16_t mavlink_msg_setpoint_8dof_pack(
 	packet.val6 = val6;
 	packet.val7 = val7;
 	packet.val8 = val8;
+	packet.target_system = target_system;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SETPOINT_8DOF_LEN);
 #endif
@@ -143,15 +143,15 @@ static inline uint16_t mavlink_msg_setpoint_8dof_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SETPOINT_8DOF_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_float(buf, 1, val1);
-	_mav_put_float(buf, 5, val2);
-	_mav_put_float(buf, 9, val3);
-	_mav_put_float(buf, 13, val4);
-	_mav_put_float(buf, 17, val5);
-	_mav_put_float(buf, 21, val6);
-	_mav_put_float(buf, 25, val7);
-	_mav_put_float(buf, 29, val8);
+	_mav_put_float(buf, 0, val1);
+	_mav_put_float(buf, 4, val2);
+	_mav_put_float(buf, 8, val3);
+	_mav_put_float(buf, 12, val4);
+	_mav_put_float(buf, 16, val5);
+	_mav_put_float(buf, 20, val6);
+	_mav_put_float(buf, 24, val7);
+	_mav_put_float(buf, 28, val8);
+	_mav_put_uint8_t(buf, 32, target_system);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SETPOINT_8DOF_LEN);
 #else
@@ -273,15 +273,15 @@ static inline void mavlink_msg_setpoint_8dof_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SETPOINT_8DOF_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_float(buf, 1, val1);
-	_mav_put_float(buf, 5, val2);
-	_mav_put_float(buf, 9, val3);
-	_mav_put_float(buf, 13, val4);
-	_mav_put_float(buf, 17, val5);
-	_mav_put_float(buf, 21, val6);
-	_mav_put_float(buf, 25, val7);
-	_mav_put_float(buf, 29, val8);
+	_mav_put_float(buf, 0, val1);
+	_mav_put_float(buf, 4, val2);
+	_mav_put_float(buf, 8, val3);
+	_mav_put_float(buf, 12, val4);
+	_mav_put_float(buf, 16, val5);
+	_mav_put_float(buf, 20, val6);
+	_mav_put_float(buf, 24, val7);
+	_mav_put_float(buf, 28, val8);
+	_mav_put_uint8_t(buf, 32, target_system);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SETPOINT_8DOF, buf, MAVLINK_MSG_ID_SETPOINT_8DOF_LEN, MAVLINK_MSG_ID_SETPOINT_8DOF_CRC);
@@ -327,15 +327,15 @@ static inline void mavlink_msg_wID_setpoint_8dof_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SETPOINT_8DOF_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_float(buf, 1, val1);
-	_mav_put_float(buf, 5, val2);
-	_mav_put_float(buf, 9, val3);
-	_mav_put_float(buf, 13, val4);
-	_mav_put_float(buf, 17, val5);
-	_mav_put_float(buf, 21, val6);
-	_mav_put_float(buf, 25, val7);
-	_mav_put_float(buf, 29, val8);
+	_mav_put_float(buf, 0, val1);
+	_mav_put_float(buf, 4, val2);
+	_mav_put_float(buf, 8, val3);
+	_mav_put_float(buf, 12, val4);
+	_mav_put_float(buf, 16, val5);
+	_mav_put_float(buf, 20, val6);
+	_mav_put_float(buf, 24, val7);
+	_mav_put_float(buf, 28, val8);
+	_mav_put_uint8_t(buf, 32, target_system);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_SETPOINT_8DOF, buf, MAVLINK_MSG_ID_SETPOINT_8DOF_LEN, MAVLINK_MSG_ID_SETPOINT_8DOF_CRC);

@@ -5,6 +5,7 @@
 
 typedef struct __mavlink_analog_eu_t 
 { 
+  uint64_t usec;  ///< time
   float chan01;  ///< adc channel_01
   float chan02;  ///< adc channel_02
   float chan03;  ///< adc channel_03
@@ -21,7 +22,6 @@ typedef struct __mavlink_analog_eu_t
   float chan14;  ///< adc channel_14
   float chan15;  ///< adc channel_15
   float chan16;  ///< adc channel_16
-  uint64_t usec;  ///< time
 } mavlink_analog_eu_t;
 
 #define MAVLINK_MSG_ID_ANALOG_EU_LEN 72
@@ -32,23 +32,23 @@ typedef struct __mavlink_analog_eu_t
   "ANALOG_EU", \
   17, \
   { \
-    { "chan01", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_analog_eu_t, chan01) }, \
-    { "chan02", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_analog_eu_t, chan02) }, \
-    { "chan03", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_analog_eu_t, chan03) }, \
-    { "chan04", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_analog_eu_t, chan04) }, \
-    { "chan05", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_analog_eu_t, chan05) }, \
-    { "chan06", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_analog_eu_t, chan06) }, \
-    { "chan07", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_analog_eu_t, chan07) }, \
-    { "chan08", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_analog_eu_t, chan08) }, \
-    { "chan09", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_analog_eu_t, chan09) }, \
-    { "chan10", NULL, MAVLINK_TYPE_FLOAT, 0, 36, offsetof(mavlink_analog_eu_t, chan10) }, \
-    { "chan11", NULL, MAVLINK_TYPE_FLOAT, 0, 40, offsetof(mavlink_analog_eu_t, chan11) }, \
-    { "chan12", NULL, MAVLINK_TYPE_FLOAT, 0, 44, offsetof(mavlink_analog_eu_t, chan12) }, \
-    { "chan13", NULL, MAVLINK_TYPE_FLOAT, 0, 48, offsetof(mavlink_analog_eu_t, chan13) }, \
-    { "chan14", NULL, MAVLINK_TYPE_FLOAT, 0, 52, offsetof(mavlink_analog_eu_t, chan14) }, \
-    { "chan15", NULL, MAVLINK_TYPE_FLOAT, 0, 56, offsetof(mavlink_analog_eu_t, chan15) }, \
-    { "chan16", NULL, MAVLINK_TYPE_FLOAT, 0, 60, offsetof(mavlink_analog_eu_t, chan16) }, \
-    { "usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 64, offsetof(mavlink_analog_eu_t, usec) }, \
+    { "usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_analog_eu_t, usec) }, \
+    { "chan01", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_analog_eu_t, chan01) }, \
+    { "chan02", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_analog_eu_t, chan02) }, \
+    { "chan03", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_analog_eu_t, chan03) }, \
+    { "chan04", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_analog_eu_t, chan04) }, \
+    { "chan05", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_analog_eu_t, chan05) }, \
+    { "chan06", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_analog_eu_t, chan06) }, \
+    { "chan07", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_analog_eu_t, chan07) }, \
+    { "chan08", NULL, MAVLINK_TYPE_FLOAT, 0, 36, offsetof(mavlink_analog_eu_t, chan08) }, \
+    { "chan09", NULL, MAVLINK_TYPE_FLOAT, 0, 40, offsetof(mavlink_analog_eu_t, chan09) }, \
+    { "chan10", NULL, MAVLINK_TYPE_FLOAT, 0, 44, offsetof(mavlink_analog_eu_t, chan10) }, \
+    { "chan11", NULL, MAVLINK_TYPE_FLOAT, 0, 48, offsetof(mavlink_analog_eu_t, chan11) }, \
+    { "chan12", NULL, MAVLINK_TYPE_FLOAT, 0, 52, offsetof(mavlink_analog_eu_t, chan12) }, \
+    { "chan13", NULL, MAVLINK_TYPE_FLOAT, 0, 56, offsetof(mavlink_analog_eu_t, chan13) }, \
+    { "chan14", NULL, MAVLINK_TYPE_FLOAT, 0, 60, offsetof(mavlink_analog_eu_t, chan14) }, \
+    { "chan15", NULL, MAVLINK_TYPE_FLOAT, 0, 64, offsetof(mavlink_analog_eu_t, chan15) }, \
+    { "chan16", NULL, MAVLINK_TYPE_FLOAT, 0, 68, offsetof(mavlink_analog_eu_t, chan16) }, \
   } \
 }
 
@@ -102,27 +102,28 @@ static inline uint16_t mavlink_msg_analog_eu_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_EU_LEN];
-	_mav_put_float(buf, 0, chan01);
-	_mav_put_float(buf, 4, chan02);
-	_mav_put_float(buf, 8, chan03);
-	_mav_put_float(buf, 12, chan04);
-	_mav_put_float(buf, 16, chan05);
-	_mav_put_float(buf, 20, chan06);
-	_mav_put_float(buf, 24, chan07);
-	_mav_put_float(buf, 28, chan08);
-	_mav_put_float(buf, 32, chan09);
-	_mav_put_float(buf, 36, chan10);
-	_mav_put_float(buf, 40, chan11);
-	_mav_put_float(buf, 44, chan12);
-	_mav_put_float(buf, 48, chan13);
-	_mav_put_float(buf, 52, chan14);
-	_mav_put_float(buf, 56, chan15);
-	_mav_put_float(buf, 60, chan16);
-	_mav_put_uint64_t(buf, 64, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_float(buf, 8, chan01);
+	_mav_put_float(buf, 12, chan02);
+	_mav_put_float(buf, 16, chan03);
+	_mav_put_float(buf, 20, chan04);
+	_mav_put_float(buf, 24, chan05);
+	_mav_put_float(buf, 28, chan06);
+	_mav_put_float(buf, 32, chan07);
+	_mav_put_float(buf, 36, chan08);
+	_mav_put_float(buf, 40, chan09);
+	_mav_put_float(buf, 44, chan10);
+	_mav_put_float(buf, 48, chan11);
+	_mav_put_float(buf, 52, chan12);
+	_mav_put_float(buf, 56, chan13);
+	_mav_put_float(buf, 60, chan14);
+	_mav_put_float(buf, 64, chan15);
+	_mav_put_float(buf, 68, chan16);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_ANALOG_EU_LEN);
 #else
 	mavlink_analog_eu_t packet;
+	packet.usec = usec;
 	packet.chan01 = chan01;
 	packet.chan02 = chan02;
 	packet.chan03 = chan03;
@@ -139,7 +140,6 @@ static inline uint16_t mavlink_msg_analog_eu_pack(
 	packet.chan14 = chan14;
 	packet.chan15 = chan15;
 	packet.chan16 = chan16;
-	packet.usec = usec;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_ANALOG_EU_LEN);
 #endif
@@ -200,23 +200,23 @@ static inline uint16_t mavlink_msg_analog_eu_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_EU_LEN];
-	_mav_put_float(buf, 0, chan01);
-	_mav_put_float(buf, 4, chan02);
-	_mav_put_float(buf, 8, chan03);
-	_mav_put_float(buf, 12, chan04);
-	_mav_put_float(buf, 16, chan05);
-	_mav_put_float(buf, 20, chan06);
-	_mav_put_float(buf, 24, chan07);
-	_mav_put_float(buf, 28, chan08);
-	_mav_put_float(buf, 32, chan09);
-	_mav_put_float(buf, 36, chan10);
-	_mav_put_float(buf, 40, chan11);
-	_mav_put_float(buf, 44, chan12);
-	_mav_put_float(buf, 48, chan13);
-	_mav_put_float(buf, 52, chan14);
-	_mav_put_float(buf, 56, chan15);
-	_mav_put_float(buf, 60, chan16);
-	_mav_put_uint64_t(buf, 64, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_float(buf, 8, chan01);
+	_mav_put_float(buf, 12, chan02);
+	_mav_put_float(buf, 16, chan03);
+	_mav_put_float(buf, 20, chan04);
+	_mav_put_float(buf, 24, chan05);
+	_mav_put_float(buf, 28, chan06);
+	_mav_put_float(buf, 32, chan07);
+	_mav_put_float(buf, 36, chan08);
+	_mav_put_float(buf, 40, chan09);
+	_mav_put_float(buf, 44, chan10);
+	_mav_put_float(buf, 48, chan11);
+	_mav_put_float(buf, 52, chan12);
+	_mav_put_float(buf, 56, chan13);
+	_mav_put_float(buf, 60, chan14);
+	_mav_put_float(buf, 64, chan15);
+	_mav_put_float(buf, 68, chan16);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_ANALOG_EU_LEN);
 #else
@@ -332,23 +332,23 @@ static inline void mavlink_msg_analog_eu_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_EU_LEN];
-	_mav_put_float(buf, 0, chan01);
-	_mav_put_float(buf, 4, chan02);
-	_mav_put_float(buf, 8, chan03);
-	_mav_put_float(buf, 12, chan04);
-	_mav_put_float(buf, 16, chan05);
-	_mav_put_float(buf, 20, chan06);
-	_mav_put_float(buf, 24, chan07);
-	_mav_put_float(buf, 28, chan08);
-	_mav_put_float(buf, 32, chan09);
-	_mav_put_float(buf, 36, chan10);
-	_mav_put_float(buf, 40, chan11);
-	_mav_put_float(buf, 44, chan12);
-	_mav_put_float(buf, 48, chan13);
-	_mav_put_float(buf, 52, chan14);
-	_mav_put_float(buf, 56, chan15);
-	_mav_put_float(buf, 60, chan16);
-	_mav_put_uint64_t(buf, 64, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_float(buf, 8, chan01);
+	_mav_put_float(buf, 12, chan02);
+	_mav_put_float(buf, 16, chan03);
+	_mav_put_float(buf, 20, chan04);
+	_mav_put_float(buf, 24, chan05);
+	_mav_put_float(buf, 28, chan06);
+	_mav_put_float(buf, 32, chan07);
+	_mav_put_float(buf, 36, chan08);
+	_mav_put_float(buf, 40, chan09);
+	_mav_put_float(buf, 44, chan10);
+	_mav_put_float(buf, 48, chan11);
+	_mav_put_float(buf, 52, chan12);
+	_mav_put_float(buf, 56, chan13);
+	_mav_put_float(buf, 60, chan14);
+	_mav_put_float(buf, 64, chan15);
+	_mav_put_float(buf, 68, chan16);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ANALOG_EU, buf, MAVLINK_MSG_ID_ANALOG_EU_LEN);
 #else
@@ -400,23 +400,23 @@ static inline void mavlink_msg_wID_analog_eu_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_EU_LEN];
-	_mav_put_float(buf, 0, chan01);
-	_mav_put_float(buf, 4, chan02);
-	_mav_put_float(buf, 8, chan03);
-	_mav_put_float(buf, 12, chan04);
-	_mav_put_float(buf, 16, chan05);
-	_mav_put_float(buf, 20, chan06);
-	_mav_put_float(buf, 24, chan07);
-	_mav_put_float(buf, 28, chan08);
-	_mav_put_float(buf, 32, chan09);
-	_mav_put_float(buf, 36, chan10);
-	_mav_put_float(buf, 40, chan11);
-	_mav_put_float(buf, 44, chan12);
-	_mav_put_float(buf, 48, chan13);
-	_mav_put_float(buf, 52, chan14);
-	_mav_put_float(buf, 56, chan15);
-	_mav_put_float(buf, 60, chan16);
-	_mav_put_uint64_t(buf, 64, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_float(buf, 8, chan01);
+	_mav_put_float(buf, 12, chan02);
+	_mav_put_float(buf, 16, chan03);
+	_mav_put_float(buf, 20, chan04);
+	_mav_put_float(buf, 24, chan05);
+	_mav_put_float(buf, 28, chan06);
+	_mav_put_float(buf, 32, chan07);
+	_mav_put_float(buf, 36, chan08);
+	_mav_put_float(buf, 40, chan09);
+	_mav_put_float(buf, 44, chan10);
+	_mav_put_float(buf, 48, chan11);
+	_mav_put_float(buf, 52, chan12);
+	_mav_put_float(buf, 56, chan13);
+	_mav_put_float(buf, 60, chan14);
+	_mav_put_float(buf, 64, chan15);
+	_mav_put_float(buf, 68, chan16);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_ANALOG_EU, buf, MAVLINK_MSG_ID_ANALOG_EU_LEN);
 #else

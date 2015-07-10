@@ -5,12 +5,12 @@
 
 typedef struct __mavlink_manual_control_t 
 { 
-  uint8_t target;  ///< The system to be controlled.
   int16_t x;  ///< X-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid. Generally corresponds to forward(1000)-backward(-1000) movement on a joystick and the pitch of a vehicle.
   int16_t y;  ///< Y-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid. Generally corresponds to left(-1000)-right(1000) movement on a joystick and the roll of a vehicle.
   int16_t z;  ///< Z-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid. Generally corresponds to a separate slider movement with maximum being 1000 and minimum being -1000 on a joystick and the thrust of a vehicle.
   int16_t r;  ///< R-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid. Generally corresponds to a twisting of the joystick, with counter-clockwise being 1000 and clockwise being -1000, and the yaw of a vehicle.
   uint16_t buttons;  ///< A bitfield corresponding to the joystick buttons' current state, 1 for pressed, 0 for released. The lowest bit corresponds to Button 1.
+  uint8_t target;  ///< The system to be controlled.
 } mavlink_manual_control_t;
 
 #define MAVLINK_MSG_ID_MANUAL_CONTROL_LEN 11
@@ -24,12 +24,12 @@ typedef struct __mavlink_manual_control_t
   "MANUAL_CONTROL", \
   6, \
   { \
-    { "target", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_manual_control_t, target) }, \
-    { "x", NULL, MAVLINK_TYPE_INT16_T, 0, 1, offsetof(mavlink_manual_control_t, x) }, \
-    { "y", NULL, MAVLINK_TYPE_INT16_T, 0, 3, offsetof(mavlink_manual_control_t, y) }, \
-    { "z", NULL, MAVLINK_TYPE_INT16_T, 0, 5, offsetof(mavlink_manual_control_t, z) }, \
-    { "r", NULL, MAVLINK_TYPE_INT16_T, 0, 7, offsetof(mavlink_manual_control_t, r) }, \
-    { "buttons", NULL, MAVLINK_TYPE_UINT16_T, 0, 9, offsetof(mavlink_manual_control_t, buttons) }, \
+    { "x", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_manual_control_t, x) }, \
+    { "y", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_manual_control_t, y) }, \
+    { "z", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_manual_control_t, z) }, \
+    { "r", NULL, MAVLINK_TYPE_INT16_T, 0, 6, offsetof(mavlink_manual_control_t, r) }, \
+    { "buttons", NULL, MAVLINK_TYPE_UINT16_T, 0, 8, offsetof(mavlink_manual_control_t, buttons) }, \
+    { "target", NULL, MAVLINK_TYPE_UINT8_T, 0, 10, offsetof(mavlink_manual_control_t, target) }, \
   } \
 }
 
@@ -61,22 +61,22 @@ static inline uint16_t mavlink_msg_manual_control_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MANUAL_CONTROL_LEN];
-	_mav_put_uint8_t(buf, 0, target);
-	_mav_put_int16_t(buf, 1, x);
-	_mav_put_int16_t(buf, 3, y);
-	_mav_put_int16_t(buf, 5, z);
-	_mav_put_int16_t(buf, 7, r);
-	_mav_put_uint16_t(buf, 9, buttons);
+	_mav_put_int16_t(buf, 0, x);
+	_mav_put_int16_t(buf, 2, y);
+	_mav_put_int16_t(buf, 4, z);
+	_mav_put_int16_t(buf, 6, r);
+	_mav_put_uint16_t(buf, 8, buttons);
+	_mav_put_uint8_t(buf, 10, target);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MANUAL_CONTROL_LEN);
 #else
 	mavlink_manual_control_t packet;
-	packet.target = target;
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
 	packet.r = r;
 	packet.buttons = buttons;
+	packet.target = target;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_MANUAL_CONTROL_LEN);
 #endif
@@ -119,12 +119,12 @@ static inline uint16_t mavlink_msg_manual_control_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MANUAL_CONTROL_LEN];
-	_mav_put_uint8_t(buf, 0, target);
-	_mav_put_int16_t(buf, 1, x);
-	_mav_put_int16_t(buf, 3, y);
-	_mav_put_int16_t(buf, 5, z);
-	_mav_put_int16_t(buf, 7, r);
-	_mav_put_uint16_t(buf, 9, buttons);
+	_mav_put_int16_t(buf, 0, x);
+	_mav_put_int16_t(buf, 2, y);
+	_mav_put_int16_t(buf, 4, z);
+	_mav_put_int16_t(buf, 6, r);
+	_mav_put_uint16_t(buf, 8, buttons);
+	_mav_put_uint8_t(buf, 10, target);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MANUAL_CONTROL_LEN);
 #else
@@ -231,12 +231,12 @@ static inline void mavlink_msg_manual_control_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MANUAL_CONTROL_LEN];
-	_mav_put_uint8_t(buf, 0, target);
-	_mav_put_int16_t(buf, 1, x);
-	_mav_put_int16_t(buf, 3, y);
-	_mav_put_int16_t(buf, 5, z);
-	_mav_put_int16_t(buf, 7, r);
-	_mav_put_uint16_t(buf, 9, buttons);
+	_mav_put_int16_t(buf, 0, x);
+	_mav_put_int16_t(buf, 2, y);
+	_mav_put_int16_t(buf, 4, z);
+	_mav_put_int16_t(buf, 6, r);
+	_mav_put_uint16_t(buf, 8, buttons);
+	_mav_put_uint8_t(buf, 10, target);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_MANUAL_CONTROL, buf, MAVLINK_MSG_ID_MANUAL_CONTROL_LEN, MAVLINK_MSG_ID_MANUAL_CONTROL_CRC);
@@ -276,12 +276,12 @@ static inline void mavlink_msg_wID_manual_control_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MANUAL_CONTROL_LEN];
-	_mav_put_uint8_t(buf, 0, target);
-	_mav_put_int16_t(buf, 1, x);
-	_mav_put_int16_t(buf, 3, y);
-	_mav_put_int16_t(buf, 5, z);
-	_mav_put_int16_t(buf, 7, r);
-	_mav_put_uint16_t(buf, 9, buttons);
+	_mav_put_int16_t(buf, 0, x);
+	_mav_put_int16_t(buf, 2, y);
+	_mav_put_int16_t(buf, 4, z);
+	_mav_put_int16_t(buf, 6, r);
+	_mav_put_uint16_t(buf, 8, buttons);
+	_mav_put_uint8_t(buf, 10, target);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_MANUAL_CONTROL, buf, MAVLINK_MSG_ID_MANUAL_CONTROL_LEN, MAVLINK_MSG_ID_MANUAL_CONTROL_CRC);

@@ -5,15 +5,15 @@
 
 typedef struct __mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t 
 { 
-  uint8_t group;  ///< ID of the quadrotor group (0 - 255, up to 256 groups supported)
-  uint8_t mode;  ///< ID of the flight mode (0 - 255, up to 256 modes supported)
+  int16_t roll;  ///< Desired roll angle in radians +-PI (+-INT16_MAX)
+  int16_t pitch;  ///< Desired pitch angle in radians +-PI (+-INT16_MAX)
+  int16_t yaw[4];  ///< Desired yaw angle in radians, scaled to int16 +-PI (+-INT16_MAX)
+  uint16_t thrust[4];  ///< Collective thrust, scaled to uint16 (0..UINT16_MAX)
+  uint8_t group[0];  ///< ID of the quadrotor group (0 - 255, up to 256 groups supported)
+  uint8_t mode[0];  ///< ID of the flight mode (0 - 255, up to 256 modes supported)
   uint8_t led_red[4];  ///< RGB red channel (0-255)
   uint8_t led_blue[4];  ///< RGB green channel (0-255)
   uint8_t led_green[4];  ///< RGB blue channel (0-255)
-  int16_t roll[4];  ///< Desired roll angle in radians +-PI (+-INT16_MAX)
-  int16_t pitch[4];  ///< Desired pitch angle in radians +-PI (+-INT16_MAX)
-  int16_t yaw[4];  ///< Desired yaw angle in radians, scaled to int16 +-PI (+-INT16_MAX)
-  uint16_t thrust[4];  ///< Collective thrust, scaled to uint16 (0..UINT16_MAX)
 } mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t;
 
 #define MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN 46
@@ -27,15 +27,15 @@ typedef struct __mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t
   "SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST", \
   9, \
   { \
-    { "group", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, group) }, \
-    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, mode) }, \
-    { "led_red", NULL, MAVLINK_TYPE_UINT8_T, 4, 2, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, led_red) }, \
-    { "led_blue", NULL, MAVLINK_TYPE_UINT8_T, 4, 3, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, led_blue) }, \
-    { "led_green", NULL, MAVLINK_TYPE_UINT8_T, 4, 4, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, led_green) }, \
-    { "roll", NULL, MAVLINK_TYPE_INT16_T, 4, 5, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, roll) }, \
-    { "pitch", NULL, MAVLINK_TYPE_INT16_T, 4, 7, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, pitch) }, \
-    { "yaw", NULL, MAVLINK_TYPE_INT16_T, 4, 9, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, yaw) }, \
-    { "thrust", NULL, MAVLINK_TYPE_UINT16_T, 4, 11, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, thrust) }, \
+    { "roll", NULL, MAVLINK_TYPE_INT16_T, 4, 0, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, roll) }, \
+    { "pitch", NULL, MAVLINK_TYPE_INT16_T, 4, 2, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, pitch) }, \
+    { "yaw", NULL, MAVLINK_TYPE_INT16_T, 4, 4, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, yaw) }, \
+    { "thrust", NULL, MAVLINK_TYPE_UINT16_T, 4, 6, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, thrust) }, \
+    { "group", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, group) }, \
+    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, mode) }, \
+    { "led_red", NULL, MAVLINK_TYPE_UINT8_T, 4, 10, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, led_red) }, \
+    { "led_blue", NULL, MAVLINK_TYPE_UINT8_T, 4, 11, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, led_blue) }, \
+    { "led_green", NULL, MAVLINK_TYPE_UINT8_T, 4, 12, offsetof(mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t, led_green) }, \
   } \
 }
 
@@ -73,28 +73,28 @@ static inline uint16_t mavlink_msg_set_quad_swarm_led_roll_pitch_yaw_thrust_pack
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN];
-	_mav_put_uint8_t(buf, 0, group);
-	_mav_put_uint8_t(buf, 1, mode);
-	_mav_put_uint8_t_array(buf, 2, led_red, 4);
-	_mav_put_uint8_t_array(buf, 3, led_blue, 4);
-	_mav_put_uint8_t_array(buf, 4, led_green, 4);
-	_mav_put_int16_t_array(buf, 5, roll, 4);
-	_mav_put_int16_t_array(buf, 7, pitch, 4);
-	_mav_put_int16_t_array(buf, 9, yaw, 4);
-	_mav_put_uint16_t_array(buf, 11, thrust, 4);
+	_mav_put_int16_t(buf, 0, roll);
+	_mav_put_int16_t(buf, 2, pitch);
+	_mav_put_int16_t_array(buf, 4, yaw, 4);
+	_mav_put_uint16_t_array(buf, 6, thrust, 4);
+	_mav_put_uint8_t_array(buf, 8, group, 0);
+	_mav_put_uint8_t_array(buf, 9, mode, 0);
+	_mav_put_uint8_t_array(buf, 10, led_red, 4);
+	_mav_put_uint8_t_array(buf, 11, led_blue, 4);
+	_mav_put_uint8_t_array(buf, 12, led_green, 4);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN);
 #else
 	mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t packet;
-	packet.group = group;
-	packet.mode = mode;
+	packet.roll = roll;
+	packet.pitch = pitch;
+	mav_array_memcpy(packet.yaw, yaw, sizeof(int16_t)*4);
+	mav_array_memcpy(packet.thrust, thrust, sizeof(uint16_t)*4);
+	mav_array_memcpy(packet.group, group, sizeof(uint8_t)*0);
+	mav_array_memcpy(packet.mode, mode, sizeof(uint8_t)*0);
 	mav_array_memcpy(packet.led_red, led_red, sizeof(uint8_t)*4);
 	mav_array_memcpy(packet.led_blue, led_blue, sizeof(uint8_t)*4);
 	mav_array_memcpy(packet.led_green, led_green, sizeof(uint8_t)*4);
-	mav_array_memcpy(packet.roll, roll, sizeof(int16_t)*4);
-	mav_array_memcpy(packet.pitch, pitch, sizeof(int16_t)*4);
-	mav_array_memcpy(packet.yaw, yaw, sizeof(int16_t)*4);
-	mav_array_memcpy(packet.thrust, thrust, sizeof(uint16_t)*4);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN);
 #endif
@@ -143,15 +143,15 @@ static inline uint16_t mavlink_msg_set_quad_swarm_led_roll_pitch_yaw_thrust_pack
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN];
-	_mav_put_uint8_t(buf, 0, group);
-	_mav_put_uint8_t(buf, 1, mode);
-	_mav_put_uint8_t_array(buf, 2, led_red, 4);
-	_mav_put_uint8_t_array(buf, 3, led_blue, 4);
-	_mav_put_uint8_t_array(buf, 4, led_green, 4);
-	_mav_put_int16_t_array(buf, 5, roll, 4);
-	_mav_put_int16_t_array(buf, 7, pitch, 4);
-	_mav_put_int16_t_array(buf, 9, yaw, 4);
-	_mav_put_uint16_t_array(buf, 11, thrust, 4);
+	_mav_put_int16_t(buf, 0, roll);
+	_mav_put_int16_t(buf, 2, pitch);
+	_mav_put_int16_t_array(buf, 4, yaw, 4);
+	_mav_put_uint16_t_array(buf, 6, thrust, 4);
+	_mav_put_uint8_t_array(buf, 8, group, 0);
+	_mav_put_uint8_t_array(buf, 9, mode, 0);
+	_mav_put_uint8_t_array(buf, 10, led_red, 4);
+	_mav_put_uint8_t_array(buf, 11, led_blue, 4);
+	_mav_put_uint8_t_array(buf, 12, led_green, 4);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN);
 #else
@@ -273,15 +273,15 @@ static inline void mavlink_msg_set_quad_swarm_led_roll_pitch_yaw_thrust_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN];
-	_mav_put_uint8_t(buf, 0, group);
-	_mav_put_uint8_t(buf, 1, mode);
-	_mav_put_uint8_t_array(buf, 2, led_red, 4);
-	_mav_put_uint8_t_array(buf, 3, led_blue, 4);
-	_mav_put_uint8_t_array(buf, 4, led_green, 4);
-	_mav_put_int16_t_array(buf, 5, roll, 4);
-	_mav_put_int16_t_array(buf, 7, pitch, 4);
-	_mav_put_int16_t_array(buf, 9, yaw, 4);
-	_mav_put_uint16_t_array(buf, 11, thrust, 4);
+	_mav_put_int16_t(buf, 0, roll);
+	_mav_put_int16_t(buf, 2, pitch);
+	_mav_put_int16_t_array(buf, 4, yaw, 4);
+	_mav_put_uint16_t_array(buf, 6, thrust, 4);
+	_mav_put_uint8_t_array(buf, 8, group, 0);
+	_mav_put_uint8_t_array(buf, 9, mode, 0);
+	_mav_put_uint8_t_array(buf, 10, led_red, 4);
+	_mav_put_uint8_t_array(buf, 11, led_blue, 4);
+	_mav_put_uint8_t_array(buf, 12, led_green, 4);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST, buf, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_CRC);
@@ -327,15 +327,15 @@ static inline void mavlink_msg_wID_set_quad_swarm_led_roll_pitch_yaw_thrust_send
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN];
-	_mav_put_uint8_t(buf, 0, group);
-	_mav_put_uint8_t(buf, 1, mode);
-	_mav_put_uint8_t_array(buf, 2, led_red, 4);
-	_mav_put_uint8_t_array(buf, 3, led_blue, 4);
-	_mav_put_uint8_t_array(buf, 4, led_green, 4);
-	_mav_put_int16_t_array(buf, 5, roll, 4);
-	_mav_put_int16_t_array(buf, 7, pitch, 4);
-	_mav_put_int16_t_array(buf, 9, yaw, 4);
-	_mav_put_uint16_t_array(buf, 11, thrust, 4);
+	_mav_put_int16_t(buf, 0, roll);
+	_mav_put_int16_t(buf, 2, pitch);
+	_mav_put_int16_t_array(buf, 4, yaw, 4);
+	_mav_put_uint16_t_array(buf, 6, thrust, 4);
+	_mav_put_uint8_t_array(buf, 8, group, 0);
+	_mav_put_uint8_t_array(buf, 9, mode, 0);
+	_mav_put_uint8_t_array(buf, 10, led_red, 4);
+	_mav_put_uint8_t_array(buf, 11, led_blue, 4);
+	_mav_put_uint8_t_array(buf, 12, led_green, 4);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST, buf, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_LEN, MAVLINK_MSG_ID_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_CRC);

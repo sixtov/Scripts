@@ -5,10 +5,10 @@
 
 typedef struct __mavlink_param_request_read_t 
 { 
-  uint8_t target_system;  ///< System ID
-  uint8_t target_component;  ///< Component ID
-  uint8_t param_id[15];  ///< Onboard parameter id
+  uint8_t param_id;  ///< Onboard parameter id
   int16_t param_index;  ///< Parameter index. Send -1 to use the param ID field as identifier
+  uint8_t target_system[0];  ///< System ID
+  uint8_t target_component;  ///< Component ID
 } mavlink_param_request_read_t;
 
 #define MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN 19
@@ -19,10 +19,10 @@ typedef struct __mavlink_param_request_read_t
   "PARAM_REQUEST_READ", \
   4, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_param_request_read_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_param_request_read_t, target_component) }, \
-    { "param_id", NULL, MAVLINK_TYPE_UINT8_T, 15, 2, offsetof(mavlink_param_request_read_t, param_id) }, \
-    { "param_index", NULL, MAVLINK_TYPE_INT16_T, 0, 17, offsetof(mavlink_param_request_read_t, param_index) }, \
+    { "param_id", NULL, MAVLINK_TYPE_UINT8_T, 15, 0, offsetof(mavlink_param_request_read_t, param_id) }, \
+    { "param_index", NULL, MAVLINK_TYPE_INT16_T, 0, 15, offsetof(mavlink_param_request_read_t, param_index) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 17, offsetof(mavlink_param_request_read_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 18, offsetof(mavlink_param_request_read_t, target_component) }, \
   } \
 }
 
@@ -50,18 +50,18 @@ static inline uint16_t mavlink_msg_param_request_read_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t_array(buf, 2, param_id, 15);
-	_mav_put_int16_t(buf, 17, param_index);
+	_mav_put_uint8_t(buf, 0, param_id);
+	_mav_put_int16_t(buf, 15, param_index);
+	_mav_put_uint8_t_array(buf, 17, target_system, 0);
+	_mav_put_uint8_t(buf, 18, target_component);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN);
 #else
 	mavlink_param_request_read_t packet;
-	packet.target_system = target_system;
-	packet.target_component = target_component;
-	mav_array_memcpy(packet.param_id, param_id, sizeof(uint8_t)*15);
+	packet.param_id = param_id;
 	packet.param_index = param_index;
+	mav_array_memcpy(packet.target_system, target_system, sizeof(uint8_t)*0);
+	packet.target_component = target_component;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN);
 #endif
@@ -96,10 +96,10 @@ static inline uint16_t mavlink_msg_param_request_read_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t_array(buf, 2, param_id, 15);
-	_mav_put_int16_t(buf, 17, param_index);
+	_mav_put_uint8_t(buf, 0, param_id);
+	_mav_put_int16_t(buf, 15, param_index);
+	_mav_put_uint8_t_array(buf, 17, target_system, 0);
+	_mav_put_uint8_t(buf, 18, target_component);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN);
 #else
@@ -163,10 +163,10 @@ static inline void mavlink_msg_param_request_read_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t_array(buf, 2, param_id, 15);
-	_mav_put_int16_t(buf, 17, param_index);
+	_mav_put_uint8_t(buf, 0, param_id);
+	_mav_put_int16_t(buf, 15, param_index);
+	_mav_put_uint8_t_array(buf, 17, target_system, 0);
+	_mav_put_uint8_t(buf, 18, target_component);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PARAM_REQUEST_READ, buf, MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN);
 #else
@@ -192,10 +192,10 @@ static inline void mavlink_msg_wID_param_request_read_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t_array(buf, 2, param_id, 15);
-	_mav_put_int16_t(buf, 17, param_index);
+	_mav_put_uint8_t(buf, 0, param_id);
+	_mav_put_int16_t(buf, 15, param_index);
+	_mav_put_uint8_t_array(buf, 17, target_system, 0);
+	_mav_put_uint8_t(buf, 18, target_component);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_PARAM_REQUEST_READ, buf, MAVLINK_MSG_ID_PARAM_REQUEST_READ_LEN);
 #else

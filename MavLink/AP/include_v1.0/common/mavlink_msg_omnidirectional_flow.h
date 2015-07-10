@@ -6,11 +6,11 @@
 typedef struct __mavlink_omnidirectional_flow_t 
 { 
   uint64_t time_usec;  ///< Timestamp (microseconds, synced to UNIX time or since system boot)
-  uint8_t sensor_id;  ///< Sensor ID
+  float front_distance_m;  ///< Front distance in meters. Positive value (including zero): distance known. Negative value: Unknown distance
   int16_t left[10];  ///< Flow in deci pixels (1 = 0.1 pixel) on left hemisphere
   int16_t right[10];  ///< Flow in deci pixels (1 = 0.1 pixel) on right hemisphere
+  uint8_t sensor_id;  ///< Sensor ID
   uint8_t quality;  ///< Optical flow quality / confidence. 0: bad, 255: maximum quality
-  float front_distance_m;  ///< Front distance in meters. Positive value (including zero): distance known. Negative value: Unknown distance
 } mavlink_omnidirectional_flow_t;
 
 #define MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN 54
@@ -25,11 +25,11 @@ typedef struct __mavlink_omnidirectional_flow_t
   6, \
   { \
     { "time_usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_omnidirectional_flow_t, time_usec) }, \
-    { "sensor_id", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_omnidirectional_flow_t, sensor_id) }, \
-    { "left", NULL, MAVLINK_TYPE_INT16_T, 10, 9, offsetof(mavlink_omnidirectional_flow_t, left) }, \
-    { "right", NULL, MAVLINK_TYPE_INT16_T, 10, 11, offsetof(mavlink_omnidirectional_flow_t, right) }, \
-    { "quality", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_omnidirectional_flow_t, quality) }, \
-    { "front_distance_m", NULL, MAVLINK_TYPE_FLOAT, 0, 14, offsetof(mavlink_omnidirectional_flow_t, front_distance_m) }, \
+    { "front_distance_m", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_omnidirectional_flow_t, front_distance_m) }, \
+    { "left", NULL, MAVLINK_TYPE_INT16_T, 10, 12, offsetof(mavlink_omnidirectional_flow_t, left) }, \
+    { "right", NULL, MAVLINK_TYPE_INT16_T, 10, 14, offsetof(mavlink_omnidirectional_flow_t, right) }, \
+    { "sensor_id", NULL, MAVLINK_TYPE_UINT8_T, 0, 16, offsetof(mavlink_omnidirectional_flow_t, sensor_id) }, \
+    { "quality", NULL, MAVLINK_TYPE_UINT8_T, 0, 17, offsetof(mavlink_omnidirectional_flow_t, quality) }, \
   } \
 }
 
@@ -62,21 +62,21 @@ static inline uint16_t mavlink_msg_omnidirectional_flow_pack(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN];
 	_mav_put_uint64_t(buf, 0, time_usec);
-	_mav_put_uint8_t(buf, 8, sensor_id);
-	_mav_put_int16_t_array(buf, 9, left, 10);
-	_mav_put_int16_t_array(buf, 11, right, 10);
-	_mav_put_uint8_t(buf, 13, quality);
-	_mav_put_float(buf, 14, front_distance_m);
+	_mav_put_float(buf, 8, front_distance_m);
+	_mav_put_int16_t_array(buf, 12, left, 10);
+	_mav_put_int16_t_array(buf, 14, right, 10);
+	_mav_put_uint8_t(buf, 16, sensor_id);
+	_mav_put_uint8_t(buf, 17, quality);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN);
 #else
 	mavlink_omnidirectional_flow_t packet;
 	packet.time_usec = time_usec;
-	packet.sensor_id = sensor_id;
+	packet.front_distance_m = front_distance_m;
 	mav_array_memcpy(packet.left, left, sizeof(int16_t)*10);
 	mav_array_memcpy(packet.right, right, sizeof(int16_t)*10);
+	packet.sensor_id = sensor_id;
 	packet.quality = quality;
-	packet.front_distance_m = front_distance_m;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN);
 #endif
@@ -120,11 +120,11 @@ static inline uint16_t mavlink_msg_omnidirectional_flow_pack_chan(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN];
 	_mav_put_uint64_t(buf, 0, time_usec);
-	_mav_put_uint8_t(buf, 8, sensor_id);
-	_mav_put_int16_t_array(buf, 9, left, 10);
-	_mav_put_int16_t_array(buf, 11, right, 10);
-	_mav_put_uint8_t(buf, 13, quality);
-	_mav_put_float(buf, 14, front_distance_m);
+	_mav_put_float(buf, 8, front_distance_m);
+	_mav_put_int16_t_array(buf, 12, left, 10);
+	_mav_put_int16_t_array(buf, 14, right, 10);
+	_mav_put_uint8_t(buf, 16, sensor_id);
+	_mav_put_uint8_t(buf, 17, quality);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN);
 #else
@@ -232,11 +232,11 @@ static inline void mavlink_msg_omnidirectional_flow_send(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN];
 	_mav_put_uint64_t(buf, 0, time_usec);
-	_mav_put_uint8_t(buf, 8, sensor_id);
-	_mav_put_int16_t_array(buf, 9, left, 10);
-	_mav_put_int16_t_array(buf, 11, right, 10);
-	_mav_put_uint8_t(buf, 13, quality);
-	_mav_put_float(buf, 14, front_distance_m);
+	_mav_put_float(buf, 8, front_distance_m);
+	_mav_put_int16_t_array(buf, 12, left, 10);
+	_mav_put_int16_t_array(buf, 14, right, 10);
+	_mav_put_uint8_t(buf, 16, sensor_id);
+	_mav_put_uint8_t(buf, 17, quality);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW, buf, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_CRC);
@@ -277,11 +277,11 @@ static inline void mavlink_msg_wID_omnidirectional_flow_send(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN];
 	_mav_put_uint64_t(buf, 0, time_usec);
-	_mav_put_uint8_t(buf, 8, sensor_id);
-	_mav_put_int16_t_array(buf, 9, left, 10);
-	_mav_put_int16_t_array(buf, 11, right, 10);
-	_mav_put_uint8_t(buf, 13, quality);
-	_mav_put_float(buf, 14, front_distance_m);
+	_mav_put_float(buf, 8, front_distance_m);
+	_mav_put_int16_t_array(buf, 12, left, 10);
+	_mav_put_int16_t_array(buf, 14, right, 10);
+	_mav_put_uint8_t(buf, 16, sensor_id);
+	_mav_put_uint8_t(buf, 17, quality);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW, buf, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_LEN, MAVLINK_MSG_ID_OMNIDIRECTIONAL_FLOW_CRC);

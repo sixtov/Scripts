@@ -5,13 +5,13 @@
 
 typedef struct __mavlink_sys_status_t 
 { 
-  uint8_t mode;  ///< System mode, see MAV_MODE ENUM in mavlink/include/mavlink_types.h
-  uint8_t nav_mode;  ///< Navigation mode, see MAV_NAV_MODE ENUM
-  uint8_t status;  ///< System status flag, see MAV_STATUS ENUM
   uint16_t load;  ///< Maximum usage in percent of the mainloop time, (0%%: 0, 100%%: 1000) should be always below 1000
   uint16_t vbat;  ///< Battery voltage, in millivolts (1 = 1 millivolt)
   uint16_t battery_remaining;  ///< Remaining battery energy: (0%%: 0, 100%%: 1000)
   uint16_t packet_drop;  ///< Dropped packets (packets that were corrupted on reception on the MAV)
+  uint8_t mode;  ///< System mode, see MAV_MODE ENUM in mavlink/include/mavlink_types.h
+  uint8_t nav_mode;  ///< Navigation mode, see MAV_NAV_MODE ENUM
+  uint8_t status;  ///< System status flag, see MAV_STATUS ENUM
 } mavlink_sys_status_t;
 
 #define MAVLINK_MSG_ID_SYS_STATUS_LEN 11
@@ -22,13 +22,13 @@ typedef struct __mavlink_sys_status_t
   "SYS_STATUS", \
   7, \
   { \
-    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_sys_status_t, mode) }, \
-    { "nav_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_sys_status_t, nav_mode) }, \
-    { "status", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_sys_status_t, status) }, \
-    { "load", NULL, MAVLINK_TYPE_UINT16_T, 0, 3, offsetof(mavlink_sys_status_t, load) }, \
-    { "vbat", NULL, MAVLINK_TYPE_UINT16_T, 0, 5, offsetof(mavlink_sys_status_t, vbat) }, \
-    { "battery_remaining", NULL, MAVLINK_TYPE_UINT16_T, 0, 7, offsetof(mavlink_sys_status_t, battery_remaining) }, \
-    { "packet_drop", NULL, MAVLINK_TYPE_UINT16_T, 0, 9, offsetof(mavlink_sys_status_t, packet_drop) }, \
+    { "load", NULL, MAVLINK_TYPE_UINT16_T, 0, 0, offsetof(mavlink_sys_status_t, load) }, \
+    { "vbat", NULL, MAVLINK_TYPE_UINT16_T, 0, 2, offsetof(mavlink_sys_status_t, vbat) }, \
+    { "battery_remaining", NULL, MAVLINK_TYPE_UINT16_T, 0, 4, offsetof(mavlink_sys_status_t, battery_remaining) }, \
+    { "packet_drop", NULL, MAVLINK_TYPE_UINT16_T, 0, 6, offsetof(mavlink_sys_status_t, packet_drop) }, \
+    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_sys_status_t, mode) }, \
+    { "nav_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_sys_status_t, nav_mode) }, \
+    { "status", NULL, MAVLINK_TYPE_UINT8_T, 0, 10, offsetof(mavlink_sys_status_t, status) }, \
   } \
 }
 
@@ -62,24 +62,24 @@ static inline uint16_t mavlink_msg_sys_status_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SYS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, mode);
-	_mav_put_uint8_t(buf, 1, nav_mode);
-	_mav_put_uint8_t(buf, 2, status);
-	_mav_put_uint16_t(buf, 3, load);
-	_mav_put_uint16_t(buf, 5, vbat);
-	_mav_put_uint16_t(buf, 7, battery_remaining);
-	_mav_put_uint16_t(buf, 9, packet_drop);
+	_mav_put_uint16_t(buf, 0, load);
+	_mav_put_uint16_t(buf, 2, vbat);
+	_mav_put_uint16_t(buf, 4, battery_remaining);
+	_mav_put_uint16_t(buf, 6, packet_drop);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, nav_mode);
+	_mav_put_uint8_t(buf, 10, status);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_SYS_STATUS_LEN);
 #else
 	mavlink_sys_status_t packet;
-	packet.mode = mode;
-	packet.nav_mode = nav_mode;
-	packet.status = status;
 	packet.load = load;
 	packet.vbat = vbat;
 	packet.battery_remaining = battery_remaining;
 	packet.packet_drop = packet_drop;
+	packet.mode = mode;
+	packet.nav_mode = nav_mode;
+	packet.status = status;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_SYS_STATUS_LEN);
 #endif
@@ -120,13 +120,13 @@ static inline uint16_t mavlink_msg_sys_status_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SYS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, mode);
-	_mav_put_uint8_t(buf, 1, nav_mode);
-	_mav_put_uint8_t(buf, 2, status);
-	_mav_put_uint16_t(buf, 3, load);
-	_mav_put_uint16_t(buf, 5, vbat);
-	_mav_put_uint16_t(buf, 7, battery_remaining);
-	_mav_put_uint16_t(buf, 9, packet_drop);
+	_mav_put_uint16_t(buf, 0, load);
+	_mav_put_uint16_t(buf, 2, vbat);
+	_mav_put_uint16_t(buf, 4, battery_remaining);
+	_mav_put_uint16_t(buf, 6, packet_drop);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, nav_mode);
+	_mav_put_uint8_t(buf, 10, status);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_SYS_STATUS_LEN);
 #else
@@ -202,13 +202,13 @@ static inline void mavlink_msg_sys_status_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SYS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, mode);
-	_mav_put_uint8_t(buf, 1, nav_mode);
-	_mav_put_uint8_t(buf, 2, status);
-	_mav_put_uint16_t(buf, 3, load);
-	_mav_put_uint16_t(buf, 5, vbat);
-	_mav_put_uint16_t(buf, 7, battery_remaining);
-	_mav_put_uint16_t(buf, 9, packet_drop);
+	_mav_put_uint16_t(buf, 0, load);
+	_mav_put_uint16_t(buf, 2, vbat);
+	_mav_put_uint16_t(buf, 4, battery_remaining);
+	_mav_put_uint16_t(buf, 6, packet_drop);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, nav_mode);
+	_mav_put_uint8_t(buf, 10, status);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_SYS_STATUS, buf, MAVLINK_MSG_ID_SYS_STATUS_LEN);
 #else
@@ -240,13 +240,13 @@ static inline void mavlink_msg_wID_sys_status_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_SYS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, mode);
-	_mav_put_uint8_t(buf, 1, nav_mode);
-	_mav_put_uint8_t(buf, 2, status);
-	_mav_put_uint16_t(buf, 3, load);
-	_mav_put_uint16_t(buf, 5, vbat);
-	_mav_put_uint16_t(buf, 7, battery_remaining);
-	_mav_put_uint16_t(buf, 9, packet_drop);
+	_mav_put_uint16_t(buf, 0, load);
+	_mav_put_uint16_t(buf, 2, vbat);
+	_mav_put_uint16_t(buf, 4, battery_remaining);
+	_mav_put_uint16_t(buf, 6, packet_drop);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, nav_mode);
+	_mav_put_uint8_t(buf, 10, status);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_SYS_STATUS, buf, MAVLINK_MSG_ID_SYS_STATUS_LEN);
 #else

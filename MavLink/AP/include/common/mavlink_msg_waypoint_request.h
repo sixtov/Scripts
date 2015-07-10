@@ -5,9 +5,9 @@
 
 typedef struct __mavlink_waypoint_request_t 
 { 
+  uint16_t seq;  ///< Sequence
   uint8_t target_system;  ///< System ID
   uint8_t target_component;  ///< Component ID
-  uint16_t seq;  ///< Sequence
 } mavlink_waypoint_request_t;
 
 #define MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN 4
@@ -18,9 +18,9 @@ typedef struct __mavlink_waypoint_request_t
   "WAYPOINT_REQUEST", \
   3, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_waypoint_request_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_waypoint_request_t, target_component) }, \
-    { "seq", NULL, MAVLINK_TYPE_UINT16_T, 0, 2, offsetof(mavlink_waypoint_request_t, seq) }, \
+    { "seq", NULL, MAVLINK_TYPE_UINT16_T, 0, 0, offsetof(mavlink_waypoint_request_t, seq) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_waypoint_request_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 3, offsetof(mavlink_waypoint_request_t, target_component) }, \
   } \
 }
 
@@ -46,16 +46,16 @@ static inline uint16_t mavlink_msg_waypoint_request_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
+	_mav_put_uint16_t(buf, 0, seq);
+	_mav_put_uint8_t(buf, 2, target_system);
+	_mav_put_uint8_t(buf, 3, target_component);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN);
 #else
 	mavlink_waypoint_request_t packet;
+	packet.seq = seq;
 	packet.target_system = target_system;
 	packet.target_component = target_component;
-	packet.seq = seq;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN);
 #endif
@@ -88,9 +88,9 @@ static inline uint16_t mavlink_msg_waypoint_request_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
+	_mav_put_uint16_t(buf, 0, seq);
+	_mav_put_uint8_t(buf, 2, target_system);
+	_mav_put_uint8_t(buf, 3, target_component);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN);
 #else
@@ -150,9 +150,9 @@ static inline void mavlink_msg_waypoint_request_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
+	_mav_put_uint16_t(buf, 0, seq);
+	_mav_put_uint8_t(buf, 2, target_system);
+	_mav_put_uint8_t(buf, 3, target_component);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_WAYPOINT_REQUEST, buf, MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN);
 #else
@@ -176,9 +176,9 @@ static inline void mavlink_msg_wID_waypoint_request_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
+	_mav_put_uint16_t(buf, 0, seq);
+	_mav_put_uint8_t(buf, 2, target_system);
+	_mav_put_uint8_t(buf, 3, target_component);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_WAYPOINT_REQUEST, buf, MAVLINK_MSG_ID_WAYPOINT_REQUEST_LEN);
 #else

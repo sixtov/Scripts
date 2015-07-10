@@ -5,6 +5,7 @@
 
 typedef struct __mavlink_analog_raw_t 
 { 
+  uint64_t usec;  ///< time
   uint16_t chan01;  ///< adc channel_01
   uint16_t chan02;  ///< adc channel_02
   uint16_t chan03;  ///< adc channel_03
@@ -21,7 +22,6 @@ typedef struct __mavlink_analog_raw_t
   uint16_t chan14;  ///< adc channel_14
   uint16_t chan15;  ///< adc channel_15
   uint16_t chan16;  ///< adc channel_16
-  uint64_t usec;  ///< time
 } mavlink_analog_raw_t;
 
 #define MAVLINK_MSG_ID_ANALOG_RAW_LEN 40
@@ -32,23 +32,23 @@ typedef struct __mavlink_analog_raw_t
   "ANALOG_RAW", \
   17, \
   { \
-    { "chan01", NULL, MAVLINK_TYPE_UINT16_T, 0, 0, offsetof(mavlink_analog_raw_t, chan01) }, \
-    { "chan02", NULL, MAVLINK_TYPE_UINT16_T, 0, 2, offsetof(mavlink_analog_raw_t, chan02) }, \
-    { "chan03", NULL, MAVLINK_TYPE_UINT16_T, 0, 4, offsetof(mavlink_analog_raw_t, chan03) }, \
-    { "chan04", NULL, MAVLINK_TYPE_UINT16_T, 0, 6, offsetof(mavlink_analog_raw_t, chan04) }, \
-    { "chan05", NULL, MAVLINK_TYPE_UINT16_T, 0, 8, offsetof(mavlink_analog_raw_t, chan05) }, \
-    { "chan06", NULL, MAVLINK_TYPE_UINT16_T, 0, 10, offsetof(mavlink_analog_raw_t, chan06) }, \
-    { "chan07", NULL, MAVLINK_TYPE_UINT16_T, 0, 12, offsetof(mavlink_analog_raw_t, chan07) }, \
-    { "chan08", NULL, MAVLINK_TYPE_UINT16_T, 0, 14, offsetof(mavlink_analog_raw_t, chan08) }, \
-    { "chan09", NULL, MAVLINK_TYPE_UINT16_T, 0, 16, offsetof(mavlink_analog_raw_t, chan09) }, \
-    { "chan10", NULL, MAVLINK_TYPE_UINT16_T, 0, 18, offsetof(mavlink_analog_raw_t, chan10) }, \
-    { "chan11", NULL, MAVLINK_TYPE_UINT16_T, 0, 20, offsetof(mavlink_analog_raw_t, chan11) }, \
-    { "chan12", NULL, MAVLINK_TYPE_UINT16_T, 0, 22, offsetof(mavlink_analog_raw_t, chan12) }, \
-    { "chan13", NULL, MAVLINK_TYPE_UINT16_T, 0, 24, offsetof(mavlink_analog_raw_t, chan13) }, \
-    { "chan14", NULL, MAVLINK_TYPE_UINT16_T, 0, 26, offsetof(mavlink_analog_raw_t, chan14) }, \
-    { "chan15", NULL, MAVLINK_TYPE_UINT16_T, 0, 28, offsetof(mavlink_analog_raw_t, chan15) }, \
-    { "chan16", NULL, MAVLINK_TYPE_UINT16_T, 0, 30, offsetof(mavlink_analog_raw_t, chan16) }, \
-    { "usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 32, offsetof(mavlink_analog_raw_t, usec) }, \
+    { "usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_analog_raw_t, usec) }, \
+    { "chan01", NULL, MAVLINK_TYPE_UINT16_T, 0, 8, offsetof(mavlink_analog_raw_t, chan01) }, \
+    { "chan02", NULL, MAVLINK_TYPE_UINT16_T, 0, 10, offsetof(mavlink_analog_raw_t, chan02) }, \
+    { "chan03", NULL, MAVLINK_TYPE_UINT16_T, 0, 12, offsetof(mavlink_analog_raw_t, chan03) }, \
+    { "chan04", NULL, MAVLINK_TYPE_UINT16_T, 0, 14, offsetof(mavlink_analog_raw_t, chan04) }, \
+    { "chan05", NULL, MAVLINK_TYPE_UINT16_T, 0, 16, offsetof(mavlink_analog_raw_t, chan05) }, \
+    { "chan06", NULL, MAVLINK_TYPE_UINT16_T, 0, 18, offsetof(mavlink_analog_raw_t, chan06) }, \
+    { "chan07", NULL, MAVLINK_TYPE_UINT16_T, 0, 20, offsetof(mavlink_analog_raw_t, chan07) }, \
+    { "chan08", NULL, MAVLINK_TYPE_UINT16_T, 0, 22, offsetof(mavlink_analog_raw_t, chan08) }, \
+    { "chan09", NULL, MAVLINK_TYPE_UINT16_T, 0, 24, offsetof(mavlink_analog_raw_t, chan09) }, \
+    { "chan10", NULL, MAVLINK_TYPE_UINT16_T, 0, 26, offsetof(mavlink_analog_raw_t, chan10) }, \
+    { "chan11", NULL, MAVLINK_TYPE_UINT16_T, 0, 28, offsetof(mavlink_analog_raw_t, chan11) }, \
+    { "chan12", NULL, MAVLINK_TYPE_UINT16_T, 0, 30, offsetof(mavlink_analog_raw_t, chan12) }, \
+    { "chan13", NULL, MAVLINK_TYPE_UINT16_T, 0, 32, offsetof(mavlink_analog_raw_t, chan13) }, \
+    { "chan14", NULL, MAVLINK_TYPE_UINT16_T, 0, 34, offsetof(mavlink_analog_raw_t, chan14) }, \
+    { "chan15", NULL, MAVLINK_TYPE_UINT16_T, 0, 36, offsetof(mavlink_analog_raw_t, chan15) }, \
+    { "chan16", NULL, MAVLINK_TYPE_UINT16_T, 0, 38, offsetof(mavlink_analog_raw_t, chan16) }, \
   } \
 }
 
@@ -102,27 +102,28 @@ static inline uint16_t mavlink_msg_analog_raw_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_RAW_LEN];
-	_mav_put_uint16_t(buf, 0, chan01);
-	_mav_put_uint16_t(buf, 2, chan02);
-	_mav_put_uint16_t(buf, 4, chan03);
-	_mav_put_uint16_t(buf, 6, chan04);
-	_mav_put_uint16_t(buf, 8, chan05);
-	_mav_put_uint16_t(buf, 10, chan06);
-	_mav_put_uint16_t(buf, 12, chan07);
-	_mav_put_uint16_t(buf, 14, chan08);
-	_mav_put_uint16_t(buf, 16, chan09);
-	_mav_put_uint16_t(buf, 18, chan10);
-	_mav_put_uint16_t(buf, 20, chan11);
-	_mav_put_uint16_t(buf, 22, chan12);
-	_mav_put_uint16_t(buf, 24, chan13);
-	_mav_put_uint16_t(buf, 26, chan14);
-	_mav_put_uint16_t(buf, 28, chan15);
-	_mav_put_uint16_t(buf, 30, chan16);
-	_mav_put_uint64_t(buf, 32, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint16_t(buf, 8, chan01);
+	_mav_put_uint16_t(buf, 10, chan02);
+	_mav_put_uint16_t(buf, 12, chan03);
+	_mav_put_uint16_t(buf, 14, chan04);
+	_mav_put_uint16_t(buf, 16, chan05);
+	_mav_put_uint16_t(buf, 18, chan06);
+	_mav_put_uint16_t(buf, 20, chan07);
+	_mav_put_uint16_t(buf, 22, chan08);
+	_mav_put_uint16_t(buf, 24, chan09);
+	_mav_put_uint16_t(buf, 26, chan10);
+	_mav_put_uint16_t(buf, 28, chan11);
+	_mav_put_uint16_t(buf, 30, chan12);
+	_mav_put_uint16_t(buf, 32, chan13);
+	_mav_put_uint16_t(buf, 34, chan14);
+	_mav_put_uint16_t(buf, 36, chan15);
+	_mav_put_uint16_t(buf, 38, chan16);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_ANALOG_RAW_LEN);
 #else
 	mavlink_analog_raw_t packet;
+	packet.usec = usec;
 	packet.chan01 = chan01;
 	packet.chan02 = chan02;
 	packet.chan03 = chan03;
@@ -139,7 +140,6 @@ static inline uint16_t mavlink_msg_analog_raw_pack(
 	packet.chan14 = chan14;
 	packet.chan15 = chan15;
 	packet.chan16 = chan16;
-	packet.usec = usec;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_ANALOG_RAW_LEN);
 #endif
@@ -200,23 +200,23 @@ static inline uint16_t mavlink_msg_analog_raw_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_RAW_LEN];
-	_mav_put_uint16_t(buf, 0, chan01);
-	_mav_put_uint16_t(buf, 2, chan02);
-	_mav_put_uint16_t(buf, 4, chan03);
-	_mav_put_uint16_t(buf, 6, chan04);
-	_mav_put_uint16_t(buf, 8, chan05);
-	_mav_put_uint16_t(buf, 10, chan06);
-	_mav_put_uint16_t(buf, 12, chan07);
-	_mav_put_uint16_t(buf, 14, chan08);
-	_mav_put_uint16_t(buf, 16, chan09);
-	_mav_put_uint16_t(buf, 18, chan10);
-	_mav_put_uint16_t(buf, 20, chan11);
-	_mav_put_uint16_t(buf, 22, chan12);
-	_mav_put_uint16_t(buf, 24, chan13);
-	_mav_put_uint16_t(buf, 26, chan14);
-	_mav_put_uint16_t(buf, 28, chan15);
-	_mav_put_uint16_t(buf, 30, chan16);
-	_mav_put_uint64_t(buf, 32, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint16_t(buf, 8, chan01);
+	_mav_put_uint16_t(buf, 10, chan02);
+	_mav_put_uint16_t(buf, 12, chan03);
+	_mav_put_uint16_t(buf, 14, chan04);
+	_mav_put_uint16_t(buf, 16, chan05);
+	_mav_put_uint16_t(buf, 18, chan06);
+	_mav_put_uint16_t(buf, 20, chan07);
+	_mav_put_uint16_t(buf, 22, chan08);
+	_mav_put_uint16_t(buf, 24, chan09);
+	_mav_put_uint16_t(buf, 26, chan10);
+	_mav_put_uint16_t(buf, 28, chan11);
+	_mav_put_uint16_t(buf, 30, chan12);
+	_mav_put_uint16_t(buf, 32, chan13);
+	_mav_put_uint16_t(buf, 34, chan14);
+	_mav_put_uint16_t(buf, 36, chan15);
+	_mav_put_uint16_t(buf, 38, chan16);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_ANALOG_RAW_LEN);
 #else
@@ -332,23 +332,23 @@ static inline void mavlink_msg_analog_raw_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_RAW_LEN];
-	_mav_put_uint16_t(buf, 0, chan01);
-	_mav_put_uint16_t(buf, 2, chan02);
-	_mav_put_uint16_t(buf, 4, chan03);
-	_mav_put_uint16_t(buf, 6, chan04);
-	_mav_put_uint16_t(buf, 8, chan05);
-	_mav_put_uint16_t(buf, 10, chan06);
-	_mav_put_uint16_t(buf, 12, chan07);
-	_mav_put_uint16_t(buf, 14, chan08);
-	_mav_put_uint16_t(buf, 16, chan09);
-	_mav_put_uint16_t(buf, 18, chan10);
-	_mav_put_uint16_t(buf, 20, chan11);
-	_mav_put_uint16_t(buf, 22, chan12);
-	_mav_put_uint16_t(buf, 24, chan13);
-	_mav_put_uint16_t(buf, 26, chan14);
-	_mav_put_uint16_t(buf, 28, chan15);
-	_mav_put_uint16_t(buf, 30, chan16);
-	_mav_put_uint64_t(buf, 32, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint16_t(buf, 8, chan01);
+	_mav_put_uint16_t(buf, 10, chan02);
+	_mav_put_uint16_t(buf, 12, chan03);
+	_mav_put_uint16_t(buf, 14, chan04);
+	_mav_put_uint16_t(buf, 16, chan05);
+	_mav_put_uint16_t(buf, 18, chan06);
+	_mav_put_uint16_t(buf, 20, chan07);
+	_mav_put_uint16_t(buf, 22, chan08);
+	_mav_put_uint16_t(buf, 24, chan09);
+	_mav_put_uint16_t(buf, 26, chan10);
+	_mav_put_uint16_t(buf, 28, chan11);
+	_mav_put_uint16_t(buf, 30, chan12);
+	_mav_put_uint16_t(buf, 32, chan13);
+	_mav_put_uint16_t(buf, 34, chan14);
+	_mav_put_uint16_t(buf, 36, chan15);
+	_mav_put_uint16_t(buf, 38, chan16);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_ANALOG_RAW, buf, MAVLINK_MSG_ID_ANALOG_RAW_LEN);
 #else
@@ -400,23 +400,23 @@ static inline void mavlink_msg_wID_analog_raw_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_ANALOG_RAW_LEN];
-	_mav_put_uint16_t(buf, 0, chan01);
-	_mav_put_uint16_t(buf, 2, chan02);
-	_mav_put_uint16_t(buf, 4, chan03);
-	_mav_put_uint16_t(buf, 6, chan04);
-	_mav_put_uint16_t(buf, 8, chan05);
-	_mav_put_uint16_t(buf, 10, chan06);
-	_mav_put_uint16_t(buf, 12, chan07);
-	_mav_put_uint16_t(buf, 14, chan08);
-	_mav_put_uint16_t(buf, 16, chan09);
-	_mav_put_uint16_t(buf, 18, chan10);
-	_mav_put_uint16_t(buf, 20, chan11);
-	_mav_put_uint16_t(buf, 22, chan12);
-	_mav_put_uint16_t(buf, 24, chan13);
-	_mav_put_uint16_t(buf, 26, chan14);
-	_mav_put_uint16_t(buf, 28, chan15);
-	_mav_put_uint16_t(buf, 30, chan16);
-	_mav_put_uint64_t(buf, 32, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint16_t(buf, 8, chan01);
+	_mav_put_uint16_t(buf, 10, chan02);
+	_mav_put_uint16_t(buf, 12, chan03);
+	_mav_put_uint16_t(buf, 14, chan04);
+	_mav_put_uint16_t(buf, 16, chan05);
+	_mav_put_uint16_t(buf, 18, chan06);
+	_mav_put_uint16_t(buf, 20, chan07);
+	_mav_put_uint16_t(buf, 22, chan08);
+	_mav_put_uint16_t(buf, 24, chan09);
+	_mav_put_uint16_t(buf, 26, chan10);
+	_mav_put_uint16_t(buf, 28, chan11);
+	_mav_put_uint16_t(buf, 30, chan12);
+	_mav_put_uint16_t(buf, 32, chan13);
+	_mav_put_uint16_t(buf, 34, chan14);
+	_mav_put_uint16_t(buf, 36, chan15);
+	_mav_put_uint16_t(buf, 38, chan16);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_ANALOG_RAW, buf, MAVLINK_MSG_ID_ANALOG_RAW_LEN);
 #else

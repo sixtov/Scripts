@@ -7,12 +7,12 @@ typedef struct __mavlink_nav_controller_output_t
 { 
   float nav_roll;  ///< Current desired roll in degrees
   float nav_pitch;  ///< Current desired pitch in degrees
-  int16_t nav_bearing;  ///< Current desired heading in degrees
-  int16_t target_bearing;  ///< Bearing to current waypoint/target in degrees
-  uint16_t wp_dist;  ///< Distance to active waypoint in meters
   float alt_error;  ///< Current altitude error in meters
   float aspd_error;  ///< Current airspeed error in meters/second
   float xtrack_error;  ///< Current crosstrack error on x-y plane in meters
+  int16_t nav_bearing;  ///< Current desired heading in degrees
+  int16_t target_bearing;  ///< Bearing to current waypoint/target in degrees
+  uint16_t wp_dist;  ///< Distance to active waypoint in meters
 } mavlink_nav_controller_output_t;
 
 #define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN 26
@@ -25,12 +25,12 @@ typedef struct __mavlink_nav_controller_output_t
   { \
     { "nav_roll", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_nav_controller_output_t, nav_roll) }, \
     { "nav_pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_nav_controller_output_t, nav_pitch) }, \
-    { "nav_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_nav_controller_output_t, nav_bearing) }, \
-    { "target_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 10, offsetof(mavlink_nav_controller_output_t, target_bearing) }, \
-    { "wp_dist", NULL, MAVLINK_TYPE_UINT16_T, 0, 12, offsetof(mavlink_nav_controller_output_t, wp_dist) }, \
-    { "alt_error", NULL, MAVLINK_TYPE_FLOAT, 0, 14, offsetof(mavlink_nav_controller_output_t, alt_error) }, \
-    { "aspd_error", NULL, MAVLINK_TYPE_FLOAT, 0, 18, offsetof(mavlink_nav_controller_output_t, aspd_error) }, \
-    { "xtrack_error", NULL, MAVLINK_TYPE_FLOAT, 0, 22, offsetof(mavlink_nav_controller_output_t, xtrack_error) }, \
+    { "alt_error", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_nav_controller_output_t, alt_error) }, \
+    { "aspd_error", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_nav_controller_output_t, aspd_error) }, \
+    { "xtrack_error", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_nav_controller_output_t, xtrack_error) }, \
+    { "nav_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 20, offsetof(mavlink_nav_controller_output_t, nav_bearing) }, \
+    { "target_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 22, offsetof(mavlink_nav_controller_output_t, target_bearing) }, \
+    { "wp_dist", NULL, MAVLINK_TYPE_UINT16_T, 0, 24, offsetof(mavlink_nav_controller_output_t, wp_dist) }, \
   } \
 }
 
@@ -68,24 +68,24 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack(
 	char buf[MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN];
 	_mav_put_float(buf, 0, nav_roll);
 	_mav_put_float(buf, 4, nav_pitch);
-	_mav_put_int16_t(buf, 8, nav_bearing);
-	_mav_put_int16_t(buf, 10, target_bearing);
-	_mav_put_uint16_t(buf, 12, wp_dist);
-	_mav_put_float(buf, 14, alt_error);
-	_mav_put_float(buf, 18, aspd_error);
-	_mav_put_float(buf, 22, xtrack_error);
+	_mav_put_float(buf, 8, alt_error);
+	_mav_put_float(buf, 12, aspd_error);
+	_mav_put_float(buf, 16, xtrack_error);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #else
 	mavlink_nav_controller_output_t packet;
 	packet.nav_roll = nav_roll;
 	packet.nav_pitch = nav_pitch;
-	packet.nav_bearing = nav_bearing;
-	packet.target_bearing = target_bearing;
-	packet.wp_dist = wp_dist;
 	packet.alt_error = alt_error;
 	packet.aspd_error = aspd_error;
 	packet.xtrack_error = xtrack_error;
+	packet.nav_bearing = nav_bearing;
+	packet.target_bearing = target_bearing;
+	packet.wp_dist = wp_dist;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #endif
@@ -130,12 +130,12 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack_chan(
 	char buf[MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN];
 	_mav_put_float(buf, 0, nav_roll);
 	_mav_put_float(buf, 4, nav_pitch);
-	_mav_put_int16_t(buf, 8, nav_bearing);
-	_mav_put_int16_t(buf, 10, target_bearing);
-	_mav_put_uint16_t(buf, 12, wp_dist);
-	_mav_put_float(buf, 14, alt_error);
-	_mav_put_float(buf, 18, aspd_error);
-	_mav_put_float(buf, 22, xtrack_error);
+	_mav_put_float(buf, 8, alt_error);
+	_mav_put_float(buf, 12, aspd_error);
+	_mav_put_float(buf, 16, xtrack_error);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #else
@@ -217,12 +217,12 @@ static inline void mavlink_msg_nav_controller_output_send(
 	char buf[MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN];
 	_mav_put_float(buf, 0, nav_roll);
 	_mav_put_float(buf, 4, nav_pitch);
-	_mav_put_int16_t(buf, 8, nav_bearing);
-	_mav_put_int16_t(buf, 10, target_bearing);
-	_mav_put_uint16_t(buf, 12, wp_dist);
-	_mav_put_float(buf, 14, alt_error);
-	_mav_put_float(buf, 18, aspd_error);
-	_mav_put_float(buf, 22, xtrack_error);
+	_mav_put_float(buf, 8, alt_error);
+	_mav_put_float(buf, 12, aspd_error);
+	_mav_put_float(buf, 16, xtrack_error);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT, buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #else
@@ -258,12 +258,12 @@ static inline void mavlink_msg_wID_nav_controller_output_send(
 	char buf[MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN];
 	_mav_put_float(buf, 0, nav_roll);
 	_mav_put_float(buf, 4, nav_pitch);
-	_mav_put_int16_t(buf, 8, nav_bearing);
-	_mav_put_int16_t(buf, 10, target_bearing);
-	_mav_put_uint16_t(buf, 12, wp_dist);
-	_mav_put_float(buf, 14, alt_error);
-	_mav_put_float(buf, 18, aspd_error);
-	_mav_put_float(buf, 22, xtrack_error);
+	_mav_put_float(buf, 8, alt_error);
+	_mav_put_float(buf, 12, aspd_error);
+	_mav_put_float(buf, 16, xtrack_error);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT, buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #else

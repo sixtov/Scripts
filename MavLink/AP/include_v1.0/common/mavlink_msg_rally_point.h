@@ -5,15 +5,15 @@
 
 typedef struct __mavlink_rally_point_t 
 { 
-  uint8_t target_system;  ///< System ID
-  uint8_t target_component;  ///< Component ID
-  uint8_t idx;  ///< point index (first point is 0)
-  uint8_t count;  ///< total number of points (for sanity checking)
   int32_t lat;  ///< Latitude of point in degrees * 1E7
   int32_t lng;  ///< Longitude of point in degrees * 1E7
   int16_t alt;  ///< Transit / loiter altitude in meters relative to home
   int16_t break_alt;  ///< Break altitude in meters relative to home
   uint16_t land_dir;  ///< Heading to aim for when landing. In centi-degrees.
+  uint8_t target_system;  ///< System ID
+  uint8_t target_component;  ///< Component ID
+  uint8_t idx;  ///< point index (first point is 0)
+  uint8_t count;  ///< total number of points (for sanity checking)
   uint8_t flags;  ///< See RALLY_FLAGS enum for definition of the bitmask.
 } mavlink_rally_point_t;
 
@@ -28,15 +28,15 @@ typedef struct __mavlink_rally_point_t
   "RALLY_POINT", \
   10, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_rally_point_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_rally_point_t, target_component) }, \
-    { "idx", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_rally_point_t, idx) }, \
-    { "count", NULL, MAVLINK_TYPE_UINT8_T, 0, 3, offsetof(mavlink_rally_point_t, count) }, \
-    { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 4, offsetof(mavlink_rally_point_t, lat) }, \
-    { "lng", NULL, MAVLINK_TYPE_INT32_T, 0, 8, offsetof(mavlink_rally_point_t, lng) }, \
-    { "alt", NULL, MAVLINK_TYPE_INT16_T, 0, 12, offsetof(mavlink_rally_point_t, alt) }, \
-    { "break_alt", NULL, MAVLINK_TYPE_INT16_T, 0, 14, offsetof(mavlink_rally_point_t, break_alt) }, \
-    { "land_dir", NULL, MAVLINK_TYPE_UINT16_T, 0, 16, offsetof(mavlink_rally_point_t, land_dir) }, \
+    { "lat", NULL, MAVLINK_TYPE_INT32_T, 0, 0, offsetof(mavlink_rally_point_t, lat) }, \
+    { "lng", NULL, MAVLINK_TYPE_INT32_T, 0, 4, offsetof(mavlink_rally_point_t, lng) }, \
+    { "alt", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_rally_point_t, alt) }, \
+    { "break_alt", NULL, MAVLINK_TYPE_INT16_T, 0, 10, offsetof(mavlink_rally_point_t, break_alt) }, \
+    { "land_dir", NULL, MAVLINK_TYPE_UINT16_T, 0, 12, offsetof(mavlink_rally_point_t, land_dir) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 14, offsetof(mavlink_rally_point_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 15, offsetof(mavlink_rally_point_t, target_component) }, \
+    { "idx", NULL, MAVLINK_TYPE_UINT8_T, 0, 16, offsetof(mavlink_rally_point_t, idx) }, \
+    { "count", NULL, MAVLINK_TYPE_UINT8_T, 0, 17, offsetof(mavlink_rally_point_t, count) }, \
     { "flags", NULL, MAVLINK_TYPE_UINT8_T, 0, 18, offsetof(mavlink_rally_point_t, flags) }, \
   } \
 }
@@ -77,29 +77,29 @@ static inline uint16_t mavlink_msg_rally_point_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_RALLY_POINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, idx);
-	_mav_put_uint8_t(buf, 3, count);
-	_mav_put_int32_t(buf, 4, lat);
-	_mav_put_int32_t(buf, 8, lng);
-	_mav_put_int16_t(buf, 12, alt);
-	_mav_put_int16_t(buf, 14, break_alt);
-	_mav_put_uint16_t(buf, 16, land_dir);
+	_mav_put_int32_t(buf, 0, lat);
+	_mav_put_int32_t(buf, 4, lng);
+	_mav_put_int16_t(buf, 8, alt);
+	_mav_put_int16_t(buf, 10, break_alt);
+	_mav_put_uint16_t(buf, 12, land_dir);
+	_mav_put_uint8_t(buf, 14, target_system);
+	_mav_put_uint8_t(buf, 15, target_component);
+	_mav_put_uint8_t(buf, 16, idx);
+	_mav_put_uint8_t(buf, 17, count);
 	_mav_put_uint8_t(buf, 18, flags);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_RALLY_POINT_LEN);
 #else
 	mavlink_rally_point_t packet;
-	packet.target_system = target_system;
-	packet.target_component = target_component;
-	packet.idx = idx;
-	packet.count = count;
 	packet.lat = lat;
 	packet.lng = lng;
 	packet.alt = alt;
 	packet.break_alt = break_alt;
 	packet.land_dir = land_dir;
+	packet.target_system = target_system;
+	packet.target_component = target_component;
+	packet.idx = idx;
+	packet.count = count;
 	packet.flags = flags;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_RALLY_POINT_LEN);
@@ -151,15 +151,15 @@ static inline uint16_t mavlink_msg_rally_point_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_RALLY_POINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, idx);
-	_mav_put_uint8_t(buf, 3, count);
-	_mav_put_int32_t(buf, 4, lat);
-	_mav_put_int32_t(buf, 8, lng);
-	_mav_put_int16_t(buf, 12, alt);
-	_mav_put_int16_t(buf, 14, break_alt);
-	_mav_put_uint16_t(buf, 16, land_dir);
+	_mav_put_int32_t(buf, 0, lat);
+	_mav_put_int32_t(buf, 4, lng);
+	_mav_put_int16_t(buf, 8, alt);
+	_mav_put_int16_t(buf, 10, break_alt);
+	_mav_put_uint16_t(buf, 12, land_dir);
+	_mav_put_uint8_t(buf, 14, target_system);
+	_mav_put_uint8_t(buf, 15, target_component);
+	_mav_put_uint8_t(buf, 16, idx);
+	_mav_put_uint8_t(buf, 17, count);
 	_mav_put_uint8_t(buf, 18, flags);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_RALLY_POINT_LEN);
@@ -287,15 +287,15 @@ static inline void mavlink_msg_rally_point_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_RALLY_POINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, idx);
-	_mav_put_uint8_t(buf, 3, count);
-	_mav_put_int32_t(buf, 4, lat);
-	_mav_put_int32_t(buf, 8, lng);
-	_mav_put_int16_t(buf, 12, alt);
-	_mav_put_int16_t(buf, 14, break_alt);
-	_mav_put_uint16_t(buf, 16, land_dir);
+	_mav_put_int32_t(buf, 0, lat);
+	_mav_put_int32_t(buf, 4, lng);
+	_mav_put_int16_t(buf, 8, alt);
+	_mav_put_int16_t(buf, 10, break_alt);
+	_mav_put_uint16_t(buf, 12, land_dir);
+	_mav_put_uint8_t(buf, 14, target_system);
+	_mav_put_uint8_t(buf, 15, target_component);
+	_mav_put_uint8_t(buf, 16, idx);
+	_mav_put_uint8_t(buf, 17, count);
 	_mav_put_uint8_t(buf, 18, flags);
 #if MAVLINK_CRC_EXTRA
 
@@ -344,15 +344,15 @@ static inline void mavlink_msg_wID_rally_point_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_RALLY_POINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, idx);
-	_mav_put_uint8_t(buf, 3, count);
-	_mav_put_int32_t(buf, 4, lat);
-	_mav_put_int32_t(buf, 8, lng);
-	_mav_put_int16_t(buf, 12, alt);
-	_mav_put_int16_t(buf, 14, break_alt);
-	_mav_put_uint16_t(buf, 16, land_dir);
+	_mav_put_int32_t(buf, 0, lat);
+	_mav_put_int32_t(buf, 4, lng);
+	_mav_put_int16_t(buf, 8, alt);
+	_mav_put_int16_t(buf, 10, break_alt);
+	_mav_put_uint16_t(buf, 12, land_dir);
+	_mav_put_uint8_t(buf, 14, target_system);
+	_mav_put_uint8_t(buf, 15, target_component);
+	_mav_put_uint8_t(buf, 16, idx);
+	_mav_put_uint8_t(buf, 17, count);
 	_mav_put_uint8_t(buf, 18, flags);
 #if MAVLINK_CRC_EXTRA
 

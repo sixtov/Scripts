@@ -1,7 +1,7 @@
 %% XML File Parse
 function parse_APM_XML()
     global SWAP;
-    SWAP = 0;       % SWAP=0; don't swap mavlink message parameters
+    SWAP = 1;       % SWAP=0; don't swap mavlink message parameters
                     % SWAP=1; swap mavlink message parameters as
                     %         recommended by the MavLink protocol.
                     %         where the fields in a message are sorted
@@ -2018,6 +2018,8 @@ function Mess = parseXML(file)
         Mess(k+1).fields = MavLinkSort(Mess(k+1).fields);
         if (Mess(k+1).fields.needSwap)
             fprintf('%s message needs swap\n',Mess(k+1).name);
+        else
+            fprintf('%s message  NO   swap\n',Mess(k+1).name);
         end
     end   
     Mess = Mess(:);

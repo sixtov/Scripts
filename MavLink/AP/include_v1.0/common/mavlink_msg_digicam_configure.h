@@ -5,17 +5,17 @@
 
 typedef struct __mavlink_digicam_configure_t 
 { 
+  float extra_value;  ///< Correspondent value to given extra_param
+  uint16_t shutter_speed;  ///< Divisor number //e.g. 1000 means 1/1000 (0 means ignore)
   uint8_t target_system;  ///< System ID
   uint8_t target_component;  ///< Component ID
   uint8_t mode;  ///< Mode enumeration from 1 to N //P, TV, AV, M, Etc (0 means ignore)
-  uint16_t shutter_speed;  ///< Divisor number //e.g. 1000 means 1/1000 (0 means ignore)
   uint8_t aperture;  ///< F stop number x 10 //e.g. 28 means 2.8 (0 means ignore)
   uint8_t iso;  ///< ISO enumeration from 1 to N //e.g. 80, 100, 200, Etc (0 means ignore)
   uint8_t exposure_type;  ///< Exposure type enumeration from 1 to N (0 means ignore)
   uint8_t command_id;  ///< Command Identity (incremental loop: 0 to 255)//A command sent multiple times will be executed or pooled just once
   uint8_t engine_cut_off;  ///< Main engine cut-off time before camera trigger in seconds/10 (0 means no cut-off)
   uint8_t extra_param;  ///< Extra parameters enumeration (0 means ignore)
-  float extra_value;  ///< Correspondent value to given extra_param
 } mavlink_digicam_configure_t;
 
 #define MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN 15
@@ -29,17 +29,17 @@ typedef struct __mavlink_digicam_configure_t
   "DIGICAM_CONFIGURE", \
   11, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_digicam_configure_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_digicam_configure_t, target_component) }, \
-    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_digicam_configure_t, mode) }, \
-    { "shutter_speed", NULL, MAVLINK_TYPE_UINT16_T, 0, 3, offsetof(mavlink_digicam_configure_t, shutter_speed) }, \
-    { "aperture", NULL, MAVLINK_TYPE_UINT8_T, 0, 5, offsetof(mavlink_digicam_configure_t, aperture) }, \
-    { "iso", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_digicam_configure_t, iso) }, \
-    { "exposure_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 7, offsetof(mavlink_digicam_configure_t, exposure_type) }, \
-    { "command_id", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_digicam_configure_t, command_id) }, \
-    { "engine_cut_off", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_digicam_configure_t, engine_cut_off) }, \
-    { "extra_param", NULL, MAVLINK_TYPE_UINT8_T, 0, 10, offsetof(mavlink_digicam_configure_t, extra_param) }, \
-    { "extra_value", NULL, MAVLINK_TYPE_FLOAT, 0, 11, offsetof(mavlink_digicam_configure_t, extra_value) }, \
+    { "extra_value", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_digicam_configure_t, extra_value) }, \
+    { "shutter_speed", NULL, MAVLINK_TYPE_UINT16_T, 0, 4, offsetof(mavlink_digicam_configure_t, shutter_speed) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_digicam_configure_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 7, offsetof(mavlink_digicam_configure_t, target_component) }, \
+    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_digicam_configure_t, mode) }, \
+    { "aperture", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_digicam_configure_t, aperture) }, \
+    { "iso", NULL, MAVLINK_TYPE_UINT8_T, 0, 10, offsetof(mavlink_digicam_configure_t, iso) }, \
+    { "exposure_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 11, offsetof(mavlink_digicam_configure_t, exposure_type) }, \
+    { "command_id", NULL, MAVLINK_TYPE_UINT8_T, 0, 12, offsetof(mavlink_digicam_configure_t, command_id) }, \
+    { "engine_cut_off", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_digicam_configure_t, engine_cut_off) }, \
+    { "extra_param", NULL, MAVLINK_TYPE_UINT8_T, 0, 14, offsetof(mavlink_digicam_configure_t, extra_param) }, \
   } \
 }
 
@@ -81,32 +81,32 @@ static inline uint16_t mavlink_msg_digicam_configure_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint16_t(buf, 3, shutter_speed);
-	_mav_put_uint8_t(buf, 5, aperture);
-	_mav_put_uint8_t(buf, 6, iso);
-	_mav_put_uint8_t(buf, 7, exposure_type);
-	_mav_put_uint8_t(buf, 8, command_id);
-	_mav_put_uint8_t(buf, 9, engine_cut_off);
-	_mav_put_uint8_t(buf, 10, extra_param);
-	_mav_put_float(buf, 11, extra_value);
+	_mav_put_float(buf, 0, extra_value);
+	_mav_put_uint16_t(buf, 4, shutter_speed);
+	_mav_put_uint8_t(buf, 6, target_system);
+	_mav_put_uint8_t(buf, 7, target_component);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, aperture);
+	_mav_put_uint8_t(buf, 10, iso);
+	_mav_put_uint8_t(buf, 11, exposure_type);
+	_mav_put_uint8_t(buf, 12, command_id);
+	_mav_put_uint8_t(buf, 13, engine_cut_off);
+	_mav_put_uint8_t(buf, 14, extra_param);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN);
 #else
 	mavlink_digicam_configure_t packet;
+	packet.extra_value = extra_value;
+	packet.shutter_speed = shutter_speed;
 	packet.target_system = target_system;
 	packet.target_component = target_component;
 	packet.mode = mode;
-	packet.shutter_speed = shutter_speed;
 	packet.aperture = aperture;
 	packet.iso = iso;
 	packet.exposure_type = exposure_type;
 	packet.command_id = command_id;
 	packet.engine_cut_off = engine_cut_off;
 	packet.extra_param = extra_param;
-	packet.extra_value = extra_value;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN);
 #endif
@@ -159,17 +159,17 @@ static inline uint16_t mavlink_msg_digicam_configure_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint16_t(buf, 3, shutter_speed);
-	_mav_put_uint8_t(buf, 5, aperture);
-	_mav_put_uint8_t(buf, 6, iso);
-	_mav_put_uint8_t(buf, 7, exposure_type);
-	_mav_put_uint8_t(buf, 8, command_id);
-	_mav_put_uint8_t(buf, 9, engine_cut_off);
-	_mav_put_uint8_t(buf, 10, extra_param);
-	_mav_put_float(buf, 11, extra_value);
+	_mav_put_float(buf, 0, extra_value);
+	_mav_put_uint16_t(buf, 4, shutter_speed);
+	_mav_put_uint8_t(buf, 6, target_system);
+	_mav_put_uint8_t(buf, 7, target_component);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, aperture);
+	_mav_put_uint8_t(buf, 10, iso);
+	_mav_put_uint8_t(buf, 11, exposure_type);
+	_mav_put_uint8_t(buf, 12, command_id);
+	_mav_put_uint8_t(buf, 13, engine_cut_off);
+	_mav_put_uint8_t(buf, 14, extra_param);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN);
 #else
@@ -301,17 +301,17 @@ static inline void mavlink_msg_digicam_configure_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint16_t(buf, 3, shutter_speed);
-	_mav_put_uint8_t(buf, 5, aperture);
-	_mav_put_uint8_t(buf, 6, iso);
-	_mav_put_uint8_t(buf, 7, exposure_type);
-	_mav_put_uint8_t(buf, 8, command_id);
-	_mav_put_uint8_t(buf, 9, engine_cut_off);
-	_mav_put_uint8_t(buf, 10, extra_param);
-	_mav_put_float(buf, 11, extra_value);
+	_mav_put_float(buf, 0, extra_value);
+	_mav_put_uint16_t(buf, 4, shutter_speed);
+	_mav_put_uint8_t(buf, 6, target_system);
+	_mav_put_uint8_t(buf, 7, target_component);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, aperture);
+	_mav_put_uint8_t(buf, 10, iso);
+	_mav_put_uint8_t(buf, 11, exposure_type);
+	_mav_put_uint8_t(buf, 12, command_id);
+	_mav_put_uint8_t(buf, 13, engine_cut_off);
+	_mav_put_uint8_t(buf, 14, extra_param);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_DIGICAM_CONFIGURE, buf, MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN, MAVLINK_MSG_ID_DIGICAM_CONFIGURE_CRC);
@@ -361,17 +361,17 @@ static inline void mavlink_msg_wID_digicam_configure_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint16_t(buf, 3, shutter_speed);
-	_mav_put_uint8_t(buf, 5, aperture);
-	_mav_put_uint8_t(buf, 6, iso);
-	_mav_put_uint8_t(buf, 7, exposure_type);
-	_mav_put_uint8_t(buf, 8, command_id);
-	_mav_put_uint8_t(buf, 9, engine_cut_off);
-	_mav_put_uint8_t(buf, 10, extra_param);
-	_mav_put_float(buf, 11, extra_value);
+	_mav_put_float(buf, 0, extra_value);
+	_mav_put_uint16_t(buf, 4, shutter_speed);
+	_mav_put_uint8_t(buf, 6, target_system);
+	_mav_put_uint8_t(buf, 7, target_component);
+	_mav_put_uint8_t(buf, 8, mode);
+	_mav_put_uint8_t(buf, 9, aperture);
+	_mav_put_uint8_t(buf, 10, iso);
+	_mav_put_uint8_t(buf, 11, exposure_type);
+	_mav_put_uint8_t(buf, 12, command_id);
+	_mav_put_uint8_t(buf, 13, engine_cut_off);
+	_mav_put_uint8_t(buf, 14, extra_param);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_DIGICAM_CONFIGURE, buf, MAVLINK_MSG_ID_DIGICAM_CONFIGURE_LEN, MAVLINK_MSG_ID_DIGICAM_CONFIGURE_CRC);

@@ -5,13 +5,13 @@
 
 typedef struct __mavlink_traffic_data_t 
 { 
-  char ID[8];  ///< vehicle ID
-  float lat;  ///< latitude (deg)
+  float lat[0];  ///< latitude (deg)
   float lon;  ///< longitude (deg)
   float alt;  ///< altitude (meters)
   float roll;  ///< roll (deg)
   float pitch;  ///< pitch (deg)
   float heading;  ///< heading (deg)
+  char ID;  ///< vehicle ID
   uint8_t ownship_flag;  ///< identifies whether the aircraft is ownship (1) or not (0)
 } mavlink_traffic_data_t;
 
@@ -23,13 +23,13 @@ typedef struct __mavlink_traffic_data_t
   "TRAFFIC_DATA", \
   8, \
   { \
-    { "ID", NULL, MAVLINK_TYPE_CHAR, 8, 0, offsetof(mavlink_traffic_data_t, ID) }, \
-    { "lat", NULL, MAVLINK_TYPE_FLOAT, 0, 1, offsetof(mavlink_traffic_data_t, lat) }, \
-    { "lon", NULL, MAVLINK_TYPE_FLOAT, 0, 5, offsetof(mavlink_traffic_data_t, lon) }, \
-    { "alt", NULL, MAVLINK_TYPE_FLOAT, 0, 9, offsetof(mavlink_traffic_data_t, alt) }, \
-    { "roll", NULL, MAVLINK_TYPE_FLOAT, 0, 13, offsetof(mavlink_traffic_data_t, roll) }, \
-    { "pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 17, offsetof(mavlink_traffic_data_t, pitch) }, \
-    { "heading", NULL, MAVLINK_TYPE_FLOAT, 0, 21, offsetof(mavlink_traffic_data_t, heading) }, \
+    { "lat", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_traffic_data_t, lat) }, \
+    { "lon", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_traffic_data_t, lon) }, \
+    { "alt", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_traffic_data_t, alt) }, \
+    { "roll", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_traffic_data_t, roll) }, \
+    { "pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_traffic_data_t, pitch) }, \
+    { "heading", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_traffic_data_t, heading) }, \
+    { "ID", NULL, MAVLINK_TYPE_CHAR, 8, 24, offsetof(mavlink_traffic_data_t, ID) }, \
     { "ownship_flag", NULL, MAVLINK_TYPE_UINT8_T, 0, 25, offsetof(mavlink_traffic_data_t, ownship_flag) }, \
   } \
 }
@@ -66,25 +66,25 @@ static inline uint16_t mavlink_msg_traffic_data_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_TRAFFIC_DATA_LEN];
-	_mav_put_char_array(buf, 0, ID, 8);
-	_mav_put_float(buf, 1, lat);
-	_mav_put_float(buf, 5, lon);
-	_mav_put_float(buf, 9, alt);
-	_mav_put_float(buf, 13, roll);
-	_mav_put_float(buf, 17, pitch);
-	_mav_put_float(buf, 21, heading);
+	_mav_put_float_array(buf, 0, lat, 0);
+	_mav_put_float(buf, 4, lon);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, roll);
+	_mav_put_float(buf, 16, pitch);
+	_mav_put_float(buf, 20, heading);
+	_mav_put_char(buf, 24, ID);
 	_mav_put_uint8_t(buf, 25, ownship_flag);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_TRAFFIC_DATA_LEN);
 #else
 	mavlink_traffic_data_t packet;
-	mav_array_memcpy(packet.ID, ID, sizeof(char)*8);
-	packet.lat = lat;
+	mav_array_memcpy(packet.lat, lat, sizeof(float)*0);
 	packet.lon = lon;
 	packet.alt = alt;
 	packet.roll = roll;
 	packet.pitch = pitch;
 	packet.heading = heading;
+	packet.ID = ID;
 	packet.ownship_flag = ownship_flag;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_TRAFFIC_DATA_LEN);
@@ -128,13 +128,13 @@ static inline uint16_t mavlink_msg_traffic_data_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_TRAFFIC_DATA_LEN];
-	_mav_put_char_array(buf, 0, ID, 8);
-	_mav_put_float(buf, 1, lat);
-	_mav_put_float(buf, 5, lon);
-	_mav_put_float(buf, 9, alt);
-	_mav_put_float(buf, 13, roll);
-	_mav_put_float(buf, 17, pitch);
-	_mav_put_float(buf, 21, heading);
+	_mav_put_float_array(buf, 0, lat, 0);
+	_mav_put_float(buf, 4, lon);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, roll);
+	_mav_put_float(buf, 16, pitch);
+	_mav_put_float(buf, 20, heading);
+	_mav_put_char(buf, 24, ID);
 	_mav_put_uint8_t(buf, 25, ownship_flag);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_TRAFFIC_DATA_LEN);
@@ -215,13 +215,13 @@ static inline void mavlink_msg_traffic_data_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_TRAFFIC_DATA_LEN];
-	_mav_put_char_array(buf, 0, ID, 8);
-	_mav_put_float(buf, 1, lat);
-	_mav_put_float(buf, 5, lon);
-	_mav_put_float(buf, 9, alt);
-	_mav_put_float(buf, 13, roll);
-	_mav_put_float(buf, 17, pitch);
-	_mav_put_float(buf, 21, heading);
+	_mav_put_float_array(buf, 0, lat, 0);
+	_mav_put_float(buf, 4, lon);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, roll);
+	_mav_put_float(buf, 16, pitch);
+	_mav_put_float(buf, 20, heading);
+	_mav_put_char(buf, 24, ID);
 	_mav_put_uint8_t(buf, 25, ownship_flag);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_TRAFFIC_DATA, buf, MAVLINK_MSG_ID_TRAFFIC_DATA_LEN);
@@ -256,13 +256,13 @@ static inline void mavlink_msg_wID_traffic_data_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_TRAFFIC_DATA_LEN];
-	_mav_put_char_array(buf, 0, ID, 8);
-	_mav_put_float(buf, 1, lat);
-	_mav_put_float(buf, 5, lon);
-	_mav_put_float(buf, 9, alt);
-	_mav_put_float(buf, 13, roll);
-	_mav_put_float(buf, 17, pitch);
-	_mav_put_float(buf, 21, heading);
+	_mav_put_float_array(buf, 0, lat, 0);
+	_mav_put_float(buf, 4, lon);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, roll);
+	_mav_put_float(buf, 16, pitch);
+	_mav_put_float(buf, 20, heading);
+	_mav_put_char(buf, 24, ID);
 	_mav_put_uint8_t(buf, 25, ownship_flag);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_TRAFFIC_DATA, buf, MAVLINK_MSG_ID_TRAFFIC_DATA_LEN);

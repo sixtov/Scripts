@@ -5,10 +5,10 @@
 
 typedef struct __mavlink_param_set_t 
 { 
-  uint8_t target_system;  ///< System ID
-  uint8_t target_component;  ///< Component ID
-  char param_id[16];  ///< Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
   float param_value;  ///< Onboard parameter value
+  uint8_t target_system;  ///< System ID
+  uint8_t target_component[0];  ///< Component ID
+  char param_id;  ///< Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
   uint8_t param_type;  ///< Onboard parameter type: see the MAV_PARAM_TYPE enum for supported data types.
 } mavlink_param_set_t;
 
@@ -23,10 +23,10 @@ typedef struct __mavlink_param_set_t
   "PARAM_SET", \
   5, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_param_set_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_param_set_t, target_component) }, \
-    { "param_id", NULL, MAVLINK_TYPE_CHAR, 16, 2, offsetof(mavlink_param_set_t, param_id) }, \
-    { "param_value", NULL, MAVLINK_TYPE_FLOAT, 0, 3, offsetof(mavlink_param_set_t, param_value) }, \
+    { "param_value", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_param_set_t, param_value) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_param_set_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 5, offsetof(mavlink_param_set_t, target_component) }, \
+    { "param_id", NULL, MAVLINK_TYPE_CHAR, 16, 6, offsetof(mavlink_param_set_t, param_id) }, \
     { "param_type", NULL, MAVLINK_TYPE_UINT8_T, 0, 7, offsetof(mavlink_param_set_t, param_type) }, \
   } \
 }
@@ -57,19 +57,19 @@ static inline uint16_t mavlink_msg_param_set_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_SET_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_char_array(buf, 2, param_id, 16);
-	_mav_put_float(buf, 3, param_value);
+	_mav_put_float(buf, 0, param_value);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t_array(buf, 5, target_component, 0);
+	_mav_put_char(buf, 6, param_id);
 	_mav_put_uint8_t(buf, 7, param_type);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PARAM_SET_LEN);
 #else
 	mavlink_param_set_t packet;
-	packet.target_system = target_system;
-	packet.target_component = target_component;
-	mav_array_memcpy(packet.param_id, param_id, sizeof(char)*16);
 	packet.param_value = param_value;
+	packet.target_system = target_system;
+	mav_array_memcpy(packet.target_component, target_component, sizeof(uint8_t)*0);
+	packet.param_id = param_id;
 	packet.param_type = param_type;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_PARAM_SET_LEN);
@@ -111,10 +111,10 @@ static inline uint16_t mavlink_msg_param_set_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_SET_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_char_array(buf, 2, param_id, 16);
-	_mav_put_float(buf, 3, param_value);
+	_mav_put_float(buf, 0, param_value);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t_array(buf, 5, target_component, 0);
+	_mav_put_char(buf, 6, param_id);
 	_mav_put_uint8_t(buf, 7, param_type);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PARAM_SET_LEN);
@@ -217,10 +217,10 @@ static inline void mavlink_msg_param_set_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_SET_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_char_array(buf, 2, param_id, 16);
-	_mav_put_float(buf, 3, param_value);
+	_mav_put_float(buf, 0, param_value);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t_array(buf, 5, target_component, 0);
+	_mav_put_char(buf, 6, param_id);
 	_mav_put_uint8_t(buf, 7, param_type);
 #if MAVLINK_CRC_EXTRA
 
@@ -259,10 +259,10 @@ static inline void mavlink_msg_wID_param_set_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PARAM_SET_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_char_array(buf, 2, param_id, 16);
-	_mav_put_float(buf, 3, param_value);
+	_mav_put_float(buf, 0, param_value);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t_array(buf, 5, target_component, 0);
+	_mav_put_char(buf, 6, param_id);
 	_mav_put_uint8_t(buf, 7, param_type);
 #if MAVLINK_CRC_EXTRA
 

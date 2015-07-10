@@ -5,14 +5,14 @@
 
 typedef struct __mavlink_cdnr_controller_t 
 { 
-  int8_t h_flag;  ///< enables/disables new heading command
-  int8_t s_flag;  ///< enables/disables new airspeed command
-  int8_t a_flag;  ///< enables/disables new altitude command
-  int8_t t_flag;  ///< enables/disables max time command
   int16_t new_heading;  ///< value for new heading
   int16_t new_airspeed;  ///< value for new airspeed
   int16_t new_altitude;  ///< value for new altitude
   int16_t max_time;  ///< maximum time to hold this command
+  int8_t h_flag;  ///< enables/disables new heading command
+  int8_t s_flag;  ///< enables/disables new airspeed command
+  int8_t a_flag;  ///< enables/disables new altitude command
+  int8_t t_flag;  ///< enables/disables max time command
 } mavlink_cdnr_controller_t;
 
 #define MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN 12
@@ -23,14 +23,14 @@ typedef struct __mavlink_cdnr_controller_t
   "CDNR_CONTROLLER", \
   8, \
   { \
-    { "h_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 0, offsetof(mavlink_cdnr_controller_t, h_flag) }, \
-    { "s_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 1, offsetof(mavlink_cdnr_controller_t, s_flag) }, \
-    { "a_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 2, offsetof(mavlink_cdnr_controller_t, a_flag) }, \
-    { "t_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 3, offsetof(mavlink_cdnr_controller_t, t_flag) }, \
-    { "new_heading", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_cdnr_controller_t, new_heading) }, \
-    { "new_airspeed", NULL, MAVLINK_TYPE_INT16_T, 0, 6, offsetof(mavlink_cdnr_controller_t, new_airspeed) }, \
-    { "new_altitude", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_cdnr_controller_t, new_altitude) }, \
-    { "max_time", NULL, MAVLINK_TYPE_INT16_T, 0, 10, offsetof(mavlink_cdnr_controller_t, max_time) }, \
+    { "new_heading", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_cdnr_controller_t, new_heading) }, \
+    { "new_airspeed", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_cdnr_controller_t, new_airspeed) }, \
+    { "new_altitude", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_cdnr_controller_t, new_altitude) }, \
+    { "max_time", NULL, MAVLINK_TYPE_INT16_T, 0, 6, offsetof(mavlink_cdnr_controller_t, max_time) }, \
+    { "h_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 8, offsetof(mavlink_cdnr_controller_t, h_flag) }, \
+    { "s_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 9, offsetof(mavlink_cdnr_controller_t, s_flag) }, \
+    { "a_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 10, offsetof(mavlink_cdnr_controller_t, a_flag) }, \
+    { "t_flag", NULL, MAVLINK_TYPE_INT8_T, 0, 11, offsetof(mavlink_cdnr_controller_t, t_flag) }, \
   } \
 }
 
@@ -66,26 +66,26 @@ static inline uint16_t mavlink_msg_cdnr_controller_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN];
-	_mav_put_int8_t(buf, 0, h_flag);
-	_mav_put_int8_t(buf, 1, s_flag);
-	_mav_put_int8_t(buf, 2, a_flag);
-	_mav_put_int8_t(buf, 3, t_flag);
-	_mav_put_int16_t(buf, 4, new_heading);
-	_mav_put_int16_t(buf, 6, new_airspeed);
-	_mav_put_int16_t(buf, 8, new_altitude);
-	_mav_put_int16_t(buf, 10, max_time);
+	_mav_put_int16_t(buf, 0, new_heading);
+	_mav_put_int16_t(buf, 2, new_airspeed);
+	_mav_put_int16_t(buf, 4, new_altitude);
+	_mav_put_int16_t(buf, 6, max_time);
+	_mav_put_int8_t(buf, 8, h_flag);
+	_mav_put_int8_t(buf, 9, s_flag);
+	_mav_put_int8_t(buf, 10, a_flag);
+	_mav_put_int8_t(buf, 11, t_flag);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN);
 #else
 	mavlink_cdnr_controller_t packet;
-	packet.h_flag = h_flag;
-	packet.s_flag = s_flag;
-	packet.a_flag = a_flag;
-	packet.t_flag = t_flag;
 	packet.new_heading = new_heading;
 	packet.new_airspeed = new_airspeed;
 	packet.new_altitude = new_altitude;
 	packet.max_time = max_time;
+	packet.h_flag = h_flag;
+	packet.s_flag = s_flag;
+	packet.a_flag = a_flag;
+	packet.t_flag = t_flag;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN);
 #endif
@@ -128,14 +128,14 @@ static inline uint16_t mavlink_msg_cdnr_controller_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN];
-	_mav_put_int8_t(buf, 0, h_flag);
-	_mav_put_int8_t(buf, 1, s_flag);
-	_mav_put_int8_t(buf, 2, a_flag);
-	_mav_put_int8_t(buf, 3, t_flag);
-	_mav_put_int16_t(buf, 4, new_heading);
-	_mav_put_int16_t(buf, 6, new_airspeed);
-	_mav_put_int16_t(buf, 8, new_altitude);
-	_mav_put_int16_t(buf, 10, max_time);
+	_mav_put_int16_t(buf, 0, new_heading);
+	_mav_put_int16_t(buf, 2, new_airspeed);
+	_mav_put_int16_t(buf, 4, new_altitude);
+	_mav_put_int16_t(buf, 6, max_time);
+	_mav_put_int8_t(buf, 8, h_flag);
+	_mav_put_int8_t(buf, 9, s_flag);
+	_mav_put_int8_t(buf, 10, a_flag);
+	_mav_put_int8_t(buf, 11, t_flag);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN);
 #else
@@ -215,14 +215,14 @@ static inline void mavlink_msg_cdnr_controller_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN];
-	_mav_put_int8_t(buf, 0, h_flag);
-	_mav_put_int8_t(buf, 1, s_flag);
-	_mav_put_int8_t(buf, 2, a_flag);
-	_mav_put_int8_t(buf, 3, t_flag);
-	_mav_put_int16_t(buf, 4, new_heading);
-	_mav_put_int16_t(buf, 6, new_airspeed);
-	_mav_put_int16_t(buf, 8, new_altitude);
-	_mav_put_int16_t(buf, 10, max_time);
+	_mav_put_int16_t(buf, 0, new_heading);
+	_mav_put_int16_t(buf, 2, new_airspeed);
+	_mav_put_int16_t(buf, 4, new_altitude);
+	_mav_put_int16_t(buf, 6, max_time);
+	_mav_put_int8_t(buf, 8, h_flag);
+	_mav_put_int8_t(buf, 9, s_flag);
+	_mav_put_int8_t(buf, 10, a_flag);
+	_mav_put_int8_t(buf, 11, t_flag);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_CDNR_CONTROLLER, buf, MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN);
 #else
@@ -256,14 +256,14 @@ static inline void mavlink_msg_wID_cdnr_controller_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN];
-	_mav_put_int8_t(buf, 0, h_flag);
-	_mav_put_int8_t(buf, 1, s_flag);
-	_mav_put_int8_t(buf, 2, a_flag);
-	_mav_put_int8_t(buf, 3, t_flag);
-	_mav_put_int16_t(buf, 4, new_heading);
-	_mav_put_int16_t(buf, 6, new_airspeed);
-	_mav_put_int16_t(buf, 8, new_altitude);
-	_mav_put_int16_t(buf, 10, max_time);
+	_mav_put_int16_t(buf, 0, new_heading);
+	_mav_put_int16_t(buf, 2, new_airspeed);
+	_mav_put_int16_t(buf, 4, new_altitude);
+	_mav_put_int16_t(buf, 6, max_time);
+	_mav_put_int8_t(buf, 8, h_flag);
+	_mav_put_int8_t(buf, 9, s_flag);
+	_mav_put_int8_t(buf, 10, a_flag);
+	_mav_put_int8_t(buf, 11, t_flag);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_CDNR_CONTROLLER, buf, MAVLINK_MSG_ID_CDNR_CONTROLLER_LEN);
 #else

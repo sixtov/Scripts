@@ -5,10 +5,10 @@
 
 typedef struct __mavlink_mission_request_partial_list_t 
 { 
-  uint8_t target_system;  ///< System ID
-  uint8_t target_component;  ///< Component ID
   int16_t start_index;  ///< Start index, 0 by default
   int16_t end_index;  ///< End index, -1 by default (-1: send list to end). Else a valid index of the list
+  uint8_t target_system;  ///< System ID
+  uint8_t target_component;  ///< Component ID
 } mavlink_mission_request_partial_list_t;
 
 #define MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN 6
@@ -22,10 +22,10 @@ typedef struct __mavlink_mission_request_partial_list_t
   "MISSION_REQUEST_PARTIAL_LIST", \
   4, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_mission_request_partial_list_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_mission_request_partial_list_t, target_component) }, \
-    { "start_index", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_mission_request_partial_list_t, start_index) }, \
-    { "end_index", NULL, MAVLINK_TYPE_INT16_T, 0, 4, offsetof(mavlink_mission_request_partial_list_t, end_index) }, \
+    { "start_index", NULL, MAVLINK_TYPE_INT16_T, 0, 0, offsetof(mavlink_mission_request_partial_list_t, start_index) }, \
+    { "end_index", NULL, MAVLINK_TYPE_INT16_T, 0, 2, offsetof(mavlink_mission_request_partial_list_t, end_index) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_mission_request_partial_list_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 5, offsetof(mavlink_mission_request_partial_list_t, target_component) }, \
   } \
 }
 
@@ -53,18 +53,18 @@ static inline uint16_t mavlink_msg_mission_request_partial_list_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int16_t(buf, 2, start_index);
-	_mav_put_int16_t(buf, 4, end_index);
+	_mav_put_int16_t(buf, 0, start_index);
+	_mav_put_int16_t(buf, 2, end_index);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t(buf, 5, target_component);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN);
 #else
 	mavlink_mission_request_partial_list_t packet;
-	packet.target_system = target_system;
-	packet.target_component = target_component;
 	packet.start_index = start_index;
 	packet.end_index = end_index;
+	packet.target_system = target_system;
+	packet.target_component = target_component;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN);
 #endif
@@ -103,10 +103,10 @@ static inline uint16_t mavlink_msg_mission_request_partial_list_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int16_t(buf, 2, start_index);
-	_mav_put_int16_t(buf, 4, end_index);
+	_mav_put_int16_t(buf, 0, start_index);
+	_mav_put_int16_t(buf, 2, end_index);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t(buf, 5, target_component);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN);
 #else
@@ -203,10 +203,10 @@ static inline void mavlink_msg_mission_request_partial_list_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int16_t(buf, 2, start_index);
-	_mav_put_int16_t(buf, 4, end_index);
+	_mav_put_int16_t(buf, 0, start_index);
+	_mav_put_int16_t(buf, 2, end_index);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t(buf, 5, target_component);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST, buf, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_CRC);
@@ -242,10 +242,10 @@ static inline void mavlink_msg_wID_mission_request_partial_list_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int16_t(buf, 2, start_index);
-	_mav_put_int16_t(buf, 4, end_index);
+	_mav_put_int16_t(buf, 0, start_index);
+	_mav_put_int16_t(buf, 2, end_index);
+	_mav_put_uint8_t(buf, 4, target_system);
+	_mav_put_uint8_t(buf, 5, target_component);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST, buf, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_LEN, MAVLINK_MSG_ID_MISSION_REQUEST_PARTIAL_LIST_CRC);

@@ -5,12 +5,12 @@
 
 typedef struct __mavlink_limits_status_t 
 { 
-  uint8_t limits_state;  ///< state of AP_Limits, (see enum LimitState, LIMITS_STATE)
   uint32_t last_trigger;  ///< time of last breach in milliseconds since boot
   uint32_t last_action;  ///< time of last recovery action in milliseconds since boot
   uint32_t last_recovery;  ///< time of last successful recovery in milliseconds since boot
   uint32_t last_clear;  ///< time of last all-clear in milliseconds since boot
   uint16_t breach_count;  ///< number of fence breaches
+  uint8_t limits_state;  ///< state of AP_Limits, (see enum LimitState, LIMITS_STATE)
   uint8_t mods_enabled;  ///< AP_Limit_Module bitfield of enabled modules, (see enum moduleid or LIMIT_MODULE)
   uint8_t mods_required;  ///< AP_Limit_Module bitfield of required modules, (see enum moduleid or LIMIT_MODULE)
   uint8_t mods_triggered;  ///< AP_Limit_Module bitfield of triggered modules, (see enum moduleid or LIMIT_MODULE)
@@ -27,12 +27,12 @@ typedef struct __mavlink_limits_status_t
   "LIMITS_STATUS", \
   9, \
   { \
-    { "limits_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_limits_status_t, limits_state) }, \
-    { "last_trigger", NULL, MAVLINK_TYPE_UINT32_T, 0, 1, offsetof(mavlink_limits_status_t, last_trigger) }, \
-    { "last_action", NULL, MAVLINK_TYPE_UINT32_T, 0, 5, offsetof(mavlink_limits_status_t, last_action) }, \
-    { "last_recovery", NULL, MAVLINK_TYPE_UINT32_T, 0, 9, offsetof(mavlink_limits_status_t, last_recovery) }, \
-    { "last_clear", NULL, MAVLINK_TYPE_UINT32_T, 0, 13, offsetof(mavlink_limits_status_t, last_clear) }, \
-    { "breach_count", NULL, MAVLINK_TYPE_UINT16_T, 0, 17, offsetof(mavlink_limits_status_t, breach_count) }, \
+    { "last_trigger", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_limits_status_t, last_trigger) }, \
+    { "last_action", NULL, MAVLINK_TYPE_UINT32_T, 0, 4, offsetof(mavlink_limits_status_t, last_action) }, \
+    { "last_recovery", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_limits_status_t, last_recovery) }, \
+    { "last_clear", NULL, MAVLINK_TYPE_UINT32_T, 0, 12, offsetof(mavlink_limits_status_t, last_clear) }, \
+    { "breach_count", NULL, MAVLINK_TYPE_UINT16_T, 0, 16, offsetof(mavlink_limits_status_t, breach_count) }, \
+    { "limits_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 18, offsetof(mavlink_limits_status_t, limits_state) }, \
     { "mods_enabled", NULL, MAVLINK_TYPE_UINT8_T, 0, 19, offsetof(mavlink_limits_status_t, mods_enabled) }, \
     { "mods_required", NULL, MAVLINK_TYPE_UINT8_T, 0, 20, offsetof(mavlink_limits_status_t, mods_required) }, \
     { "mods_triggered", NULL, MAVLINK_TYPE_UINT8_T, 0, 21, offsetof(mavlink_limits_status_t, mods_triggered) }, \
@@ -73,12 +73,12 @@ static inline uint16_t mavlink_msg_limits_status_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LIMITS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, limits_state);
-	_mav_put_uint32_t(buf, 1, last_trigger);
-	_mav_put_uint32_t(buf, 5, last_action);
-	_mav_put_uint32_t(buf, 9, last_recovery);
-	_mav_put_uint32_t(buf, 13, last_clear);
-	_mav_put_uint16_t(buf, 17, breach_count);
+	_mav_put_uint32_t(buf, 0, last_trigger);
+	_mav_put_uint32_t(buf, 4, last_action);
+	_mav_put_uint32_t(buf, 8, last_recovery);
+	_mav_put_uint32_t(buf, 12, last_clear);
+	_mav_put_uint16_t(buf, 16, breach_count);
+	_mav_put_uint8_t(buf, 18, limits_state);
 	_mav_put_uint8_t(buf, 19, mods_enabled);
 	_mav_put_uint8_t(buf, 20, mods_required);
 	_mav_put_uint8_t(buf, 21, mods_triggered);
@@ -86,12 +86,12 @@ static inline uint16_t mavlink_msg_limits_status_pack(
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LIMITS_STATUS_LEN);
 #else
 	mavlink_limits_status_t packet;
-	packet.limits_state = limits_state;
 	packet.last_trigger = last_trigger;
 	packet.last_action = last_action;
 	packet.last_recovery = last_recovery;
 	packet.last_clear = last_clear;
 	packet.breach_count = breach_count;
+	packet.limits_state = limits_state;
 	packet.mods_enabled = mods_enabled;
 	packet.mods_required = mods_required;
 	packet.mods_triggered = mods_triggered;
@@ -143,12 +143,12 @@ static inline uint16_t mavlink_msg_limits_status_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LIMITS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, limits_state);
-	_mav_put_uint32_t(buf, 1, last_trigger);
-	_mav_put_uint32_t(buf, 5, last_action);
-	_mav_put_uint32_t(buf, 9, last_recovery);
-	_mav_put_uint32_t(buf, 13, last_clear);
-	_mav_put_uint16_t(buf, 17, breach_count);
+	_mav_put_uint32_t(buf, 0, last_trigger);
+	_mav_put_uint32_t(buf, 4, last_action);
+	_mav_put_uint32_t(buf, 8, last_recovery);
+	_mav_put_uint32_t(buf, 12, last_clear);
+	_mav_put_uint16_t(buf, 16, breach_count);
+	_mav_put_uint8_t(buf, 18, limits_state);
 	_mav_put_uint8_t(buf, 19, mods_enabled);
 	_mav_put_uint8_t(buf, 20, mods_required);
 	_mav_put_uint8_t(buf, 21, mods_triggered);
@@ -273,12 +273,12 @@ static inline void mavlink_msg_limits_status_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LIMITS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, limits_state);
-	_mav_put_uint32_t(buf, 1, last_trigger);
-	_mav_put_uint32_t(buf, 5, last_action);
-	_mav_put_uint32_t(buf, 9, last_recovery);
-	_mav_put_uint32_t(buf, 13, last_clear);
-	_mav_put_uint16_t(buf, 17, breach_count);
+	_mav_put_uint32_t(buf, 0, last_trigger);
+	_mav_put_uint32_t(buf, 4, last_action);
+	_mav_put_uint32_t(buf, 8, last_recovery);
+	_mav_put_uint32_t(buf, 12, last_clear);
+	_mav_put_uint16_t(buf, 16, breach_count);
+	_mav_put_uint8_t(buf, 18, limits_state);
 	_mav_put_uint8_t(buf, 19, mods_enabled);
 	_mav_put_uint8_t(buf, 20, mods_required);
 	_mav_put_uint8_t(buf, 21, mods_triggered);
@@ -327,12 +327,12 @@ static inline void mavlink_msg_wID_limits_status_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LIMITS_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, limits_state);
-	_mav_put_uint32_t(buf, 1, last_trigger);
-	_mav_put_uint32_t(buf, 5, last_action);
-	_mav_put_uint32_t(buf, 9, last_recovery);
-	_mav_put_uint32_t(buf, 13, last_clear);
-	_mav_put_uint16_t(buf, 17, breach_count);
+	_mav_put_uint32_t(buf, 0, last_trigger);
+	_mav_put_uint32_t(buf, 4, last_action);
+	_mav_put_uint32_t(buf, 8, last_recovery);
+	_mav_put_uint32_t(buf, 12, last_clear);
+	_mav_put_uint16_t(buf, 16, breach_count);
+	_mav_put_uint8_t(buf, 18, limits_state);
 	_mav_put_uint8_t(buf, 19, mods_enabled);
 	_mav_put_uint8_t(buf, 20, mods_required);
 	_mav_put_uint8_t(buf, 21, mods_triggered);

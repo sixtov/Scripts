@@ -5,11 +5,11 @@
 
 typedef struct __mavlink_state_data_aug_t 
 { 
+  uint64_t usec;  ///< time
   uint8_t num;  ///< Vehicle number, e.g. 1 for R1, 2 for R2, 3 for R3
   uint8_t atloiter;  ///< if 0, vehicle is not currently loitering, if 1, vehicle is loitering
   uint8_t mode;  ///< mode: MANUAL=0, CIRCLE=1, STABILIZE=2, FLY_BY_WIRE_A=5, FLY_BY_WIRE_B=6, FLY_BY_WIRE_C=7, AUTO=10, RTL=11, LOITER=12, GUIDED=15, INITIALISING=16
   uint8_t RC_state;  ///< state: OFF=0, ON=1, FAILSAFE=255
-  uint64_t usec;  ///< time
 } mavlink_state_data_aug_t;
 
 #define MAVLINK_MSG_ID_STATE_DATA_AUG_LEN 12
@@ -20,11 +20,11 @@ typedef struct __mavlink_state_data_aug_t
   "STATE_DATA_AUG", \
   5, \
   { \
-    { "num", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_state_data_aug_t, num) }, \
-    { "atloiter", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_state_data_aug_t, atloiter) }, \
-    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_state_data_aug_t, mode) }, \
-    { "RC_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 3, offsetof(mavlink_state_data_aug_t, RC_state) }, \
-    { "usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 4, offsetof(mavlink_state_data_aug_t, usec) }, \
+    { "usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_state_data_aug_t, usec) }, \
+    { "num", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_state_data_aug_t, num) }, \
+    { "atloiter", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_state_data_aug_t, atloiter) }, \
+    { "mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 10, offsetof(mavlink_state_data_aug_t, mode) }, \
+    { "RC_state", NULL, MAVLINK_TYPE_UINT8_T, 0, 11, offsetof(mavlink_state_data_aug_t, RC_state) }, \
   } \
 }
 
@@ -54,20 +54,20 @@ static inline uint16_t mavlink_msg_state_data_aug_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_STATE_DATA_AUG_LEN];
-	_mav_put_uint8_t(buf, 0, num);
-	_mav_put_uint8_t(buf, 1, atloiter);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint8_t(buf, 3, RC_state);
-	_mav_put_uint64_t(buf, 4, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint8_t(buf, 8, num);
+	_mav_put_uint8_t(buf, 9, atloiter);
+	_mav_put_uint8_t(buf, 10, mode);
+	_mav_put_uint8_t(buf, 11, RC_state);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_STATE_DATA_AUG_LEN);
 #else
 	mavlink_state_data_aug_t packet;
+	packet.usec = usec;
 	packet.num = num;
 	packet.atloiter = atloiter;
 	packet.mode = mode;
 	packet.RC_state = RC_state;
-	packet.usec = usec;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_STATE_DATA_AUG_LEN);
 #endif
@@ -104,11 +104,11 @@ static inline uint16_t mavlink_msg_state_data_aug_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_STATE_DATA_AUG_LEN];
-	_mav_put_uint8_t(buf, 0, num);
-	_mav_put_uint8_t(buf, 1, atloiter);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint8_t(buf, 3, RC_state);
-	_mav_put_uint64_t(buf, 4, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint8_t(buf, 8, num);
+	_mav_put_uint8_t(buf, 9, atloiter);
+	_mav_put_uint8_t(buf, 10, mode);
+	_mav_put_uint8_t(buf, 11, RC_state);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_STATE_DATA_AUG_LEN);
 #else
@@ -176,11 +176,11 @@ static inline void mavlink_msg_state_data_aug_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_STATE_DATA_AUG_LEN];
-	_mav_put_uint8_t(buf, 0, num);
-	_mav_put_uint8_t(buf, 1, atloiter);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint8_t(buf, 3, RC_state);
-	_mav_put_uint64_t(buf, 4, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint8_t(buf, 8, num);
+	_mav_put_uint8_t(buf, 9, atloiter);
+	_mav_put_uint8_t(buf, 10, mode);
+	_mav_put_uint8_t(buf, 11, RC_state);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_STATE_DATA_AUG, buf, MAVLINK_MSG_ID_STATE_DATA_AUG_LEN);
 #else
@@ -208,11 +208,11 @@ static inline void mavlink_msg_wID_state_data_aug_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_STATE_DATA_AUG_LEN];
-	_mav_put_uint8_t(buf, 0, num);
-	_mav_put_uint8_t(buf, 1, atloiter);
-	_mav_put_uint8_t(buf, 2, mode);
-	_mav_put_uint8_t(buf, 3, RC_state);
-	_mav_put_uint64_t(buf, 4, usec);
+	_mav_put_uint64_t(buf, 0, usec);
+	_mav_put_uint8_t(buf, 8, num);
+	_mav_put_uint8_t(buf, 9, atloiter);
+	_mav_put_uint8_t(buf, 10, mode);
+	_mav_put_uint8_t(buf, 11, RC_state);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_STATE_DATA_AUG, buf, MAVLINK_MSG_ID_STATE_DATA_AUG_LEN);
 #else

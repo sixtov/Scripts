@@ -5,10 +5,10 @@
 
 typedef struct __mavlink_heartbeat_t 
 { 
+  uint32_t custom_mode;  ///< A bitfield for use for autopilot-specific flags.
   uint8_t type;  ///< Type of the MAV (quadrotor, helicopter, etc., up to 15 types, defined in MAV_TYPE ENUM)
   uint8_t autopilot;  ///< Autopilot type / class. defined in MAV_AUTOPILOT ENUM
   uint8_t base_mode;  ///< System mode bitfield, see MAV_MODE_FLAGS ENUM in mavlink/include/mavlink_types.h
-  uint32_t custom_mode;  ///< A bitfield for use for autopilot-specific flags.
   uint8_t system_status;  ///< System status flag, see MAV_STATE ENUM
   uint8_t mavlink_version;  ///< MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version
 } mavlink_heartbeat_t;
@@ -24,10 +24,10 @@ typedef struct __mavlink_heartbeat_t
   "HEARTBEAT", \
   6, \
   { \
-    { "type", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_heartbeat_t, type) }, \
-    { "autopilot", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_heartbeat_t, autopilot) }, \
-    { "base_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 2, offsetof(mavlink_heartbeat_t, base_mode) }, \
-    { "custom_mode", NULL, MAVLINK_TYPE_UINT32_T, 0, 3, offsetof(mavlink_heartbeat_t, custom_mode) }, \
+    { "custom_mode", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_heartbeat_t, custom_mode) }, \
+    { "type", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_heartbeat_t, type) }, \
+    { "autopilot", NULL, MAVLINK_TYPE_UINT8_T, 0, 5, offsetof(mavlink_heartbeat_t, autopilot) }, \
+    { "base_mode", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_heartbeat_t, base_mode) }, \
     { "system_status", NULL, MAVLINK_TYPE_UINT8_T, 0, 7, offsetof(mavlink_heartbeat_t, system_status) }, \
     { "mavlink_version", NULL, MAVLINK_TYPE_UINT8_T, 0, 8, offsetof(mavlink_heartbeat_t, mavlink_version) }, \
   } \
@@ -61,20 +61,20 @@ static inline uint16_t mavlink_msg_heartbeat_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_HEARTBEAT_LEN];
-	_mav_put_uint8_t(buf, 0, type);
-	_mav_put_uint8_t(buf, 1, autopilot);
-	_mav_put_uint8_t(buf, 2, base_mode);
-	_mav_put_uint32_t(buf, 3, custom_mode);
+	_mav_put_uint32_t(buf, 0, custom_mode);
+	_mav_put_uint8_t(buf, 4, type);
+	_mav_put_uint8_t(buf, 5, autopilot);
+	_mav_put_uint8_t(buf, 6, base_mode);
 	_mav_put_uint8_t(buf, 7, system_status);
 	_mav_put_uint8_t(buf, 8, mavlink_version);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_HEARTBEAT_LEN);
 #else
 	mavlink_heartbeat_t packet;
+	packet.custom_mode = custom_mode;
 	packet.type = type;
 	packet.autopilot = autopilot;
 	packet.base_mode = base_mode;
-	packet.custom_mode = custom_mode;
 	packet.system_status = system_status;
 	packet.mavlink_version = mavlink_version;
 
@@ -119,10 +119,10 @@ static inline uint16_t mavlink_msg_heartbeat_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_HEARTBEAT_LEN];
-	_mav_put_uint8_t(buf, 0, type);
-	_mav_put_uint8_t(buf, 1, autopilot);
-	_mav_put_uint8_t(buf, 2, base_mode);
-	_mav_put_uint32_t(buf, 3, custom_mode);
+	_mav_put_uint32_t(buf, 0, custom_mode);
+	_mav_put_uint8_t(buf, 4, type);
+	_mav_put_uint8_t(buf, 5, autopilot);
+	_mav_put_uint8_t(buf, 6, base_mode);
 	_mav_put_uint8_t(buf, 7, system_status);
 	_mav_put_uint8_t(buf, 8, mavlink_version);
 
@@ -231,10 +231,10 @@ static inline void mavlink_msg_heartbeat_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_HEARTBEAT_LEN];
-	_mav_put_uint8_t(buf, 0, type);
-	_mav_put_uint8_t(buf, 1, autopilot);
-	_mav_put_uint8_t(buf, 2, base_mode);
-	_mav_put_uint32_t(buf, 3, custom_mode);
+	_mav_put_uint32_t(buf, 0, custom_mode);
+	_mav_put_uint8_t(buf, 4, type);
+	_mav_put_uint8_t(buf, 5, autopilot);
+	_mav_put_uint8_t(buf, 6, base_mode);
 	_mav_put_uint8_t(buf, 7, system_status);
 	_mav_put_uint8_t(buf, 8, mavlink_version);
 #if MAVLINK_CRC_EXTRA
@@ -276,10 +276,10 @@ static inline void mavlink_msg_wID_heartbeat_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_HEARTBEAT_LEN];
-	_mav_put_uint8_t(buf, 0, type);
-	_mav_put_uint8_t(buf, 1, autopilot);
-	_mav_put_uint8_t(buf, 2, base_mode);
-	_mav_put_uint32_t(buf, 3, custom_mode);
+	_mav_put_uint32_t(buf, 0, custom_mode);
+	_mav_put_uint8_t(buf, 4, type);
+	_mav_put_uint8_t(buf, 5, autopilot);
+	_mav_put_uint8_t(buf, 6, base_mode);
 	_mav_put_uint8_t(buf, 7, system_status);
 	_mav_put_uint8_t(buf, 8, mavlink_version);
 #if MAVLINK_CRC_EXTRA

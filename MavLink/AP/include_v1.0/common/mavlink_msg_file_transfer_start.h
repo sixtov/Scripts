@@ -6,9 +6,9 @@
 typedef struct __mavlink_file_transfer_start_t 
 { 
   uint64_t transfer_uid;  ///< Unique transfer ID
-  char dest_path[240];  ///< Destination path
+  uint32_t file_size[0];  ///< File size in bytes
+  char dest_path;  ///< Destination path
   uint8_t direction;  ///< Transfer direction: 0: from requester, 1: to requester
-  uint32_t file_size;  ///< File size in bytes
   uint8_t flags;  ///< RESERVED
 } mavlink_file_transfer_start_t;
 
@@ -24,9 +24,9 @@ typedef struct __mavlink_file_transfer_start_t
   5, \
   { \
     { "transfer_uid", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_file_transfer_start_t, transfer_uid) }, \
-    { "dest_path", NULL, MAVLINK_TYPE_CHAR, 240, 8, offsetof(mavlink_file_transfer_start_t, dest_path) }, \
-    { "direction", NULL, MAVLINK_TYPE_UINT8_T, 0, 9, offsetof(mavlink_file_transfer_start_t, direction) }, \
-    { "file_size", NULL, MAVLINK_TYPE_UINT32_T, 0, 10, offsetof(mavlink_file_transfer_start_t, file_size) }, \
+    { "file_size", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_file_transfer_start_t, file_size) }, \
+    { "dest_path", NULL, MAVLINK_TYPE_CHAR, 240, 12, offsetof(mavlink_file_transfer_start_t, dest_path) }, \
+    { "direction", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_file_transfer_start_t, direction) }, \
     { "flags", NULL, MAVLINK_TYPE_UINT8_T, 0, 14, offsetof(mavlink_file_transfer_start_t, flags) }, \
   } \
 }
@@ -58,18 +58,18 @@ static inline uint16_t mavlink_msg_file_transfer_start_pack(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_FILE_TRANSFER_START_LEN];
 	_mav_put_uint64_t(buf, 0, transfer_uid);
-	_mav_put_char_array(buf, 8, dest_path, 240);
-	_mav_put_uint8_t(buf, 9, direction);
-	_mav_put_uint32_t(buf, 10, file_size);
+	_mav_put_uint32_t_array(buf, 8, file_size, 0);
+	_mav_put_char(buf, 12, dest_path);
+	_mav_put_uint8_t(buf, 13, direction);
 	_mav_put_uint8_t(buf, 14, flags);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FILE_TRANSFER_START_LEN);
 #else
 	mavlink_file_transfer_start_t packet;
 	packet.transfer_uid = transfer_uid;
-	mav_array_memcpy(packet.dest_path, dest_path, sizeof(char)*240);
+	mav_array_memcpy(packet.file_size, file_size, sizeof(uint32_t)*0);
+	packet.dest_path = dest_path;
 	packet.direction = direction;
-	packet.file_size = file_size;
 	packet.flags = flags;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_FILE_TRANSFER_START_LEN);
@@ -112,9 +112,9 @@ static inline uint16_t mavlink_msg_file_transfer_start_pack_chan(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_FILE_TRANSFER_START_LEN];
 	_mav_put_uint64_t(buf, 0, transfer_uid);
-	_mav_put_char_array(buf, 8, dest_path, 240);
-	_mav_put_uint8_t(buf, 9, direction);
-	_mav_put_uint32_t(buf, 10, file_size);
+	_mav_put_uint32_t_array(buf, 8, file_size, 0);
+	_mav_put_char(buf, 12, dest_path);
+	_mav_put_uint8_t(buf, 13, direction);
 	_mav_put_uint8_t(buf, 14, flags);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_FILE_TRANSFER_START_LEN);
@@ -218,9 +218,9 @@ static inline void mavlink_msg_file_transfer_start_send(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_FILE_TRANSFER_START_LEN];
 	_mav_put_uint64_t(buf, 0, transfer_uid);
-	_mav_put_char_array(buf, 8, dest_path, 240);
-	_mav_put_uint8_t(buf, 9, direction);
-	_mav_put_uint32_t(buf, 10, file_size);
+	_mav_put_uint32_t_array(buf, 8, file_size, 0);
+	_mav_put_char(buf, 12, dest_path);
+	_mav_put_uint8_t(buf, 13, direction);
 	_mav_put_uint8_t(buf, 14, flags);
 #if MAVLINK_CRC_EXTRA
 
@@ -260,9 +260,9 @@ static inline void mavlink_msg_wID_file_transfer_start_send(
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_FILE_TRANSFER_START_LEN];
 	_mav_put_uint64_t(buf, 0, transfer_uid);
-	_mav_put_char_array(buf, 8, dest_path, 240);
-	_mav_put_uint8_t(buf, 9, direction);
-	_mav_put_uint32_t(buf, 10, file_size);
+	_mav_put_uint32_t_array(buf, 8, file_size, 0);
+	_mav_put_char(buf, 12, dest_path);
+	_mav_put_uint8_t(buf, 13, direction);
 	_mav_put_uint8_t(buf, 14, flags);
 #if MAVLINK_CRC_EXTRA
 

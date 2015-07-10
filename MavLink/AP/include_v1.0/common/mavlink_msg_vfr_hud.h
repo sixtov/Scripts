@@ -7,10 +7,10 @@ typedef struct __mavlink_vfr_hud_t
 { 
   float airspeed;  ///< Current airspeed in m/s
   float groundspeed;  ///< Current ground speed in m/s
-  int16_t heading;  ///< Current heading in degrees, in compass units (0..360, 0=north)
-  uint16_t throttle;  ///< Current throttle setting in integer percent, 0 to 100
   float alt;  ///< Current altitude (MSL), in meters
   float climb;  ///< Current climb rate in meters/second
+  int16_t heading;  ///< Current heading in degrees, in compass units (0..360, 0=north)
+  uint16_t throttle;  ///< Current throttle setting in integer percent, 0 to 100
 } mavlink_vfr_hud_t;
 
 #define MAVLINK_MSG_ID_VFR_HUD_LEN 20
@@ -26,10 +26,10 @@ typedef struct __mavlink_vfr_hud_t
   { \
     { "airspeed", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_vfr_hud_t, airspeed) }, \
     { "groundspeed", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_vfr_hud_t, groundspeed) }, \
-    { "heading", NULL, MAVLINK_TYPE_INT16_T, 0, 8, offsetof(mavlink_vfr_hud_t, heading) }, \
-    { "throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 10, offsetof(mavlink_vfr_hud_t, throttle) }, \
-    { "alt", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_vfr_hud_t, alt) }, \
-    { "climb", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_vfr_hud_t, climb) }, \
+    { "alt", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_vfr_hud_t, alt) }, \
+    { "climb", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_vfr_hud_t, climb) }, \
+    { "heading", NULL, MAVLINK_TYPE_INT16_T, 0, 16, offsetof(mavlink_vfr_hud_t, heading) }, \
+    { "throttle", NULL, MAVLINK_TYPE_UINT16_T, 0, 18, offsetof(mavlink_vfr_hud_t, throttle) }, \
   } \
 }
 
@@ -63,20 +63,20 @@ static inline uint16_t mavlink_msg_vfr_hud_pack(
 	char buf[MAVLINK_MSG_ID_VFR_HUD_LEN];
 	_mav_put_float(buf, 0, airspeed);
 	_mav_put_float(buf, 4, groundspeed);
-	_mav_put_int16_t(buf, 8, heading);
-	_mav_put_uint16_t(buf, 10, throttle);
-	_mav_put_float(buf, 12, alt);
-	_mav_put_float(buf, 16, climb);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, climb);
+	_mav_put_int16_t(buf, 16, heading);
+	_mav_put_uint16_t(buf, 18, throttle);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_VFR_HUD_LEN);
 #else
 	mavlink_vfr_hud_t packet;
 	packet.airspeed = airspeed;
 	packet.groundspeed = groundspeed;
-	packet.heading = heading;
-	packet.throttle = throttle;
 	packet.alt = alt;
 	packet.climb = climb;
+	packet.heading = heading;
+	packet.throttle = throttle;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_VFR_HUD_LEN);
 #endif
@@ -121,10 +121,10 @@ static inline uint16_t mavlink_msg_vfr_hud_pack_chan(
 	char buf[MAVLINK_MSG_ID_VFR_HUD_LEN];
 	_mav_put_float(buf, 0, airspeed);
 	_mav_put_float(buf, 4, groundspeed);
-	_mav_put_int16_t(buf, 8, heading);
-	_mav_put_uint16_t(buf, 10, throttle);
-	_mav_put_float(buf, 12, alt);
-	_mav_put_float(buf, 16, climb);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, climb);
+	_mav_put_int16_t(buf, 16, heading);
+	_mav_put_uint16_t(buf, 18, throttle);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_VFR_HUD_LEN);
 #else
@@ -233,10 +233,10 @@ static inline void mavlink_msg_vfr_hud_send(
 	char buf[MAVLINK_MSG_ID_VFR_HUD_LEN];
 	_mav_put_float(buf, 0, airspeed);
 	_mav_put_float(buf, 4, groundspeed);
-	_mav_put_int16_t(buf, 8, heading);
-	_mav_put_uint16_t(buf, 10, throttle);
-	_mav_put_float(buf, 12, alt);
-	_mav_put_float(buf, 16, climb);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, climb);
+	_mav_put_int16_t(buf, 16, heading);
+	_mav_put_uint16_t(buf, 18, throttle);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_VFR_HUD, buf, MAVLINK_MSG_ID_VFR_HUD_LEN, MAVLINK_MSG_ID_VFR_HUD_CRC);
@@ -278,10 +278,10 @@ static inline void mavlink_msg_wID_vfr_hud_send(
 	char buf[MAVLINK_MSG_ID_VFR_HUD_LEN];
 	_mav_put_float(buf, 0, airspeed);
 	_mav_put_float(buf, 4, groundspeed);
-	_mav_put_int16_t(buf, 8, heading);
-	_mav_put_uint16_t(buf, 10, throttle);
-	_mav_put_float(buf, 12, alt);
-	_mav_put_float(buf, 16, climb);
+	_mav_put_float(buf, 8, alt);
+	_mav_put_float(buf, 12, climb);
+	_mav_put_int16_t(buf, 16, heading);
+	_mav_put_uint16_t(buf, 18, throttle);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_VFR_HUD, buf, MAVLINK_MSG_ID_VFR_HUD_LEN, MAVLINK_MSG_ID_VFR_HUD_CRC);

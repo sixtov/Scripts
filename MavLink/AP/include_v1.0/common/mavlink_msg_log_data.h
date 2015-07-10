@@ -5,8 +5,8 @@
 
 typedef struct __mavlink_log_data_t 
 { 
-  uint16_t id;  ///< Log id (from LOG_ENTRY reply)
   uint32_t ofs;  ///< Offset into the log
+  uint16_t id;  ///< Log id (from LOG_ENTRY reply)
   uint8_t count;  ///< Number of bytes (zero for end of log)
   uint8_t data[90];  ///< log data
 } mavlink_log_data_t;
@@ -22,8 +22,8 @@ typedef struct __mavlink_log_data_t
   "LOG_DATA", \
   4, \
   { \
-    { "id", NULL, MAVLINK_TYPE_UINT16_T, 0, 0, offsetof(mavlink_log_data_t, id) }, \
-    { "ofs", NULL, MAVLINK_TYPE_UINT32_T, 0, 2, offsetof(mavlink_log_data_t, ofs) }, \
+    { "ofs", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_log_data_t, ofs) }, \
+    { "id", NULL, MAVLINK_TYPE_UINT16_T, 0, 4, offsetof(mavlink_log_data_t, id) }, \
     { "count", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_log_data_t, count) }, \
     { "data", NULL, MAVLINK_TYPE_UINT8_T, 90, 7, offsetof(mavlink_log_data_t, data) }, \
   } \
@@ -53,16 +53,16 @@ static inline uint16_t mavlink_msg_log_data_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LOG_DATA_LEN];
-	_mav_put_uint16_t(buf, 0, id);
-	_mav_put_uint32_t(buf, 2, ofs);
+	_mav_put_uint32_t(buf, 0, ofs);
+	_mav_put_uint16_t(buf, 4, id);
 	_mav_put_uint8_t(buf, 6, count);
 	_mav_put_uint8_t_array(buf, 7, data, 90);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_LOG_DATA_LEN);
 #else
 	mavlink_log_data_t packet;
-	packet.id = id;
 	packet.ofs = ofs;
+	packet.id = id;
 	packet.count = count;
 	mav_array_memcpy(packet.data, data, sizeof(uint8_t)*90);
 
@@ -103,8 +103,8 @@ static inline uint16_t mavlink_msg_log_data_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LOG_DATA_LEN];
-	_mav_put_uint16_t(buf, 0, id);
-	_mav_put_uint32_t(buf, 2, ofs);
+	_mav_put_uint32_t(buf, 0, ofs);
+	_mav_put_uint16_t(buf, 4, id);
 	_mav_put_uint8_t(buf, 6, count);
 	_mav_put_uint8_t_array(buf, 7, data, 90);
 
@@ -203,8 +203,8 @@ static inline void mavlink_msg_log_data_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LOG_DATA_LEN];
-	_mav_put_uint16_t(buf, 0, id);
-	_mav_put_uint32_t(buf, 2, ofs);
+	_mav_put_uint32_t(buf, 0, ofs);
+	_mav_put_uint16_t(buf, 4, id);
 	_mav_put_uint8_t(buf, 6, count);
 	_mav_put_uint8_t_array(buf, 7, data, 90);
 #if MAVLINK_CRC_EXTRA
@@ -242,8 +242,8 @@ static inline void mavlink_msg_wID_log_data_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_LOG_DATA_LEN];
-	_mav_put_uint16_t(buf, 0, id);
-	_mav_put_uint32_t(buf, 2, ofs);
+	_mav_put_uint32_t(buf, 0, ofs);
+	_mav_put_uint16_t(buf, 4, id);
 	_mav_put_uint8_t(buf, 6, count);
 	_mav_put_uint8_t_array(buf, 7, data, 90);
 #if MAVLINK_CRC_EXTRA

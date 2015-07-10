@@ -5,11 +5,11 @@
 
 typedef struct __mavlink_mount_status_t 
 { 
-  uint8_t target_system;  ///< System ID
-  uint8_t target_component;  ///< Component ID
   int32_t pointing_a;  ///< pitch(deg*100) or lat, depending on mount mode
   int32_t pointing_b;  ///< roll(deg*100) or lon depending on mount mode
   int32_t pointing_c;  ///< yaw(deg*100) or alt (in cm) depending on mount mode
+  uint8_t target_system;  ///< System ID
+  uint8_t target_component;  ///< Component ID
 } mavlink_mount_status_t;
 
 #define MAVLINK_MSG_ID_MOUNT_STATUS_LEN 14
@@ -23,11 +23,11 @@ typedef struct __mavlink_mount_status_t
   "MOUNT_STATUS", \
   5, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_mount_status_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_mount_status_t, target_component) }, \
-    { "pointing_a", NULL, MAVLINK_TYPE_INT32_T, 0, 2, offsetof(mavlink_mount_status_t, pointing_a) }, \
-    { "pointing_b", NULL, MAVLINK_TYPE_INT32_T, 0, 6, offsetof(mavlink_mount_status_t, pointing_b) }, \
-    { "pointing_c", NULL, MAVLINK_TYPE_INT32_T, 0, 10, offsetof(mavlink_mount_status_t, pointing_c) }, \
+    { "pointing_a", NULL, MAVLINK_TYPE_INT32_T, 0, 0, offsetof(mavlink_mount_status_t, pointing_a) }, \
+    { "pointing_b", NULL, MAVLINK_TYPE_INT32_T, 0, 4, offsetof(mavlink_mount_status_t, pointing_b) }, \
+    { "pointing_c", NULL, MAVLINK_TYPE_INT32_T, 0, 8, offsetof(mavlink_mount_status_t, pointing_c) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 12, offsetof(mavlink_mount_status_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_mount_status_t, target_component) }, \
   } \
 }
 
@@ -57,20 +57,20 @@ static inline uint16_t mavlink_msg_mount_status_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MOUNT_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int32_t(buf, 2, pointing_a);
-	_mav_put_int32_t(buf, 6, pointing_b);
-	_mav_put_int32_t(buf, 10, pointing_c);
+	_mav_put_int32_t(buf, 0, pointing_a);
+	_mav_put_int32_t(buf, 4, pointing_b);
+	_mav_put_int32_t(buf, 8, pointing_c);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MOUNT_STATUS_LEN);
 #else
 	mavlink_mount_status_t packet;
-	packet.target_system = target_system;
-	packet.target_component = target_component;
 	packet.pointing_a = pointing_a;
 	packet.pointing_b = pointing_b;
 	packet.pointing_c = pointing_c;
+	packet.target_system = target_system;
+	packet.target_component = target_component;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_MOUNT_STATUS_LEN);
 #endif
@@ -111,11 +111,11 @@ static inline uint16_t mavlink_msg_mount_status_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MOUNT_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int32_t(buf, 2, pointing_a);
-	_mav_put_int32_t(buf, 6, pointing_b);
-	_mav_put_int32_t(buf, 10, pointing_c);
+	_mav_put_int32_t(buf, 0, pointing_a);
+	_mav_put_int32_t(buf, 4, pointing_b);
+	_mav_put_int32_t(buf, 8, pointing_c);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_MOUNT_STATUS_LEN);
 #else
@@ -217,11 +217,11 @@ static inline void mavlink_msg_mount_status_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MOUNT_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int32_t(buf, 2, pointing_a);
-	_mav_put_int32_t(buf, 6, pointing_b);
-	_mav_put_int32_t(buf, 10, pointing_c);
+	_mav_put_int32_t(buf, 0, pointing_a);
+	_mav_put_int32_t(buf, 4, pointing_b);
+	_mav_put_int32_t(buf, 8, pointing_c);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_MOUNT_STATUS, buf, MAVLINK_MSG_ID_MOUNT_STATUS_LEN, MAVLINK_MSG_ID_MOUNT_STATUS_CRC);
@@ -259,11 +259,11 @@ static inline void mavlink_msg_wID_mount_status_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_MOUNT_STATUS_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_int32_t(buf, 2, pointing_a);
-	_mav_put_int32_t(buf, 6, pointing_b);
-	_mav_put_int32_t(buf, 10, pointing_c);
+	_mav_put_int32_t(buf, 0, pointing_a);
+	_mav_put_int32_t(buf, 4, pointing_b);
+	_mav_put_int32_t(buf, 8, pointing_c);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_MOUNT_STATUS, buf, MAVLINK_MSG_ID_MOUNT_STATUS_LEN, MAVLINK_MSG_ID_MOUNT_STATUS_CRC);

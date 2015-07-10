@@ -5,13 +5,6 @@
 
 typedef struct __mavlink_waypoint_t 
 { 
-  uint8_t target_system;  ///< System ID
-  uint8_t target_component;  ///< Component ID
-  uint16_t seq;  ///< Sequence
-  uint8_t frame;  ///< The coordinate system of the waypoint. see MAV_FRAME in mavlink_types.h
-  uint8_t command;  ///< The scheduled action for the waypoint. see MAV_COMMAND in common.xml MAVLink specs
-  uint8_t current;  ///< false:0, true:1
-  uint8_t autocontinue;  ///< autocontinue to next wp
   float param1;  ///< PARAM1 / For NAV command waypoints: Radius in which the waypoint is accepted as reached, in meters
   float param2;  ///< PARAM2 / For NAV command waypoints: Time that the MAV should stay inside the PARAM1 radius before advancing, in milliseconds
   float param3;  ///< PARAM3 / For LOITER command waypoints: Orbit to circle around the waypoint, in meters. If positive the orbit direction should be clockwise, if negative the orbit direction should be counter-clockwise.
@@ -19,6 +12,13 @@ typedef struct __mavlink_waypoint_t
   float x;  ///< PARAM5 / local: x position, global: latitude
   float y;  ///< PARAM6 / y position: global: longitude
   float z;  ///< PARAM7 / z position: global: altitude
+  uint16_t seq;  ///< Sequence
+  uint8_t target_system;  ///< System ID
+  uint8_t target_component;  ///< Component ID
+  uint8_t frame;  ///< The coordinate system of the waypoint. see MAV_FRAME in mavlink_types.h
+  uint8_t command;  ///< The scheduled action for the waypoint. see MAV_COMMAND in common.xml MAVLink specs
+  uint8_t current;  ///< false:0, true:1
+  uint8_t autocontinue;  ///< autocontinue to next wp
 } mavlink_waypoint_t;
 
 #define MAVLINK_MSG_ID_WAYPOINT_LEN 36
@@ -29,20 +29,20 @@ typedef struct __mavlink_waypoint_t
   "WAYPOINT", \
   14, \
   { \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 0, offsetof(mavlink_waypoint_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 1, offsetof(mavlink_waypoint_t, target_component) }, \
-    { "seq", NULL, MAVLINK_TYPE_UINT16_T, 0, 2, offsetof(mavlink_waypoint_t, seq) }, \
-    { "frame", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_waypoint_t, frame) }, \
-    { "command", NULL, MAVLINK_TYPE_UINT8_T, 0, 5, offsetof(mavlink_waypoint_t, command) }, \
-    { "current", NULL, MAVLINK_TYPE_UINT8_T, 0, 6, offsetof(mavlink_waypoint_t, current) }, \
-    { "autocontinue", NULL, MAVLINK_TYPE_UINT8_T, 0, 7, offsetof(mavlink_waypoint_t, autocontinue) }, \
-    { "param1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_waypoint_t, param1) }, \
-    { "param2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_waypoint_t, param2) }, \
-    { "param3", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_waypoint_t, param3) }, \
-    { "param4", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_waypoint_t, param4) }, \
-    { "x", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_waypoint_t, x) }, \
-    { "y", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_waypoint_t, y) }, \
-    { "z", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_waypoint_t, z) }, \
+    { "param1", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_waypoint_t, param1) }, \
+    { "param2", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_waypoint_t, param2) }, \
+    { "param3", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_waypoint_t, param3) }, \
+    { "param4", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_waypoint_t, param4) }, \
+    { "x", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_waypoint_t, x) }, \
+    { "y", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_waypoint_t, y) }, \
+    { "z", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_waypoint_t, z) }, \
+    { "seq", NULL, MAVLINK_TYPE_UINT16_T, 0, 28, offsetof(mavlink_waypoint_t, seq) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 30, offsetof(mavlink_waypoint_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 31, offsetof(mavlink_waypoint_t, target_component) }, \
+    { "frame", NULL, MAVLINK_TYPE_UINT8_T, 0, 32, offsetof(mavlink_waypoint_t, frame) }, \
+    { "command", NULL, MAVLINK_TYPE_UINT8_T, 0, 33, offsetof(mavlink_waypoint_t, command) }, \
+    { "current", NULL, MAVLINK_TYPE_UINT8_T, 0, 34, offsetof(mavlink_waypoint_t, current) }, \
+    { "autocontinue", NULL, MAVLINK_TYPE_UINT8_T, 0, 35, offsetof(mavlink_waypoint_t, autocontinue) }, \
   } \
 }
 
@@ -90,31 +90,24 @@ static inline uint16_t mavlink_msg_waypoint_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
-	_mav_put_uint8_t(buf, 4, frame);
-	_mav_put_uint8_t(buf, 5, command);
-	_mav_put_uint8_t(buf, 6, current);
-	_mav_put_uint8_t(buf, 7, autocontinue);
-	_mav_put_float(buf, 8, param1);
-	_mav_put_float(buf, 12, param2);
-	_mav_put_float(buf, 16, param3);
-	_mav_put_float(buf, 20, param4);
-	_mav_put_float(buf, 24, x);
-	_mav_put_float(buf, 28, y);
-	_mav_put_float(buf, 32, z);
+	_mav_put_float(buf, 0, param1);
+	_mav_put_float(buf, 4, param2);
+	_mav_put_float(buf, 8, param3);
+	_mav_put_float(buf, 12, param4);
+	_mav_put_float(buf, 16, x);
+	_mav_put_float(buf, 20, y);
+	_mav_put_float(buf, 24, z);
+	_mav_put_uint16_t(buf, 28, seq);
+	_mav_put_uint8_t(buf, 30, target_system);
+	_mav_put_uint8_t(buf, 31, target_component);
+	_mav_put_uint8_t(buf, 32, frame);
+	_mav_put_uint8_t(buf, 33, command);
+	_mav_put_uint8_t(buf, 34, current);
+	_mav_put_uint8_t(buf, 35, autocontinue);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_WAYPOINT_LEN);
 #else
 	mavlink_waypoint_t packet;
-	packet.target_system = target_system;
-	packet.target_component = target_component;
-	packet.seq = seq;
-	packet.frame = frame;
-	packet.command = command;
-	packet.current = current;
-	packet.autocontinue = autocontinue;
 	packet.param1 = param1;
 	packet.param2 = param2;
 	packet.param3 = param3;
@@ -122,6 +115,13 @@ static inline uint16_t mavlink_msg_waypoint_pack(
 	packet.x = x;
 	packet.y = y;
 	packet.z = z;
+	packet.seq = seq;
+	packet.target_system = target_system;
+	packet.target_component = target_component;
+	packet.frame = frame;
+	packet.command = command;
+	packet.current = current;
+	packet.autocontinue = autocontinue;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_WAYPOINT_LEN);
 #endif
@@ -176,20 +176,20 @@ static inline uint16_t mavlink_msg_waypoint_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
-	_mav_put_uint8_t(buf, 4, frame);
-	_mav_put_uint8_t(buf, 5, command);
-	_mav_put_uint8_t(buf, 6, current);
-	_mav_put_uint8_t(buf, 7, autocontinue);
-	_mav_put_float(buf, 8, param1);
-	_mav_put_float(buf, 12, param2);
-	_mav_put_float(buf, 16, param3);
-	_mav_put_float(buf, 20, param4);
-	_mav_put_float(buf, 24, x);
-	_mav_put_float(buf, 28, y);
-	_mav_put_float(buf, 32, z);
+	_mav_put_float(buf, 0, param1);
+	_mav_put_float(buf, 4, param2);
+	_mav_put_float(buf, 8, param3);
+	_mav_put_float(buf, 12, param4);
+	_mav_put_float(buf, 16, x);
+	_mav_put_float(buf, 20, y);
+	_mav_put_float(buf, 24, z);
+	_mav_put_uint16_t(buf, 28, seq);
+	_mav_put_uint8_t(buf, 30, target_system);
+	_mav_put_uint8_t(buf, 31, target_component);
+	_mav_put_uint8_t(buf, 32, frame);
+	_mav_put_uint8_t(buf, 33, command);
+	_mav_put_uint8_t(buf, 34, current);
+	_mav_put_uint8_t(buf, 35, autocontinue);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_WAYPOINT_LEN);
 #else
@@ -293,20 +293,20 @@ static inline void mavlink_msg_waypoint_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
-	_mav_put_uint8_t(buf, 4, frame);
-	_mav_put_uint8_t(buf, 5, command);
-	_mav_put_uint8_t(buf, 6, current);
-	_mav_put_uint8_t(buf, 7, autocontinue);
-	_mav_put_float(buf, 8, param1);
-	_mav_put_float(buf, 12, param2);
-	_mav_put_float(buf, 16, param3);
-	_mav_put_float(buf, 20, param4);
-	_mav_put_float(buf, 24, x);
-	_mav_put_float(buf, 28, y);
-	_mav_put_float(buf, 32, z);
+	_mav_put_float(buf, 0, param1);
+	_mav_put_float(buf, 4, param2);
+	_mav_put_float(buf, 8, param3);
+	_mav_put_float(buf, 12, param4);
+	_mav_put_float(buf, 16, x);
+	_mav_put_float(buf, 20, y);
+	_mav_put_float(buf, 24, z);
+	_mav_put_uint16_t(buf, 28, seq);
+	_mav_put_uint8_t(buf, 30, target_system);
+	_mav_put_uint8_t(buf, 31, target_component);
+	_mav_put_uint8_t(buf, 32, frame);
+	_mav_put_uint8_t(buf, 33, command);
+	_mav_put_uint8_t(buf, 34, current);
+	_mav_put_uint8_t(buf, 35, autocontinue);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_WAYPOINT, buf, MAVLINK_MSG_ID_WAYPOINT_LEN);
 #else
@@ -352,20 +352,20 @@ static inline void mavlink_msg_wID_waypoint_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_WAYPOINT_LEN];
-	_mav_put_uint8_t(buf, 0, target_system);
-	_mav_put_uint8_t(buf, 1, target_component);
-	_mav_put_uint16_t(buf, 2, seq);
-	_mav_put_uint8_t(buf, 4, frame);
-	_mav_put_uint8_t(buf, 5, command);
-	_mav_put_uint8_t(buf, 6, current);
-	_mav_put_uint8_t(buf, 7, autocontinue);
-	_mav_put_float(buf, 8, param1);
-	_mav_put_float(buf, 12, param2);
-	_mav_put_float(buf, 16, param3);
-	_mav_put_float(buf, 20, param4);
-	_mav_put_float(buf, 24, x);
-	_mav_put_float(buf, 28, y);
-	_mav_put_float(buf, 32, z);
+	_mav_put_float(buf, 0, param1);
+	_mav_put_float(buf, 4, param2);
+	_mav_put_float(buf, 8, param3);
+	_mav_put_float(buf, 12, param4);
+	_mav_put_float(buf, 16, x);
+	_mav_put_float(buf, 20, y);
+	_mav_put_float(buf, 24, z);
+	_mav_put_uint16_t(buf, 28, seq);
+	_mav_put_uint8_t(buf, 30, target_system);
+	_mav_put_uint8_t(buf, 31, target_component);
+	_mav_put_uint8_t(buf, 32, frame);
+	_mav_put_uint8_t(buf, 33, command);
+	_mav_put_uint8_t(buf, 34, current);
+	_mav_put_uint8_t(buf, 35, autocontinue);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_WAYPOINT, buf, MAVLINK_MSG_ID_WAYPOINT_LEN);
 #else

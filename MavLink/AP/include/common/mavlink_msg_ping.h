@@ -5,10 +5,10 @@
 
 typedef struct __mavlink_ping_t 
 { 
+  uint64_t time;  ///< Unix timestamp in microseconds
   uint32_t seq;  ///< PING sequence
   uint8_t target_system;  ///< 0: request ping from all receiving systems, if greater than 0: message is a ping response and number is the system id of the requesting system
   uint8_t target_component;  ///< 0: request ping from all receiving components, if greater than 0: message is a ping response and number is the system id of the requesting system
-  uint64_t time;  ///< Unix timestamp in microseconds
 } mavlink_ping_t;
 
 #define MAVLINK_MSG_ID_PING_LEN 14
@@ -19,10 +19,10 @@ typedef struct __mavlink_ping_t
   "PING", \
   4, \
   { \
-    { "seq", NULL, MAVLINK_TYPE_UINT32_T, 0, 0, offsetof(mavlink_ping_t, seq) }, \
-    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 4, offsetof(mavlink_ping_t, target_system) }, \
-    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 5, offsetof(mavlink_ping_t, target_component) }, \
-    { "time", NULL, MAVLINK_TYPE_UINT64_T, 0, 6, offsetof(mavlink_ping_t, time) }, \
+    { "time", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_ping_t, time) }, \
+    { "seq", NULL, MAVLINK_TYPE_UINT32_T, 0, 8, offsetof(mavlink_ping_t, seq) }, \
+    { "target_system", NULL, MAVLINK_TYPE_UINT8_T, 0, 12, offsetof(mavlink_ping_t, target_system) }, \
+    { "target_component", NULL, MAVLINK_TYPE_UINT8_T, 0, 13, offsetof(mavlink_ping_t, target_component) }, \
   } \
 }
 
@@ -50,18 +50,18 @@ static inline uint16_t mavlink_msg_ping_pack(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PING_LEN];
-	_mav_put_uint32_t(buf, 0, seq);
-	_mav_put_uint8_t(buf, 4, target_system);
-	_mav_put_uint8_t(buf, 5, target_component);
-	_mav_put_uint64_t(buf, 6, time);
+	_mav_put_uint64_t(buf, 0, time);
+	_mav_put_uint32_t(buf, 8, seq);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_PING_LEN);
 #else
 	mavlink_ping_t packet;
+	packet.time = time;
 	packet.seq = seq;
 	packet.target_system = target_system;
 	packet.target_component = target_component;
-	packet.time = time;
 
 	memcpy(_MAV_PAYLOAD(msg), &packet, MAVLINK_MSG_ID_PING_LEN);
 #endif
@@ -96,10 +96,10 @@ static inline uint16_t mavlink_msg_ping_pack_chan(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PING_LEN];
-	_mav_put_uint32_t(buf, 0, seq);
-	_mav_put_uint8_t(buf, 4, target_system);
-	_mav_put_uint8_t(buf, 5, target_component);
-	_mav_put_uint64_t(buf, 6, time);
+	_mav_put_uint64_t(buf, 0, time);
+	_mav_put_uint32_t(buf, 8, seq);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 
 	memcpy(_MAV_PAYLOAD(msg), buf, MAVLINK_MSG_ID_PING_LEN);
 #else
@@ -163,10 +163,10 @@ static inline void mavlink_msg_ping_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PING_LEN];
-	_mav_put_uint32_t(buf, 0, seq);
-	_mav_put_uint8_t(buf, 4, target_system);
-	_mav_put_uint8_t(buf, 5, target_component);
-	_mav_put_uint64_t(buf, 6, time);
+	_mav_put_uint64_t(buf, 0, time);
+	_mav_put_uint32_t(buf, 8, seq);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PING, buf, MAVLINK_MSG_ID_PING_LEN);
 #else
@@ -192,10 +192,10 @@ static inline void mavlink_msg_wID_ping_send(
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_PING_LEN];
-	_mav_put_uint32_t(buf, 0, seq);
-	_mav_put_uint8_t(buf, 4, target_system);
-	_mav_put_uint8_t(buf, 5, target_component);
-	_mav_put_uint64_t(buf, 6, time);
+	_mav_put_uint64_t(buf, 0, time);
+	_mav_put_uint32_t(buf, 8, seq);
+	_mav_put_uint8_t(buf, 12, target_system);
+	_mav_put_uint8_t(buf, 13, target_component);
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_PING, buf, MAVLINK_MSG_ID_PING_LEN);
 #else
