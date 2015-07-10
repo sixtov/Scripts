@@ -4,12 +4,23 @@
 %%~ sensor value. See message GLOBAL_POSITION for the global position estimate. Coordinate 
 %%~ frame is right-handed, Z-axis up (GPS frame).
 function p = encode_HIL_GPS_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(36);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(113);
 	name = [ ...
 		{'time_usec'}			 ... %% Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		{'fix_type'}			 ... %% 0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.
 		{'lat'}					 ... %% Latitude (WGS84), in degrees * 1E7
 		{'lon'}					 ... %% Longitude (WGS84), in degrees * 1E7
-		{'alt'}					 ... %% Altitude (WGS84), in meters * 1000 (positive for up)
+		{'alt'}					 ... %% Altitude (AMSL, not WGS84), in meters * 1000 (positive for up)
 		{'eph'}					 ... %% GPS HDOP horizontal dilution of position in cm (m*100). If unknown, set to: 65535
 		{'epv'}					 ... %% GPS VDOP vertical dilution of position in cm (m*100). If unknown, set to: 65535
 		{'vel'}					 ... %% GPS ground speed (m/s * 100). If unknown, set to: 65535
@@ -22,7 +33,7 @@ function p = encode_HIL_GPS_v1_0(S)
 	byte = [ 8 1 4 4 4 2 2 2 2 2 2 2 1 ];
 	type = [ {'uint64'} {'uint8'} {'int32'} {'int32'} {'int32'} {'uint16'} {'uint16'} {'uint16'} {'int16'} {'int16'} {'int16'} {'uint16'} {'uint8'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode time_usec data field
 	val = typecast(S.time_usec,'uint64');
 	val = reshape(val,1,length(val));
@@ -88,4 +99,5 @@ function p = encode_HIL_GPS_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

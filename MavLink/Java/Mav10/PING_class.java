@@ -13,7 +13,7 @@ Message ID: PING(4)
 public class PING_class //implements Loggable
 {
 	public static final int msgID = 4;
-	public long	 time_usec;		 	// Unix timestamp in microseconds
+	public long	 time_usec;		 	// Unix timestamp in microseconds or since system boot if smaller than MAVLink epoch (1.1.2009)
 	public long	 seq;				 	// PING sequence
 	public short	 target_system;	 	// 0: request ping from all receiving systems, if greater than 0: message is a ping response and number is the system id of the requesting system
 	public short	 target_component; 	// 0: request ping from all receiving components, if greater than 0: message is a ping response and number is the system id of the requesting system

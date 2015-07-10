@@ -1,6 +1,17 @@
 %%  case: 172
 %%~ Data packet, size 96
 function p = encode_DATA96_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(98);
+	sysid = uint8(S.sysid);
+	id = uint8(S.id);
+	messid = uint8(172);
 	name = [ ...
 		{'type'} ... %% data type
 		{'len'}	 ... %% data length
@@ -9,7 +20,7 @@ function p = encode_DATA96_v1_0(S)
 	byte = [ 1 1 96 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode type data field
 	val = typecast(S.type,'uint8');
 	val = reshape(val,1,length(val));
@@ -25,4 +36,5 @@ function p = encode_DATA96_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

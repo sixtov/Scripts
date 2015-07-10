@@ -12,12 +12,12 @@ function p = encodeValues_MISSION_ITEM_v1_0(target_system,target_component,seq,f
 	S.command = typecast(uint16(command),'uint16');		% The scheduled action for the MISSION. see MAV_CMD in common.xml MAVLink specs
 	S.current = typecast(uint8(current),'uint8');		% false:0, true:1
 	S.autocontinue = typecast(uint8(autocontinue),'uint8');		% autocontinue to next wp
-	S.param1 = typecast(single(param1),'single');		% PARAM1 / For NAV command MISSIONs: Radius in which the MISSION is accepted as reached, in meters
-	S.param2 = typecast(single(param2),'single');		% PARAM2 / For NAV command MISSIONs: Time that the MAV should stay inside the PARAM1 radius before advancing, in milliseconds
-	S.param3 = typecast(single(param3),'single');		% PARAM3 / For LOITER command MISSIONs: Orbit to circle around the MISSION, in meters. If positive the orbit direction should be clockwise, if negative the orbit direction should be counter-clockwise.
-	S.param4 = typecast(single(param4),'single');		% PARAM4 / For NAV and LOITER command MISSIONs: Yaw orientation in degrees, [0..360] 0 = NORTH
+	S.param1 = typecast(single(param1),'single');		% PARAM1, see MAV_CMD enum
+	S.param2 = typecast(single(param2),'single');		% PARAM2, see MAV_CMD enum
+	S.param3 = typecast(single(param3),'single');		% PARAM3, see MAV_CMD enum
+	S.param4 = typecast(single(param4),'single');		% PARAM4, see MAV_CMD enum
 	S.x = typecast(single(x),'single');		% PARAM5 / local: x position, global: latitude
 	S.y = typecast(single(y),'single');		% PARAM6 / y position: global: longitude
-	S.z = typecast(single(z),'single');		% PARAM7 / z position: global: altitude
+	S.z = typecast(single(z),'single');		% PARAM7 / z position: global: altitude (relative or absolute, depending on frame.
 	p = encode_MISSION_ITEM_v1_0(S);
 return

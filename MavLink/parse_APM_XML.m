@@ -30,7 +30,9 @@ function parse_APM_XML()
     end
     
     %Mess = [parseXML('slvMessage.xml'); parseXML('common_MAVLINK_1.0.xml'); parseXML('ardupilotmega_MAVLINK_1.0.xml')];
-    Mess = [parseXML('MavLink1.0_common.xml'); parseXML('MavLink1.0_ardupilotmega.xml')];
+    %Mess = [parseXML('MavLink1.0_common.xml'); parseXML('MavLink1.0_ardupilotmega.xml')];
+    Mess = [parseXML('common_APM_3.3.0.xml'); parseXML('pixhawk_APM_3.3.0.xml')];
+
     if (~isempty(Mess))
         % Generates MavLink 1.0 code
         VERSION = 1.0;
@@ -83,14 +85,9 @@ function genScript(Mess)
     fprintf(fp,'\tK = zeros(1,256);\n');
     K = length(Mess);
     for i=1:K
-        N = size(Mess(i).fields.name,1);
-
+        %disp([i K])
         %% byte member
-        sum = 0;
-        for j=1:N
-            sum = sum + Mess(i).fields.matByte{j};
-        end
-        fprintf(fp,'\tK(%3.3d) = %3.3d;\t%%%%  case: %s\n',i,sum,Mess(i).id);
+        fprintf(fp,'\tK(%3.3d) = %3.3d;\t%%%%  case: %s\n',str2double(Mess(i).id)+1,sum(cell2mat(Mess(i).fields.matByte)),Mess(i).id);
 
     end
     fprintf(fp,'return\n\n');
@@ -101,23 +98,24 @@ function genScript(Mess)
     switch (VERSION)
         case 0.9
             fp = fopen(sprintf('%s\\parseMavLink_%s_Packet.m',dDir,vtag),'w');
-            fprintf(fp,'function S = parseMavLink_%s_Packet(S,p)\n',vtag);
+            fprintf(fp,'function S = parseMavLink_%s_Packet(p)\n',vtag);
         case 1.0
             fp = fopen(sprintf('%s\\parseMavLink_%s_Packet.m',dDir,vtag),'w');
-            fprintf(fp,'function S = parseMavLink_%s_Packet(S,p)\n',vtag);
+            fprintf(fp,'function S = parseMavLink_%s_Packet(p)\n',vtag);
         otherwise
             disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
             return
     end
-    fprintf(fp,'\tswitch(p.messid)\n');
+    fprintf(fp,'\tmessid = p(6);\n\n');
+    fprintf(fp,'\tswitch(messid)\n');
     K = length(Mess);
     for i=1:K
         fprintf(fp,sprintf('\t\tcase %s\n',Mess(i).id));
         fprintf(fp,sprintf('%s',Mess(i).cdesc));
-        fprintf(fp,sprintf('\t\t\tS.%s = parse_%s_%s(S.%s,p);\n\n',Mess(i).name,Mess(i).name,vtag,Mess(i).name));
+        fprintf(fp,sprintf('\t\t\tS.%s = parse_%s_%s(p);\n\n',Mess(i).name,Mess(i).name,vtag));
     end
     fprintf(fp,'\t\totherwise\n');
-    fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',p.messid))\n');
+    fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',messid))\n');
     fprintf(fp,'\tend\n');
     fprintf(fp,'return\n\n');
     fclose(fp);
@@ -126,109 +124,7 @@ function genScript(Mess)
         fpm = fopen(sprintf('%s\\parse_%s_%s.m',dDir,Mess(i).name,vtag),'w');
         fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
         fprintf(fpm,sprintf('%s',Mess(i).fdesc));
-        fprintf(fpm,sprintf('function S = parse_%s_%s(S,p)\n',Mess(i).name,vtag));
-        N = size(Mess(i).fields.name,1);
-
-        %% name member
-        fprintf(fpm,'\tname = [ ...\n');
-        ml = 0;
-        for j=1:N
-            ml = max([ml length(Mess(i).fields.name{j})]);
-        end
-        ml = 4*ceil(ml/4);
-
-        for j=1:N
-            padL = ceil((ml-length(Mess(i).fields.name{j}))/4);
-            pad = char(9*ones(1,padL));
-            fprintf(fpm,sprintf('\t\t{''%s''}%s ... ',Mess(i).fields.name{j},pad));
-            if ~isempty(Mess(i).fields.desc{j})
-                fprintf(fpm,'%%%% ');
-                fprintf(fpm,Mess(i).fields.desc{j});
-            end
-            fprintf(fpm,'\n');
-        end
-        fprintf(fpm,'\t\t];\n');
-
-        %% byte member
-        fprintf(fpm,'\tbyte = [ ');
-        for j=1:N
-            fprintf(fpm,sprintf('%d ',Mess(i).fields.matByte{j}));
-        end
-        fprintf(fpm,'];\n');
-
-        %% type member
-        fprintf(fpm,'\ttype = [ ');
-        for j=1:N
-            fprintf(fpm,sprintf('{''%s''} ',Mess(i).fields.matType{j}));
-        end
-        fprintf(fpm,'];\n');
-        
-        fprintf(fpm,'\tif (sum(byte) == p.len)\n');
-        fprintf(fpm,'\t\tS = buildStruct(S,byte,name,type,p);\n');
-        fprintf(fpm,'\telse\n');
-        fprintf(fpm,'\t\tdisp(''bytes in packet did not match structure size'')\n');
-        fprintf(fpm,'\tend\n');
-
-        fprintf(fpm,'return\n\n');
-        fclose(fpm);
-    end
-    
-%% Encode Messages
-    switch (VERSION)
-        case 0.9
-            fp = fopen(sprintf('%s\\encodeMavLink_%s_Packet.m',dDir,vtag),'w');
-            fprintf(fp,'function p = encodeMavLink_%s_Packet(ID,S)\n',vtag);
-        case 1.0
-            fp = fopen(sprintf('%s\\encodeMavLink_%s_Packet.m',dDir,vtag),'w');
-            fprintf(fp,'function p = encodeMavLink_%s_Packet(ID,S)\n',vtag);
-        otherwise
-            disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
-            return
-    end
-    fprintf(fp,'\tswitch(ID)\n');
-    K = length(Mess);
-    for i=1:K
-        fprintf(fp,sprintf('\t\tcase %s\n',Mess(i).id));
-        fprintf(fp,sprintf('%s',Mess(i).cdesc));
-        fprintf(fp,sprintf('\t\t\tp = encode_%s_%s(S.%s);\n\n',Mess(i).name,vtag,Mess(i).name));
-    end
-    fprintf(fp,'\t\totherwise\n');
-    fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',p.messid))\n');
-    fprintf(fp,'\tend\n');
-    fprintf(fp,'return\n\n');
-    fclose(fp);
-
-    for i=1:K
-        N = size(Mess(i).fields.name,1);
-        fpm = fopen(sprintf('%s\\encodeValues_%s_%s.m',dDir,Mess(i).name,vtag),'w');
-        fprintf(fpm,'%%%%%%%%  case: %s\n',Mess(i).id);
-        fprintf(fpm,sprintf('%s',Mess(i).fdesc));
-        fprintf(fpm,'function p = encodeValues_%s_%s(',Mess(i).name,vtag);
-        for j=1:N-1
-            fprintf(fpm,'%s,',Mess(i).fields.name{j});
-        end
-        fprintf(fpm,'%s)\n',Mess(i).fields.name{N});
-
-        %% name member
-        for j=1:N
-            fprintf(fpm,'\tS.%s = typecast(%s(%s),''%s'');',Mess(i).fields.name{j},Mess(i).fields.matType{j},Mess(i).fields.name{j},Mess(i).fields.matType{j});
-            if ~isempty(Mess(i).fields.desc{j})
-                fprintf(fpm,'\t\t%% ');
-                fprintf(fpm,Mess(i).fields.desc{j});
-            end
-            fprintf(fpm,'\n');
-        end
-        fprintf(fpm,sprintf('\tp = encode_%s_%s(S);\n',Mess(i).name,vtag));
-        fprintf(fpm,'return\n');
-
-        fclose(fpm);
-    end
-
-    for i=1:K
-        fpm = fopen(sprintf('%s\\encode_%s_%s.m',dDir,Mess(i).name,vtag),'w');
-        fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
-        fprintf(fpm,sprintf('%s',Mess(i).fdesc));
-        fprintf(fpm,sprintf('function p = encode_%s_%s(S)\n',Mess(i).name,vtag));
+        fprintf(fpm,sprintf('function S = parse_%s_%s(p)\n',Mess(i).name,vtag));
         N = size(Mess(i).fields.name,1);
 
         %% name member
@@ -265,15 +161,140 @@ function genScript(Mess)
         end
         fprintf(fpm,'];\n\n');
         
-        fprintf(fpm,'\tp = [];\n');
-        
-        REM = '%%';
+        fprintf(fpm,'\tlen = p(2);\n');
+        fprintf(fpm,'\tif (sum(byte) == len)\n');
+        fprintf(fpm,'\t\tS = buildStruct(byte,name,type,p);\n');
+        fprintf(fpm,'\telse\n');
+        fprintf(fpm,'\t\tS = [];\n');
+        fprintf(fpm,'\t\tdisp(''bytes in packet did not match structure size'')\n');
+        fprintf(fpm,'\tend\n');
+
+        fprintf(fpm,'return\n\n');
+        fclose(fpm);
+    end
+    
+%% Encode Messages
+    switch (VERSION)
+        case 0.9
+            fp = fopen(sprintf('%s\\encodeMavLink_%s_Packet.m',dDir,vtag),'w');
+            fprintf(fp,'function p = encodeMavLink_%s_Packet(S)\n',vtag);
+        case 1.0
+            fp = fopen(sprintf('%s\\encodeMavLink_%s_Packet.m',dDir,vtag),'w');
+            fprintf(fp,'function p = encodeMavLink_%s_Packet(S)\n',vtag);
+        otherwise
+            disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
+            return
+    end
+    fprintf(fp,'\tswitch(S.h_messid)\n');
+    K = length(Mess);
+    for i=1:K
+        fprintf(fp,sprintf('\t\tcase %s\n',Mess(i).id));
+        fprintf(fp,sprintf('%s',Mess(i).cdesc));
+        fprintf(fp,sprintf('\t\t\tp = encode_%s_%s(S);\n\n',Mess(i).name,vtag));
+    end
+    fprintf(fp,'\t\totherwise\n');
+    fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',S.h_messid))\n');
+    fprintf(fp,'\tend\n');
+    fprintf(fp,'return\n\n');
+    fclose(fp);
+
+    for i=1:K
+        N = size(Mess(i).fields.name,1);
+        fpm = fopen(sprintf('%s\\encodeValues_%s_%s.m',dDir,Mess(i).name,vtag),'w');
+        fprintf(fpm,'%%%%%%%%  case: %s\n',Mess(i).id);
+        fprintf(fpm,sprintf('%s',Mess(i).fdesc));
+        fprintf(fpm,'function p = encodeValues_%s_%s(',Mess(i).name,vtag);
+        for j=1:N-1
+            fprintf(fpm,'%s,',Mess(i).fields.name{j});
+        end
+        fprintf(fpm,'%s)\n',Mess(i).fields.name{N});
+
+        %% name member
         for j=1:N
-            fprintf(fpm,'\t%s Encode %s data field\n',REM,Mess(i).fields.name{j});
+            fprintf(fpm,'\tS.%s = typecast(%s(%s),''%s'');',Mess(i).fields.name{j},Mess(i).fields.matType{j},Mess(i).fields.name{j},Mess(i).fields.matType{j});
+            if ~isempty(Mess(i).fields.desc{j})
+                fprintf(fpm,'\t\t%% ');
+                fprintf(fpm,Mess(i).fields.desc{j});
+            end
+            fprintf(fpm,'\n');
+        end
+        fprintf(fpm,sprintf('\tp = encode_%s_%s(S);\n',Mess(i).name,vtag));
+        fprintf(fpm,'return\n');
+
+        fclose(fpm);
+    end
+
+    for i=1:K
+        fpm = fopen(sprintf('%s\\encode_%s_%s.m',dDir,Mess(i).name,vtag),'w');
+        fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
+        fprintf(fpm,sprintf('%s',Mess(i).fdesc));
+        fprintf(fpm,sprintf('function p = encode_%s_%s(S)\n',Mess(i).name,vtag));
+        N = size(Mess(i).fields.name,1);
+        fprintf(fpm,'\tglobal pnum;\n');
+        fprintf(fpm,'\tif (isempty(pnum))\n');
+        fprintf(fpm,'\t\tpnum = 1;\n');
+        fprintf(fpm,'\telse\n');
+        fprintf(fpm,'\t\tpnum = uint8(mod(pnum+1,256));\n');
+        fprintf(fpm,'\tend\n');
+        
+        switch (VERSION)
+            case 0.9
+                fprintf(fpm,'\thead = uint8(85);\n');
+            case 1.0
+                fprintf(fpm,'\thead = uint8(254);\n');
+            otherwise
+                disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
+                return
+        end
+        fprintf(fpm,'\tlen = uint8(%d);\n',sum(cell2mat(Mess(i).fields.matByte)));
+        fprintf(fpm,'\tsysid = uint8(S.h_sysid);\n');
+        fprintf(fpm,'\tid = uint8(S.h_id);\n');
+        fprintf(fpm,'\tmessid = uint8(%d);\n',str2double(Mess(i).id));
+
+        %% name member
+        fprintf(fpm,'\tname = [ ...\n');
+        ml = 0;
+        for j=1:N
+            ml = max([ml length(Mess(i).fields.name{j})]);
+        end
+        ml = 4*ceil(ml/4);
+
+        for j=1:N
+            padL = ceil((ml-length(Mess(i).fields.name{j}))/4);
+            pad = char(9*ones(1,padL));
+            fprintf(fpm,sprintf('\t\t{''%s''}%s ... ',Mess(i).fields.name{j},pad));
+            if ~isempty(Mess(i).fields.desc{j})
+                fprintf(fpm,'%%%% ');
+                fprintf(fpm,Mess(i).fields.desc{j});
+            end
+            fprintf(fpm,'\n');
+        end
+        fprintf(fpm,'\t\t];\n');
+
+        %% byte member
+        fprintf(fpm,'\tbyte = [ ');
+        for j=1:N
+            fprintf(fpm,sprintf('%d ',Mess(i).fields.matByte{j}));
+        end
+        fprintf(fpm,'];\n');
+
+        %% type member
+        fprintf(fpm,'\ttype = [ ');
+        for j=1:N
+            fprintf(fpm,sprintf('{''%s''} ',Mess(i).fields.matType{j}));
+        end
+        fprintf(fpm,'];\n\n');
+        
+        fprintf(fpm,'\tp = [head len pnum sysid id messid];\n');
+        
+        COM = '%%';
+        for j=1:N
+            fprintf(fpm,'\t%s Encode %s data field\n',COM,Mess(i).fields.name{j});
             fprintf(fpm,'\tval = typecast(S.%s,''%s'');\n',Mess(i).fields.name{j},Mess(i).fields.matType{j});
             fprintf(fpm,'\tval = reshape(val,1,length(val));\n');
             fprintf(fpm,'\tp = [p typecast(val,''uint8'')];\n\n');
         end
+        fprintf(fpm,'\tp = [p typecast(checksum_%s(p(2:end)''),''uint8'')];\n',vtag);
         fprintf(fpm,'return\n');
         fclose(fpm);
     end
@@ -2196,6 +2217,16 @@ function fields = parseType(fields,n)
 			fields.apmType{n}  = 'uint64_t';
 			fields.apmByte{n}  = 8*mult;
 			fields.gcsType{n}  = 'ulong';
+			fields.gcsByte{n}  = 8*mult;
+		case 'int64'
+			fields.byte{n}     = 8; %*mult;
+			fields.matType{n}  = 'int64';
+			fields.matByte{n}  = 8*mult;
+			fields.javaType{n} = 'long';
+			fields.javaByte{n} = 8*mult;
+			fields.apmType{n}  = 'int64_t';
+			fields.apmByte{n}  = 8*mult;
+			fields.gcsType{n}  = 'long';
 			fields.gcsByte{n}  = 8*mult;
 		case 'float'
 			fields.byte{n}     = 4; %*mult;

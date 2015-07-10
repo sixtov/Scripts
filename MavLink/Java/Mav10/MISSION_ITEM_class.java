@@ -23,13 +23,13 @@ public class MISSION_ITEM_class //implements Loggable
 	public int		 command;			 	// The scheduled action for the MISSION. see MAV_CMD in common.xml MAVLink specs
 	public short	 current;			 	// false:0, true:1
 	public short	 autocontinue;	 	// autocontinue to next wp
-	public float	 param1;			 	// PARAM1 / For NAV command MISSIONs: Radius in which the MISSION is accepted as reached, in meters
-	public float	 param2;			 	// PARAM2 / For NAV command MISSIONs: Time that the MAV should stay inside the PARAM1 radius before advancing, in milliseconds
-	public float	 param3;			 	// PARAM3 / For LOITER command MISSIONs: Orbit to circle around the MISSION, in meters. If positive the orbit direction should be clockwise, if negative the orbit direction should be counter-clockwise.
-	public float	 param4;			 	// PARAM4 / For NAV and LOITER command MISSIONs: Yaw orientation in degrees, [0..360] 0 = NORTH
+	public float	 param1;			 	// PARAM1, see MAV_CMD enum
+	public float	 param2;			 	// PARAM2, see MAV_CMD enum
+	public float	 param3;			 	// PARAM3, see MAV_CMD enum
+	public float	 param4;			 	// PARAM4, see MAV_CMD enum
 	public float	 x;				 	// PARAM5 / local: x position, global: latitude
 	public float	 y;				 	// PARAM6 / y position: global: longitude
-	public float	 z;				 	// PARAM7 / z position: global: altitude
+	public float	 z;				 	// PARAM7 / z position: global: altitude (relative or absolute, depending on frame.
 
 	private packet rcvPacket;
 	private packet sndPacket;

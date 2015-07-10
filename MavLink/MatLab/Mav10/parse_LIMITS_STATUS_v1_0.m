@@ -1,6 +1,6 @@
 %%  case: 167
 %%~ Status of AP_Limits. Sent in extended      status stream when AP_Limits is enabled
-function S = parse_LIMITS_STATUS_v1_0(S,p)
+function S = parse_LIMITS_STATUS_v1_0(p)
 	name = [ ...
 		{'limits_state'}	 ... %% state of AP_Limits, (see enum LimitState, LIMITS_STATE)
 		{'last_trigger'}	 ... %% time of last breach in milliseconds since boot
@@ -14,9 +14,12 @@ function S = parse_LIMITS_STATUS_v1_0(S,p)
 		];
 	byte = [ 1 4 4 4 4 2 1 1 1 ];
 	type = [ {'uint8'} {'uint32'} {'uint32'} {'uint32'} {'uint32'} {'uint16'} {'uint8'} {'uint8'} {'uint8'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

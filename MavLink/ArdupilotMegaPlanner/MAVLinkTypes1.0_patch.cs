@@ -1,11 +1,11 @@
     //                                                 {  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255}
-    public static readonly byte[] MAVLINK_MESSAGE_LENGTHS = new byte[] {  9, 31, 12,  0, 14,  4,  3,  1,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  5,  2, 10,  8, 30,  6, 22, 26, 16, 14, 28, 32, 28, 28, 22, 22, 21,  6,  6, 37,  4,  4,  2,  2,  4,  2,  2,  3, 13, 12, 19, 17, 15, 15, 27, 25, 18, 18, 20, 20,  9, 10, 30, 13, 36,  0,  6,  4,  0, 11, 18,  0,  0,  0, 20,  0, 33,  3,  0,  0, 20, 22,  0,  0,  0,  0,  0,  0,  0, 28, 56, 42, 33,  0,  0,  0,  0,  0,  0,  0, 26, 32, 32, 20, 32, 62, 18, 64, 84,  9, 15, 10,  9, 36, 26, 52, 22,  6, 14, 12,  8,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 24, 33, 25, 42,  8,  4, 12, 15, 13,  6, 15, 14,  0, 12,  3,  8, 28, 44,  3,  9, 22, 12,  3,  3,  3,  3,  8, 48, 19,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5, 21,  9,  9,  2,  9,  0};
+    public static readonly byte[] MAVLINK_MESSAGE_LENGTHS = new byte[] {  9, 31, 12,  0, 14,  4,  3,  1,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  5,  2, 10,  8, 30,  6, 22, 26, 16, 14, 28, 32, 28, 28, 22, 22, 21,  6,  6, 37,  4,  4,  2,  2,  4,  2,  2,  3, 13, 12, 22,  0,  0,  0, 27, 25,  0,  0,  0,  0,  0, 24, 26, 45, 41, 42,  6,  4,  0, 11, 18,  0,  0, 37, 20, 35, 33,  3,  0,  0,  0, 22, 27, 25, 53, 51, 53, 51,  0, 28, 56, 42, 33,  0,  0,  0,  0,  0,  0,  0, 26, 32, 32, 20, 32, 62, 44, 64, 84,  9,  4, 16,  0, 36, 44, 52, 22,  6, 14, 12,  8,  2,  2,  4, 35,  6, 10, 35, 35, 22, 13,  3, 14, 18, 13,  8, 22, 14, 24, 15, 13,  0,  0,  0,  0,  0,  0, 18, 39,  0,  0, 11, 52,  1, 92,  0,  0,  0,  0,  0, 18,  0,  0,  0,  0,  0,  0,  0,  0,  0, 18, 26, 16,  0,  0,  0,  0,  0,  0,  0,  4, 10, 12,  6,  0,  0,  0,  0,  0,  0,  7, 18, 30,  0,  0, 22,  0,  0,  0,  0, 21,  0,  0,  0,  0, 48, 39,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  5, 21,  9,  9,  2,  9,  0};
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=9)]
 	public struct mavlink_heartbeat_t
 	{
 		public byte type; /// Type of the MAV (quadrotor, helicopter, etc., up to 15 types, defined in MAV_TYPE ENUM)
 		public byte autopilot; /// Autopilot type / class. defined in MAV_AUTOPILOT ENUM
-		public byte base_mode; /// System mode bitfield, see MAV_MODE_FLAGS ENUM in mavlink/include/mavlink_types.h
+		public byte base_mode; /// System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
 		public uint custom_mode; /// A bitfield for use for autopilot-specific flags.
 		public byte system_status; /// System status flag, see MAV_STATE ENUM
 		public byte mavlink_version; /// MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version
@@ -39,7 +39,7 @@
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=14)]
 	public struct mavlink_ping_t
 	{
-		public ulong time_usec; /// Unix timestamp in microseconds
+		public ulong time_usec; /// Unix timestamp in microseconds or since system boot if smaller than MAVLink epoch (1.1.2009)
 		public uint seq; /// PING sequence
 		public byte target_system; /// 0: request ping from all receiving systems, if greater than 0: message is a ping response and number is the system id of the requesting system
 		public byte target_component; /// 0: request ping from all receiving components, if greater than 0: message is a ping response and number is the system id of the requesting system
@@ -131,10 +131,10 @@
 	public struct mavlink_gps_raw_int_t
 	{
 		public ulong time_usec; /// Timestamp (microseconds since UNIX epoch or microseconds since system boot)
-		public byte fix_type; /// 0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.
+		public byte fix_type; /// 0-1: no fix, 2: 2D fix, 3: 3D fix, 4: DGPS, 5: RTK. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.
 		public int lat; /// Latitude (WGS84), in degrees * 1E7
 		public int lon; /// Longitude (WGS84), in degrees * 1E7
-		public int alt; /// Altitude (WGS84), in meters * 1000 (positive for up)
+		public int alt; /// Altitude (AMSL, NOT WGS84), in meters * 1000 (positive for up). Note that virtually all GPS modules provide the AMSL altitude in addition to the WGS84 altitude.
 		public ushort eph; /// GPS HDOP horizontal dilution of position in cm (m*100). If unknown, set to: UINT16_MAX
 		public ushort epv; /// GPS VDOP vertical dilution of position in cm (m*100). If unknown, set to: UINT16_MAX
 		public ushort vel; /// GPS ground speed (m/s * 100). If unknown, set to: UINT16_MAX
@@ -233,10 +233,10 @@
 	public struct mavlink_attitude_quaternion_t
 	{
 		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
-		public float q1; /// Quaternion component 1
-		public float q2; /// Quaternion component 2
-		public float q3; /// Quaternion component 3
-		public float q4; /// Quaternion component 4
+		public float q1; /// Quaternion component 1, w (1 in null-rotation)
+		public float q2; /// Quaternion component 2, x (0 in null-rotation)
+		public float q3; /// Quaternion component 3, y (0 in null-rotation)
+		public float q4; /// Quaternion component 4, z (0 in null-rotation)
 		public float rollspeed; /// Roll angular speed (rad/s)
 		public float pitchspeed; /// Pitch angular speed (rad/s)
 		public float yawspeed; /// Yaw angular speed (rad/s)
@@ -260,7 +260,7 @@
 		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
 		public int lat; /// Latitude, expressed as * 1E7
 		public int lon; /// Longitude, expressed as * 1E7
-		public int alt; /// Altitude in meters, expressed as * 1000 (millimeters), above MSL
+		public int alt; /// Altitude in meters, expressed as * 1000 (millimeters), AMSL (not WGS84 - note that virtually all GPS modules provide the AMSL as well)
 		public int relative_alt; /// Altitude above ground in meters, expressed as * 1000 (millimeters)
 		public short vx; /// Ground X Speed (Latitude), expressed as m/s * 100
 		public short vy; /// Ground Y Speed (Longitude), expressed as m/s * 100
@@ -343,13 +343,13 @@
 		public ushort command; /// The scheduled action for the MISSION. see MAV_CMD in common.xml MAVLink specs
 		public byte current; /// false:0, true:1
 		public byte autocontinue; /// autocontinue to next wp
-		public float param1; /// PARAM1 / For NAV command MISSIONs: Radius in which the MISSION is accepted as reached, in meters
-		public float param2; /// PARAM2 / For NAV command MISSIONs: Time that the MAV should stay inside the PARAM1 radius before advancing, in milliseconds
-		public float param3; /// PARAM3 / For LOITER command MISSIONs: Orbit to circle around the MISSION, in meters. If positive the orbit direction should be clockwise, if negative the orbit direction should be counter-clockwise.
-		public float param4; /// PARAM4 / For NAV and LOITER command MISSIONs: Yaw orientation in degrees, [0..360] 0 = NORTH
+		public float param1; /// PARAM1, see MAV_CMD enum
+		public float param2; /// PARAM2, see MAV_CMD enum
+		public float param3; /// PARAM3, see MAV_CMD enum
+		public float param4; /// PARAM4, see MAV_CMD enum
 		public float x; /// PARAM5 / local: x position, global: latitude
 		public float y; /// PARAM6 / y position: global: longitude
-		public float z; /// PARAM7 / z position: global: altitude
+		public float z; /// PARAM7 / z position: global: altitude (relative or absolute, depending on frame.
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=4)]
@@ -416,7 +416,7 @@
 		public byte target_system; /// System ID
 		public int latitude; /// Latitude (WGS84), in degrees * 1E7
 		public int longitude; /// Longitude (WGS84, in degrees * 1E7
-		public int altitude; /// Altitude (WGS84), in meters * 1000 (positive for up)
+		public int altitude; /// Altitude (AMSL), in meters * 1000 (positive for up)
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=12)]
@@ -424,49 +424,24 @@
 	{
 		public int latitude; /// Latitude (WGS84), in degrees * 1E7
 		public int longitude; /// Longitude (WGS84), in degrees * 1E7
-		public int altitude; /// Altitude (WGS84), in meters * 1000 (positive for up)
+		public int altitude; /// Altitude (AMSL), in meters * 1000 (positive for up)
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=19)]
-	public struct mavlink_set_local_position_setpoint_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=22)]
+	public struct mavlink_param_map_rc_t
 	{
 		public byte target_system; /// System ID
 		public byte target_component; /// Component ID
-		public byte coordinate_frame; /// Coordinate frame - valid values are only MAV_FRAME_LOCAL_NED or MAV_FRAME_LOCAL_ENU
-		public float x; /// x position
-		public float y; /// y position
-		public float z; /// z position
-		public float yaw; /// Desired yaw angle
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=17)]
-	public struct mavlink_local_position_setpoint_t
-	{
-		public byte coordinate_frame; /// Coordinate frame - valid values are only MAV_FRAME_LOCAL_NED or MAV_FRAME_LOCAL_ENU
-		public float x; /// x position
-		public float y; /// y position
-		public float z; /// z position
-		public float yaw; /// Desired yaw angle
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=15)]
-	public struct mavlink_global_position_setpoint_int_t
-	{
-		public byte coordinate_frame; /// Coordinate frame - valid values are only MAV_FRAME_GLOBAL or MAV_FRAME_GLOBAL_RELATIVE_ALT
-		public int latitude; /// Latitude (WGS84), in degrees * 1E7
-		public int longitude; /// Longitude (WGS84), in degrees * 1E7
-		public int altitude; /// Altitude (WGS84), in meters * 1000 (positive for up)
-		public short yaw; /// Desired yaw angle in degrees * 100
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=15)]
-	public struct mavlink_set_global_position_setpoint_int_t
-	{
-		public byte coordinate_frame; /// Coordinate frame - valid values are only MAV_FRAME_GLOBAL or MAV_FRAME_GLOBAL_RELATIVE_ALT
-		public int latitude; /// Latitude (WGS84), in degrees * 1E7
-		public int longitude; /// Longitude (WGS84), in degrees * 1E7
-		public int altitude; /// Altitude (WGS84), in meters * 1000 (positive for up)
-		public short yaw; /// Desired yaw angle in degrees * 100
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=16)]
+		public byte[] param_id; /// Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
+		public short param_index; /// Parameter index. Send -1 to use the param ID field as identifier (else the param id will be ignored), send -2 to disable any existing map for this rc_channel_index.
+		public byte parameter_rc_channel_index; /// Index of parameter RC channel. Not equal to the RC channel id. Typically correpsonds to a potentiometer-knob on the RC.
+		public float param_value0; /// Initial parameter value
+		public float scale; /// Scale, maps the RC range [-1, 1] to a parameter value
+		public float param_value_min; /// Minimum param value. The protocol does not define if this overwrites an onboard minimum value. (Depends on implementation)
+		public float param_value_max; /// Maximum param value. The protocol does not define if this overwrites an onboard maximum value. (Depends on implementation)
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=27)]
@@ -495,82 +470,24 @@
 		public float p2z; /// z position 2 / Altitude 2
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
-	public struct mavlink_set_roll_pitch_yaw_thrust_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=24)]
+	public struct mavlink_attitude_quaternion_cov_t
 	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public float roll; /// Desired roll angle in radians
-		public float pitch; /// Desired pitch angle in radians
-		public float yaw; /// Desired yaw angle in radians
-		public float thrust; /// Collective thrust, normalized to 0 .. 1
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
-	public struct mavlink_set_roll_pitch_yaw_speed_thrust_t
-	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public float roll_speed; /// Desired roll angular speed in rad/s
-		public float pitch_speed; /// Desired pitch angular speed in rad/s
-		public float yaw_speed; /// Desired yaw angular speed in rad/s
-		public float thrust; /// Collective thrust, normalized to 0 .. 1
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=20)]
-	public struct mavlink_roll_pitch_yaw_thrust_setpoint_t
-	{
-		public uint time_boot_ms; /// Timestamp in milliseconds since system boot
-		public float roll; /// Desired roll angle in radians
-		public float pitch; /// Desired pitch angle in radians
-		public float yaw; /// Desired yaw angle in radians
-		public float thrust; /// Collective thrust, normalized to 0 .. 1
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=20)]
-	public struct mavlink_roll_pitch_yaw_speed_thrust_setpoint_t
-	{
-		public uint time_boot_ms; /// Timestamp in milliseconds since system boot
-		public float roll_speed; /// Desired roll angular speed in rad/s
-		public float pitch_speed; /// Desired pitch angular speed in rad/s
-		public float yaw_speed; /// Desired yaw angular speed in rad/s
-		public float thrust; /// Collective thrust, normalized to 0 .. 1
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=9)]
-	public struct mavlink_set_quad_motors_setpoint_t
-	{
-		public byte target_system; /// System ID of the system that should set these motor commands
-		public ushort motor_front_nw; /// Front motor in + configuration, front left motor in x configuration
-		public ushort motor_right_ne; /// Right motor in + configuration, front right motor in x configuration
-		public ushort motor_back_se; /// Back motor in + configuration, back right motor in x configuration
-		public ushort motor_left_sw; /// Left motor in + configuration, back left motor in x configuration
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=10)]
-	public struct mavlink_set_quad_swarm_roll_pitch_yaw_thrust_t
-	{
-		public byte group; /// ID of the quadrotor group (0 - 255, up to 256 groups supported)
-		public byte mode; /// ID of the flight mode (0 - 255, up to 256 modes supported)
+		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
 		[MarshalAs(
 			UnmanagedType.ByValArray,
 			SizeConst=4)]
-		public short[] roll; /// Desired roll angle in radians +-PI (+-INT16_MAX)
+		public float[] q; /// Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation)
+		public float rollspeed; /// Roll angular speed (rad/s)
+		public float pitchspeed; /// Pitch angular speed (rad/s)
+		public float yawspeed; /// Yaw angular speed (rad/s)
 		[MarshalAs(
 			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public short[] pitch; /// Desired pitch angle in radians +-PI (+-INT16_MAX)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public short[] yaw; /// Desired yaw angle in radians, scaled to int16 +-PI (+-INT16_MAX)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public ushort[] thrust; /// Collective thrust, scaled to uint16 (0..UINT16_MAX)
+			SizeConst=9)]
+		public float[] covariance; /// Attitude covariance
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=30)]
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=26)]
 	public struct mavlink_nav_controller_output_t
 	{
 		public float nav_roll; /// Current desired roll in degrees
@@ -581,56 +498,69 @@
 		public float alt_error; /// Current altitude error in meters
 		public float aspd_error; /// Current airspeed error in meters/second
 		public float xtrack_error; /// Current crosstrack error on x-y plane in meters
-		public float nav_wptrad; /// Navigation waypoint radius in meters
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=13)]
-	public struct mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=45)]
+	public struct mavlink_global_position_int_cov_t
 	{
-		public byte group; /// ID of the quadrotor group (0 - 255, up to 256 groups supported)
-		public byte mode; /// ID of the flight mode (0 - 255, up to 256 modes supported)
+		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
+		public ulong time_utc; /// Timestamp (microseconds since UNIX epoch) in UTC. 0 for unknown. Commonly filled by the precision time source of a GPS receiver.
+		public byte estimator_type; /// Class id of the estimator this estimate originated from.
+		public int lat; /// Latitude, expressed as degrees * 1E7
+		public int lon; /// Longitude, expressed as degrees * 1E7
+		public int alt; /// Altitude in meters, expressed as * 1000 (millimeters), above MSL
+		public int relative_alt; /// Altitude above ground in meters, expressed as * 1000 (millimeters)
+		public float vx; /// Ground X Speed (Latitude), expressed as m/s
+		public float vy; /// Ground Y Speed (Longitude), expressed as m/s
+		public float vz; /// Ground Z Speed (Altitude), expressed as m/s
 		[MarshalAs(
 			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public byte[] led_red; /// RGB red channel (0-255)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public byte[] led_blue; /// RGB green channel (0-255)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public byte[] led_green; /// RGB blue channel (0-255)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public short[] roll; /// Desired roll angle in radians +-PI (+-INT16_MAX)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public short[] pitch; /// Desired pitch angle in radians +-PI (+-INT16_MAX)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public short[] yaw; /// Desired yaw angle in radians, scaled to int16 +-PI (+-INT16_MAX)
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=4)]
-		public ushort[] thrust; /// Collective thrust, scaled to uint16 (0..UINT16_MAX)
+			SizeConst=36)]
+		public float[] covariance; /// Covariance matrix (first six entries are the first ROW, next six entries are the second row, etc.)
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=36)]
-	public struct mavlink_state_correction_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=41)]
+	public struct mavlink_local_position_ned_cov_t
 	{
-		public float xErr; /// x position error
-		public float yErr; /// y position error
-		public float zErr; /// z position error
-		public float rollErr; /// roll error (radians)
-		public float pitchErr; /// pitch error (radians)
-		public float yawErr; /// yaw error (radians)
-		public float vxErr; /// x velocity
-		public float vyErr; /// y velocity
-		public float vzErr; /// z velocity
+		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
+		public ulong time_utc; /// Timestamp (microseconds since UNIX epoch) in UTC. 0 for unknown. Commonly filled by the precision time source of a GPS receiver.
+		public byte estimator_type; /// Class id of the estimator this estimate originated from.
+		public float x; /// X Position
+		public float y; /// Y Position
+		public float z; /// Z Position
+		public float vx; /// X Speed
+		public float vy; /// Y Speed
+		public float vz; /// Z Speed
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=36)]
+		public float[] covariance; /// Covariance matrix (first six entries are the first ROW, next six entries are the second row, etc.)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=42)]
+	public struct mavlink_rc_channels_t
+	{
+		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
+		public byte chancount; /// Total number of RC channels being received. This can be larger than 18, indicating that more channels are available but not given in this message. This value should be 0 when no RC channels are available.
+		public ushort chan1_raw; /// RC channel 1 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan2_raw; /// RC channel 2 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan3_raw; /// RC channel 3 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan4_raw; /// RC channel 4 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan5_raw; /// RC channel 5 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan6_raw; /// RC channel 6 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan7_raw; /// RC channel 7 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan8_raw; /// RC channel 8 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan9_raw; /// RC channel 9 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan10_raw; /// RC channel 10 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan11_raw; /// RC channel 11 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan12_raw; /// RC channel 12 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan13_raw; /// RC channel 13 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan14_raw; /// RC channel 14 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan15_raw; /// RC channel 15 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan16_raw; /// RC channel 16 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan17_raw; /// RC channel 17 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public ushort chan18_raw; /// RC channel 18 value, in microseconds. A value of UINT16_MAX implies the channel is unused.
+		public byte rssi; /// Receive signal strength indicator, 0: 0%%, 100: 100%%, 255: invalid/unknown.
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=6)]
@@ -677,6 +607,25 @@
 		public ushort chan8_raw; /// RC channel 8 value, in microseconds. A value of UINT16_MAX means to ignore this field.
 	};
 
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=37)]
+	public struct mavlink_mission_item_int_t
+	{
+		public byte target_system; /// System ID
+		public byte target_component; /// Component ID
+		public ushort seq; /// Waypoint ID (sequence number). Starts at zero. Increases monotonically for each waypoint, no gaps in the sequence (0,1,2,3,4).
+		public byte frame; /// The coordinate system of the MISSION. see MAV_FRAME in mavlink_types.h
+		public ushort command; /// The scheduled action for the MISSION. see MAV_CMD in common.xml MAVLink specs
+		public byte current; /// false:0, true:1
+		public byte autocontinue; /// autocontinue to next wp
+		public float param1; /// PARAM1, see MAV_CMD enum
+		public float param2; /// PARAM2, see MAV_CMD enum
+		public float param3; /// PARAM3, see MAV_CMD enum
+		public float param4; /// PARAM4, see MAV_CMD enum
+		public int x; /// PARAM5 / local: x position in meters * 1e4, global: latitude in degrees * 10^7
+		public int y; /// PARAM6 / y position: local: x position in meters * 1e4, global: longitude in degrees *10^7
+		public float z; /// PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.
+	};
+
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=20)]
 	public struct mavlink_vfr_hud_t
 	{
@@ -686,6 +635,24 @@
 		public ushort throttle; /// Current throttle setting in integer percent, 0 to 100
 		public float alt; /// Current altitude (MSL), in meters
 		public float climb; /// Current climb rate in meters/second
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=35)]
+	public struct mavlink_command_int_t
+	{
+		public byte target_system; /// System ID
+		public byte target_component; /// Component ID
+		public byte frame; /// The coordinate system of the COMMAND. see MAV_FRAME in mavlink_types.h
+		public ushort command; /// The scheduled action for the mission item. see MAV_CMD in common.xml MAVLink specs
+		public byte current; /// false:0, true:1
+		public byte autocontinue; /// autocontinue to next wp
+		public float param1; /// PARAM1, see MAV_CMD enum
+		public float param2; /// PARAM2, see MAV_CMD enum
+		public float param3; /// PARAM3, see MAV_CMD enum
+		public float param4; /// PARAM4, see MAV_CMD enum
+		public int x; /// PARAM5 / local: x position in meters * 1e4, global: latitude in degrees * 10^7
+		public int y; /// PARAM6 / local: y position in meters * 1e4, global: longitude in degrees * 10^7
+		public float z; /// PARAM7 / z position: global: altitude in meters (relative or absolute, depending on frame.
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=33)]
@@ -711,16 +678,6 @@
 		public byte result; /// See MAV_RESULT enum
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=20)]
-	public struct mavlink_roll_pitch_yaw_rates_thrust_setpoint_t
-	{
-		public uint time_boot_ms; /// Timestamp in milliseconds since system boot
-		public float roll_rate; /// Desired roll rate in radians per second
-		public float pitch_rate; /// Desired pitch rate in radians per second
-		public float yaw_rate; /// Desired yaw rate in radians per second
-		public float thrust; /// Collective thrust, normalized to 0 .. 1
-	};
-
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=22)]
 	public struct mavlink_manual_setpoint_t
 	{
@@ -731,6 +688,118 @@
 		public float thrust; /// Collective thrust, normalized to 0 .. 1
 		public byte mode_switch; /// Flight mode switch position, 0.. 255
 		public byte manual_override_switch; /// Override mode switch position, 0.. 255
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=27)]
+	public struct mavlink_set_attitude_target_t
+	{
+		public uint time_boot_ms; /// Timestamp in milliseconds since system boot
+		public byte target_system; /// System ID
+		public byte target_component; /// Component ID
+		public byte type_mask; /// Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate, bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitude
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=4)]
+		public float[] q; /// Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
+		public float body_roll_rate; /// Body roll rate in radians per second
+		public float body_pitch_rate; /// Body roll rate in radians per second
+		public float body_yaw_rate; /// Body roll rate in radians per second
+		public float thrust; /// Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=25)]
+	public struct mavlink_attitude_target_t
+	{
+		public uint time_boot_ms; /// Timestamp in milliseconds since system boot
+		public byte type_mask; /// Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate, bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitude
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=4)]
+		public float[] q; /// Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
+		public float body_roll_rate; /// Body roll rate in radians per second
+		public float body_pitch_rate; /// Body roll rate in radians per second
+		public float body_yaw_rate; /// Body roll rate in radians per second
+		public float thrust; /// Collective thrust, normalized to 0 .. 1 (-1 .. 1 for vehicles capable of reverse trust)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=53)]
+	public struct mavlink_set_position_target_local_ned_t
+	{
+		public uint time_boot_ms; /// Timestamp in milliseconds since system boot
+		public byte target_system; /// System ID
+		public byte target_component; /// Component ID
+		public byte coordinate_frame; /// Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED = 9
+		public ushort type_mask; /// Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate
+		public float x; /// X Position in NED frame in meters
+		public float y; /// Y Position in NED frame in meters
+		public float z; /// Z Position in NED frame in meters (note, altitude is negative in NED)
+		public float vx; /// X velocity in NED frame in meter / s
+		public float vy; /// Y velocity in NED frame in meter / s
+		public float vz; /// Z velocity in NED frame in meter / s
+		public float afx; /// X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afy; /// Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afz; /// Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float yaw; /// yaw setpoint in rad
+		public float yaw_rate; /// yaw rate setpoint in rad/s
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=51)]
+	public struct mavlink_position_target_local_ned_t
+	{
+		public uint time_boot_ms; /// Timestamp in milliseconds since system boot
+		public byte coordinate_frame; /// Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED = 9
+		public ushort type_mask; /// Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate
+		public float x; /// X Position in NED frame in meters
+		public float y; /// Y Position in NED frame in meters
+		public float z; /// Z Position in NED frame in meters (note, altitude is negative in NED)
+		public float vx; /// X velocity in NED frame in meter / s
+		public float vy; /// Y velocity in NED frame in meter / s
+		public float vz; /// Z velocity in NED frame in meter / s
+		public float afx; /// X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afy; /// Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afz; /// Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float yaw; /// yaw setpoint in rad
+		public float yaw_rate; /// yaw rate setpoint in rad/s
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=53)]
+	public struct mavlink_set_position_target_global_int_t
+	{
+		public uint time_boot_ms; /// Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow the system to compensate for the transport delay of the setpoint. This allows the system to compensate processing latency.
+		public byte target_system; /// System ID
+		public byte target_component; /// Component ID
+		public byte coordinate_frame; /// Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11
+		public ushort type_mask; /// Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate
+		public int lat_int; /// X Position in WGS84 frame in 1e7 * meters
+		public int lon_int; /// Y Position in WGS84 frame in 1e7 * meters
+		public float alt; /// Altitude in meters in AMSL altitude, not WGS84 if absolute or relative, above terrain if GLOBAL_TERRAIN_ALT_INT
+		public float vx; /// X velocity in NED frame in meter / s
+		public float vy; /// Y velocity in NED frame in meter / s
+		public float vz; /// Z velocity in NED frame in meter / s
+		public float afx; /// X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afy; /// Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afz; /// Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float yaw; /// yaw setpoint in rad
+		public float yaw_rate; /// yaw rate setpoint in rad/s
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=51)]
+	public struct mavlink_position_target_global_int_t
+	{
+		public uint time_boot_ms; /// Timestamp in milliseconds since system boot. The rationale for the timestamp in the setpoint is to allow the system to compensate for the transport delay of the setpoint. This allows the system to compensate processing latency.
+		public byte coordinate_frame; /// Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11
+		public ushort type_mask; /// Bitmask to indicate which dimensions should be ignored by the vehicle: a value of 0b0000000000000000 or 0b0000001000000000 indicates that none of the setpoint dimensions should be ignored. If bit 10 is set the floats afx afy afz should be interpreted as force instead of acceleration. Mapping: bit 1: x, bit 2: y, bit 3: z, bit 4: vx, bit 5: vy, bit 6: vz, bit 7: ax, bit 8: ay, bit 9: az, bit 10: is force setpoint, bit 11: yaw, bit 12: yaw rate
+		public int lat_int; /// X Position in WGS84 frame in 1e7 * meters
+		public int lon_int; /// Y Position in WGS84 frame in 1e7 * meters
+		public float alt; /// Altitude in meters in AMSL altitude, not WGS84 if absolute or relative, above terrain if GLOBAL_TERRAIN_ALT_INT
+		public float vx; /// X velocity in NED frame in meter / s
+		public float vy; /// Y velocity in NED frame in meter / s
+		public float vz; /// Z velocity in NED frame in meter / s
+		public float afx; /// X acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afy; /// Y acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float afz; /// Z acceleration or force (if bit 10 of type_mask is set) in NED frame in meter / s^2 or N
+		public float yaw; /// yaw setpoint in rad
+		public float yaw_rate; /// yaw rate setpoint in rad/s
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=28)]
@@ -879,21 +948,21 @@
 		public ushort fields_updated; /// Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
-	public struct mavlink_omnidirectional_flow_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=44)]
+	public struct mavlink_optical_flow_rad_t
 	{
 		public ulong time_usec; /// Timestamp (microseconds, synced to UNIX time or since system boot)
 		public byte sensor_id; /// Sensor ID
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=10)]
-		public short[] left; /// Flow in deci pixels (1 = 0.1 pixel) on left hemisphere
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=10)]
-		public short[] right; /// Flow in deci pixels (1 = 0.1 pixel) on right hemisphere
-		public byte quality; /// Optical flow quality / confidence. 0: bad, 255: maximum quality
-		public float front_distance_m; /// Front distance in meters. Positive value (including zero): distance known. Negative value: Unknown distance
+		public uint integration_time_us; /// Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain average flow. The integration time also indicates the.
+		public float integrated_x; /// Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)
+		public float integrated_y; /// Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)
+		public float integrated_xgyro; /// RH rotation around X axis (rad)
+		public float integrated_ygyro; /// RH rotation around Y axis (rad)
+		public float integrated_zgyro; /// RH rotation around Z axis (rad)
+		public short temperature; /// Temperature * 100 in centi-degrees Celsius
+		public byte quality; /// Optical flow quality / confidence. 0: no valid flow, 255: maximum quality
+		public uint time_delta_distance_us; /// Time in microseconds since the distance was sampled.
+		public float distance; /// Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative value: Unknown distance.
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=64)]
@@ -919,10 +988,10 @@
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=84)]
 	public struct mavlink_sim_state_t
 	{
-		public float q1; /// True attitude quaternion component 1
-		public float q2; /// True attitude quaternion component 2
-		public float q3; /// True attitude quaternion component 3
-		public float q4; /// True attitude quaternion component 4
+		public float q1; /// True attitude quaternion component 1, w (1 in null-rotation)
+		public float q2; /// True attitude quaternion component 2, x (0 in null-rotation)
+		public float q3; /// True attitude quaternion component 3, y (0 in null-rotation)
+		public float q4; /// True attitude quaternion component 4, z (0 in null-rotation)
 		public float roll; /// Attitude roll expressed as Euler angles, not recommended except for human-readable outputs
 		public float pitch; /// Attitude pitch expressed as Euler angles, not recommended except for human-readable outputs
 		public float yaw; /// Attitude yaw expressed as Euler angles, not recommended except for human-readable outputs
@@ -945,44 +1014,32 @@
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=9)]
 	public struct mavlink_radio_status_t
 	{
-		public byte rssi; /// local signal strength
-		public byte remrssi; /// remote signal strength
-		public byte txbuf; /// how full the tx buffer is as a percentage
-		public byte noise; /// background noise level
-		public byte remnoise; /// remote background noise level
-		public ushort rxerrors; /// receive errors
-		public ushort fixed; /// count of error corrected packets
+		public byte rssi; /// Local signal strength
+		public byte remrssi; /// Remote signal strength
+		public byte txbuf; /// Remaining free buffer space in percent.
+		public byte noise; /// Background noise level
+		public byte remnoise; /// Remote background noise level
+		public ushort rxerrors; /// Receive errors
+		public ushort fixed; /// Count of error corrected packets
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=15)]
-	public struct mavlink_file_transfer_start_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=4)]
+	public struct mavlink_file_transfer_protocol_t
 	{
-		public ulong transfer_uid; /// Unique transfer ID
+		public byte target_network; /// Network ID (0 for broadcast)
+		public byte target_system; /// System ID (0 for broadcast)
+		public byte target_component; /// Component ID (0 for broadcast)
 		[MarshalAs(
 			UnmanagedType.ByValArray,
-			SizeConst=240)]
-		public byte[] dest_path; /// Destination path
-		public byte direction; /// Transfer direction: 0: from requester, 1: to requester
-		public uint file_size; /// File size in bytes
-		public byte flags; /// RESERVED
+			SizeConst=251)]
+		public byte[] payload; /// Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields.  The entire content of this block is opaque unless you understand any the encoding message_type.  The particular encoding used can be extension specific and might not always be documented as part of the mavlink specification.
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=10)]
-	public struct mavlink_file_transfer_dir_list_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=16)]
+	public struct mavlink_timesync_t
 	{
-		public ulong transfer_uid; /// Unique transfer ID
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=240)]
-		public byte[] dir_path; /// Directory path to list
-		public byte flags; /// RESERVED
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=9)]
-	public struct mavlink_file_transfer_res_t
-	{
-		public ulong transfer_uid; /// Unique transfer ID
-		public byte result; /// 0: OK, 1: not permitted, 2: bad path / file name, 3: no space left on device
+		public long tc1; /// Time sync timestamp 1
+		public long ts1; /// Time sync timestamp 2
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=36)]
@@ -992,7 +1049,7 @@
 		public byte fix_type; /// 0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.
 		public int lat; /// Latitude (WGS84), in degrees * 1E7
 		public int lon; /// Longitude (WGS84), in degrees * 1E7
-		public int alt; /// Altitude (WGS84), in meters * 1000 (positive for up)
+		public int alt; /// Altitude (AMSL, not WGS84), in meters * 1000 (positive for up)
 		public ushort eph; /// GPS HDOP horizontal dilution of position in cm (m*100). If unknown, set to: 65535
 		public ushort epv; /// GPS VDOP vertical dilution of position in cm (m*100). If unknown, set to: 65535
 		public ushort vel; /// GPS ground speed (m/s * 100). If unknown, set to: 65535
@@ -1003,17 +1060,21 @@
 		public byte satellites_visible; /// Number of satellites visible. If unknown, set to 255
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=26)]
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=44)]
 	public struct mavlink_hil_optical_flow_t
 	{
-		public ulong time_usec; /// Timestamp (UNIX)
+		public ulong time_usec; /// Timestamp (microseconds, synced to UNIX time or since system boot)
 		public byte sensor_id; /// Sensor ID
-		public short flow_x; /// Flow in pixels in x-sensor direction
-		public short flow_y; /// Flow in pixels in y-sensor direction
-		public float flow_comp_m_x; /// Flow in meters in x-sensor direction, angular-speed compensated
-		public float flow_comp_m_y; /// Flow in meters in y-sensor direction, angular-speed compensated
-		public byte quality; /// Optical flow quality / confidence. 0: bad, 255: maximum quality
-		public float ground_distance; /// Ground distance in meters. Positive value: distance known. Negative value: Unknown distance
+		public uint integration_time_us; /// Integration time in microseconds. Divide integrated_x and integrated_y by the integration time to obtain average flow. The integration time also indicates the.
+		public float integrated_x; /// Flow in radians around X axis (Sensor RH rotation about the X axis induces a positive flow. Sensor linear motion along the positive Y axis induces a negative flow.)
+		public float integrated_y; /// Flow in radians around Y axis (Sensor RH rotation about the Y axis induces a positive flow. Sensor linear motion along the positive X axis induces a positive flow.)
+		public float integrated_xgyro; /// RH rotation around X axis (rad)
+		public float integrated_ygyro; /// RH rotation around Y axis (rad)
+		public float integrated_zgyro; /// RH rotation around Z axis (rad)
+		public short temperature; /// Temperature * 100 in centi-degrees Celsius
+		public byte quality; /// Optical flow quality / confidence. 0: no valid flow, 255: maximum quality
+		public uint time_delta_distance_us; /// Time in microseconds since the distance was sampled.
+		public float distance; /// Distance to the center of the flow field in meters. Positive value (including zero): distance known. Negative value: Unknown distance.
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=52)]
@@ -1023,7 +1084,7 @@
 		[MarshalAs(
 			UnmanagedType.ByValArray,
 			SizeConst=4)]
-		public float[] attitude_quaternion; /// Vehicle attitude expressed as normalized quaternion
+		public float[] attitude_quaternion; /// Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
 		public float rollspeed; /// Body frame roll / phi angular speed (rad/s)
 		public float pitchspeed; /// Body frame pitch / theta angular speed (rad/s)
 		public float yawspeed; /// Body frame yaw / psi angular speed (rad/s)
@@ -1110,46 +1171,283 @@
 		public byte target_component; /// Component ID
 	};
 
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=4)]
+	public struct mavlink_gps_inject_data_t
+	{
+		public byte target_system; /// System ID
+		public byte target_component; /// Component ID
+		public byte len; /// data length
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=110)]
+		public byte[] data; /// raw data (110 is enough for 12 satellites of RTCMv2)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=35)]
+	public struct mavlink_gps2_raw_t
+	{
+		public ulong time_usec; /// Timestamp (microseconds since UNIX epoch or microseconds since system boot)
+		public byte fix_type; /// 0-1: no fix, 2: 2D fix, 3: 3D fix, 4: DGPS fix, 5: RTK Fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.
+		public int lat; /// Latitude (WGS84), in degrees * 1E7
+		public int lon; /// Longitude (WGS84), in degrees * 1E7
+		public int alt; /// Altitude (AMSL, not WGS84), in meters * 1000 (positive for up)
+		public ushort eph; /// GPS HDOP horizontal dilution of position in cm (m*100). If unknown, set to: UINT16_MAX
+		public ushort epv; /// GPS VDOP vertical dilution of position in cm (m*100). If unknown, set to: UINT16_MAX
+		public ushort vel; /// GPS ground speed (m/s * 100). If unknown, set to: UINT16_MAX
+		public ushort cog; /// Course over ground (NOT heading, but direction of movement) in degrees * 100, 0.0..359.99 degrees. If unknown, set to: UINT16_MAX
+		public byte satellites_visible; /// Number of satellites visible. If unknown, set to 255
+		public byte dgps_numch; /// Number of DGPS satellites
+		public uint dgps_age; /// Age of DGPS info
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=6)]
+	public struct mavlink_power_status_t
+	{
+		public ushort Vcc; /// 5V rail voltage in millivolts
+		public ushort Vservo; /// servo rail voltage in millivolts
+		public ushort flags; /// power supply status flags (see MAV_POWER_STATUS enum)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=10)]
+	public struct mavlink_serial_control_t
+	{
+		public byte device; /// See SERIAL_CONTROL_DEV enum
+		public byte flags; /// See SERIAL_CONTROL_FLAG enum
+		public ushort timeout; /// Timeout for reply data in milliseconds
+		public uint baudrate; /// Baudrate of transfer. Zero means no change.
+		public byte count; /// how many bytes in this transfer
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=70)]
+		public byte[] data; /// serial data
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=35)]
+	public struct mavlink_gps_rtk_t
+	{
+		public uint time_last_baseline_ms; /// Time since boot of last baseline message received in ms.
+		public byte rtk_receiver_id; /// Identification of connected RTK receiver.
+		public ushort wn; /// GPS Week Number of last baseline
+		public uint tow; /// GPS Time of Week of last baseline
+		public byte rtk_health; /// GPS-specific health report for RTK data.
+		public byte rtk_rate; /// Rate of baseline messages being received by GPS, in HZ
+		public byte nsats; /// Current number of sats used for RTK calculation.
+		public byte baseline_coords_type; /// Coordinate system of baseline. 0 == ECEF, 1 == NED
+		public int baseline_a_mm; /// Current baseline in ECEF x or NED north component in mm.
+		public int baseline_b_mm; /// Current baseline in ECEF y or NED east component in mm.
+		public int baseline_c_mm; /// Current baseline in ECEF z or NED down component in mm.
+		public uint accuracy; /// Current estimate of baseline accuracy.
+		public int iar_num_hypotheses; /// Current number of integer ambiguity hypotheses.
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=35)]
+	public struct mavlink_gps2_rtk_t
+	{
+		public uint time_last_baseline_ms; /// Time since boot of last baseline message received in ms.
+		public byte rtk_receiver_id; /// Identification of connected RTK receiver.
+		public ushort wn; /// GPS Week Number of last baseline
+		public uint tow; /// GPS Time of Week of last baseline
+		public byte rtk_health; /// GPS-specific health report for RTK data.
+		public byte rtk_rate; /// Rate of baseline messages being received by GPS, in HZ
+		public byte nsats; /// Current number of sats used for RTK calculation.
+		public byte baseline_coords_type; /// Coordinate system of baseline. 0 == ECEF, 1 == NED
+		public int baseline_a_mm; /// Current baseline in ECEF x or NED north component in mm.
+		public int baseline_b_mm; /// Current baseline in ECEF y or NED east component in mm.
+		public int baseline_c_mm; /// Current baseline in ECEF z or NED down component in mm.
+		public uint accuracy; /// Current estimate of baseline accuracy.
+		public int iar_num_hypotheses; /// Current number of integer ambiguity hypotheses.
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=22)]
+	public struct mavlink_scaled_imu3_t
+	{
+		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
+		public short xacc; /// X acceleration (mg)
+		public short yacc; /// Y acceleration (mg)
+		public short zacc; /// Z acceleration (mg)
+		public short xgyro; /// Angular speed around X axis (millirad /sec)
+		public short ygyro; /// Angular speed around Y axis (millirad /sec)
+		public short zgyro; /// Angular speed around Z axis (millirad /sec)
+		public short xmag; /// X Magnetic field (milli tesla)
+		public short ymag; /// Y Magnetic field (milli tesla)
+		public short zmag; /// Z Magnetic field (milli tesla)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=13)]
+	public struct mavlink_data_transmission_handshake_t
+	{
+		public byte type; /// type of requested/acknowledged data (as defined in ENUM DATA_TYPES in mavlink/include/mavlink_types.h)
+		public uint size; /// total data size in bytes (set on ACK only)
+		public ushort width; /// Width of a matrix or image
+		public ushort height; /// Height of a matrix or image
+		public ushort packets; /// number of packets beeing sent (set on ACK only)
+		public byte payload; /// payload size per packet (normally 253 byte, see DATA field size in message ENCAPSULATED_DATA) (set on ACK only)
+		public byte jpg_quality; /// JPEG quality out of [1,100]
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
+	public struct mavlink_encapsulated_data_t
+	{
+		public ushort seqnr; /// sequence number (starting with 0 on every transmission)
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=253)]
+		public byte[] data; /// image data bytes
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=14)]
+	public struct mavlink_distance_sensor_t
+	{
+		public uint time_boot_ms; /// Time since system boot
+		public ushort min_distance; /// Minimum distance the sensor can measure in centimeters
+		public ushort max_distance; /// Maximum distance the sensor can measure in centimeters
+		public ushort current_distance; /// Current distance reading
+		public byte type; /// Type from MAV_DISTANCE_SENSOR enum.
+		public byte id; /// Onboard ID of the sensor
+		public byte orientation; /// Direction the sensor faces from FIXME enum.
+		public byte covariance; /// Measurement covariance in centimeters, 0 for unknown / invalid readings
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
+	public struct mavlink_terrain_request_t
+	{
+		public int lat; /// Latitude of SW corner of first grid (degrees *10^7)
+		public int lon; /// Longitude of SW corner of first grid (in degrees *10^7)
+		public ushort grid_spacing; /// Grid spacing in meters
+		public ulong mask; /// Bitmask of requested 4x4 grids (row major 8x7 array of grids, 56 bits)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=13)]
+	public struct mavlink_terrain_data_t
+	{
+		public int lat; /// Latitude of SW corner of first grid (degrees *10^7)
+		public int lon; /// Longitude of SW corner of first grid (in degrees *10^7)
+		public ushort grid_spacing; /// Grid spacing in meters
+		public byte gridbit; /// bit within the terrain request mask
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=16)]
+		public short[] data; /// Terrain data in meters AMSL
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=8)]
+	public struct mavlink_terrain_check_t
+	{
+		public int lat; /// Latitude (degrees *10^7)
+		public int lon; /// Longitude (degrees *10^7)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=22)]
+	public struct mavlink_terrain_report_t
+	{
+		public int lat; /// Latitude (degrees *10^7)
+		public int lon; /// Longitude (degrees *10^7)
+		public ushort spacing; /// grid spacing (zero if terrain at this location unavailable)
+		public float terrain_height; /// Terrain height in meters AMSL
+		public float current_height; /// Current vehicle height above lat/lon terrain height (meters)
+		public ushort pending; /// Number of 4x4 terrain blocks waiting to be received or read from disk
+		public ushort loaded; /// Number of 4x4 terrain blocks in memory
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=14)]
+	public struct mavlink_scaled_pressure2_t
+	{
+		public uint time_boot_ms; /// Timestamp (milliseconds since system boot)
+		public float press_abs; /// Absolute pressure (hectopascal)
+		public float press_diff; /// Differential pressure 1 (hectopascal)
+		public short temperature; /// Temperature measurement (0.01 degrees celsius)
+	};
+
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=24)]
+	public struct mavlink_att_pos_mocap_t
+	{
+		public ulong time_usec; /// Timestamp (micros since boot or Unix epoch)
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=4)]
+		public float[] q; /// Attitude quaternion (w, x, y, z order, zero-rotation is 1, 0, 0, 0)
+		public float x; /// X position in meters (NED)
+		public float y; /// Y position in meters (NED)
+		public float z; /// Z position in meters (NED)
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=15)]
+	public struct mavlink_set_actuator_control_target_t
+	{
+		public ulong time_usec; /// Timestamp (micros since boot or Unix epoch)
+		public byte group_mlx; /// Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.
+		public byte target_system; /// System ID
+		public byte target_component; /// Component ID
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=8)]
+		public float[] controls; /// Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=13)]
+	public struct mavlink_actuator_control_target_t
+	{
+		public ulong time_usec; /// Timestamp (micros since boot or Unix epoch)
+		public byte group_mlx; /// Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=8)]
+		public float[] controls; /// Actuator controls. Normed to -1..+1 where 0 is neutral position. Throttle for single rotation direction motors is 0..1, negative range for reverse direction. Standard mapping for attitude controls (group 0): (index 0-7): roll, pitch, yaw, throttle, flaps, spoilers, airbrakes, landing gear. Load a pass-through mixer to repurpose them as generic outputs.
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
 	public struct mavlink_battery_status_t
 	{
-		public byte accu_id; /// Accupack ID
-		public ushort voltage_cell_1; /// Battery voltage of cell 1, in millivolts (1 = 1 millivolt)
-		public ushort voltage_cell_2; /// Battery voltage of cell 2, in millivolts (1 = 1 millivolt), -1: no cell
-		public ushort voltage_cell_3; /// Battery voltage of cell 3, in millivolts (1 = 1 millivolt), -1: no cell
-		public ushort voltage_cell_4; /// Battery voltage of cell 4, in millivolts (1 = 1 millivolt), -1: no cell
-		public ushort voltage_cell_5; /// Battery voltage of cell 5, in millivolts (1 = 1 millivolt), -1: no cell
-		public ushort voltage_cell_6; /// Battery voltage of cell 6, in millivolts (1 = 1 millivolt), -1: no cell
+		public byte id; /// Battery ID
+		public byte battery_function; /// Function of the battery
+		public byte type; /// Type (chemistry) of the battery
+		public short temperature; /// Temperature of the battery in centi-degrees celsius. INT16_MAX for unknown temperature.
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=10)]
+		public ushort[] voltages; /// Battery voltage of cells, in millivolts (1 = 1 millivolt)
 		public short current_battery; /// Battery current, in 10*milliamperes (1 = 10 milliampere), -1: autopilot does not measure the current
 		public int current_consumed; /// Consumed charge, in milliampere hours (1 = 1 mAh), -1: autopilot does not provide mAh consumption estimate
 		public int energy_consumed; /// Consumed energy, in 100*Joules (intergrated U*I*dt)  (1 = 100 Joule), -1: autopilot does not provide energy consumption estimate
 		public byte battery_remaining; /// Remaining battery energy: (0%%: 0, 100%%: 100), -1: autopilot does not estimate the remaining battery
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=33)]
-	public struct mavlink_setpoint_8dof_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=39)]
+	public struct mavlink_autopilot_version_t
 	{
-		public byte target_system; /// System ID
-		public float val1; /// Value 1
-		public float val2; /// Value 2
-		public float val3; /// Value 3
-		public float val4; /// Value 4
-		public float val5; /// Value 5
-		public float val6; /// Value 6
-		public float val7; /// Value 7
-		public float val8; /// Value 8
+		public ulong capabilities; /// bitmask of capabilities (see MAV_PROTOCOL_CAPABILITY enum)
+		public uint flight_sw_version; /// Firmware version number
+		public uint middleware_sw_version; /// Middleware version number
+		public uint os_sw_version; /// Operating system version number
+		public uint board_version; /// HW / board version (last 8 bytes should be silicon ID, if any)
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=8)]
+		public byte[] flight_custom_version; /// Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=8)]
+		public byte[] middleware_custom_version; /// Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=8)]
+		public byte[] os_custom_version; /// Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.
+		public ushort vendor_id; /// ID of the board vendor
+		public ushort product_id; /// ID of the product
+		public ulong uid; /// UID if provided by hardware
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=25)]
-	public struct mavlink_setpoint_6dof_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=6)]
+	public struct mavlink_v2_extension_t
 	{
-		public byte target_system; /// System ID
-		public float trans_x; /// Translational Component in x
-		public float trans_y; /// Translational Component in y
-		public float trans_z; /// Translational Component in z
-		public float rot_x; /// Rotational Component in x
-		public float rot_y; /// Rotational Component in y
-		public float rot_z; /// Rotational Component in z
+		public byte target_network; /// Network ID (0 for broadcast)
+		public byte target_system; /// System ID (0 for broadcast)
+		public byte target_component; /// Component ID (0 for broadcast)
+		public ushort message_type; /// A code that identifies the software component that understands this message (analogous to usb device classes or mime type strings).  If this code is less than 32768, it is considered a 'registered' protocol extension and the corresponding entry should be added to https://github.com/mavlink/mavlink/extension-message-ids.xml.  Software creators can register blocks of message IDs as needed (useful for GCS specific metadata, etc...). Message_types greater than 32767 are considered local experiments and should not be checked in to any widely distributed codebase.
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=249)]
+		public byte[] payload; /// Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields.  The entire content of this block is opaque unless you understand any the encoding message_type.  The particular encoding used can be extension specific and might not always be documented as part of the mavlink specification.
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=5)]
@@ -1217,300 +1515,267 @@
 		public float value; /// DEBUG value
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=42)]
-	public struct mavlink_sensor_offsets_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=11)]
+	public struct mavlink_set_cam_shutter_t
 	{
-		public short mag_ofs_x; /// magnetometer X offset
-		public short mag_ofs_y; /// magnetometer Y offset
-		public short mag_ofs_z; /// magnetometer Z offset
-		public float mag_declination; /// magnetic declination (radians)
-		public int raw_press; /// raw pressure from barometer
-		public int raw_temp; /// raw temperature from barometer
-		public float gyro_cal_x; /// gyro X calibration
-		public float gyro_cal_y; /// gyro Y calibration
-		public float gyro_cal_z; /// gyro Z calibration
-		public float accel_cal_x; /// accel X calibration
-		public float accel_cal_y; /// accel Y calibration
-		public float accel_cal_z; /// accel Z calibration
+		public byte cam_no; /// Camera id
+		public byte cam_mode; /// Camera mode: 0 = auto, 1 = manual
+		public byte trigger_pin; /// Trigger pin, 0-3 for PtGrey FireFly
+		public ushort interval; /// Shutter interval, in microseconds
+		public ushort exposure; /// Exposure time, in microseconds
+		public float gain; /// Camera gain
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=8)]
-	public struct mavlink_set_mag_offsets_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=52)]
+	public struct mavlink_image_triggered_t
+	{
+		public ulong timestamp; /// Timestamp
+		public uint seq; /// IMU seq
+		public float roll; /// Roll angle in rad
+		public float pitch; /// Pitch angle in rad
+		public float yaw; /// Yaw angle in rad
+		public float local_z; /// Local frame Z coordinate (height over ground)
+		public float lat; /// GPS X coordinate
+		public float lon; /// GPS Y coordinate
+		public float alt; /// Global frame altitude
+		public float ground_x; /// Ground truth X
+		public float ground_y; /// Ground truth Y
+		public float ground_z; /// Ground truth Z
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=1)]
+	public struct mavlink_image_trigger_control_t
+	{
+		public byte enable; /// 0 to disable, 1 to enable
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=92)]
+	public struct mavlink_image_available_t
+	{
+		public ulong cam_id; /// Camera id
+		public byte cam_no; /// Camera # (starts with 0)
+		public ulong timestamp; /// Timestamp
+		public ulong valid_until; /// Until which timestamp this buffer will stay valid
+		public uint img_seq; /// The image sequence number
+		public uint img_buf_index; /// Position of the image in the buffer, starts with 0
+		public ushort width; /// Image width
+		public ushort height; /// Image height
+		public ushort depth; /// Image depth
+		public byte channels; /// Image channels
+		public uint key; /// Shared memory area key
+		public uint exposure; /// Exposure time, in microseconds
+		public float gain; /// Camera gain
+		public float roll; /// Roll angle in rad
+		public float pitch; /// Pitch angle in rad
+		public float yaw; /// Yaw angle in rad
+		public float local_z; /// Local frame Z coordinate (height over ground)
+		public float lat; /// GPS X coordinate
+		public float lon; /// GPS Y coordinate
+		public float alt; /// Global frame altitude
+		public float ground_x; /// Ground truth X
+		public float ground_y; /// Ground truth Y
+		public float ground_z; /// Ground truth Z
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
+	public struct mavlink_set_position_control_offset_t
 	{
 		public byte target_system; /// System ID
 		public byte target_component; /// Component ID
-		public short mag_ofs_x; /// magnetometer X offset
-		public short mag_ofs_y; /// magnetometer Y offset
-		public short mag_ofs_z; /// magnetometer Z offset
+		public float x; /// x position offset
+		public float y; /// y position offset
+		public float z; /// z position offset
+		public float yaw; /// yaw orientation offset in radians, 0 = NORTH
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
+	public struct mavlink_position_control_setpoint_t
+	{
+		public ushort id; /// ID of waypoint, 0 for plain position
+		public float x; /// x position
+		public float y; /// y position
+		public float z; /// z position
+		public float yaw; /// yaw orientation in radians, 0 = NORTH
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=26)]
+	public struct mavlink_marker_t
+	{
+		public ushort id; /// ID
+		public float x; /// x position
+		public float y; /// y position
+		public float z; /// z position
+		public float roll; /// roll orientation
+		public float pitch; /// pitch orientation
+		public float yaw; /// yaw orientation
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=16)]
+	public struct mavlink_raw_aux_t
+	{
+		public ushort adc1; /// ADC1 (J405 ADC3, LPC2148 AD0.6)
+		public ushort adc2; /// ADC2 (J405 ADC5, LPC2148 AD0.2)
+		public ushort adc3; /// ADC3 (J405 ADC6, LPC2148 AD0.1)
+		public ushort adc4; /// ADC4 (J405 ADC7, LPC2148 AD1.3)
+		public ushort vbat; /// Battery voltage
+		public short temp; /// Temperature (degrees celcius)
+		public int baro; /// Barometric pressure (hecto Pascal)
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=4)]
-	public struct mavlink_meminfo_t
+	public struct mavlink_watchdog_heartbeat_t
 	{
-		public ushort brkval; /// heap top
-		public ushort freemem; /// free memory
+		public ushort watchdog_id; /// Watchdog ID
+		public ushort process_count; /// Number of processes
+	};
+
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=10)]
+	public struct mavlink_watchdog_process_info_t
+	{
+		public ushort watchdog_id; /// Watchdog ID
+		public ushort process_id; /// Process ID
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=100)]
+		public byte[] name; /// Process name
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=147)]
+		public byte[] arguments; /// Process arguments
+		public int timeout; /// Timeout (seconds)
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=12)]
-	public struct mavlink_ap_adc_t
+	public struct mavlink_watchdog_process_status_t
 	{
-		public ushort adc1; /// ADC output 1
-		public ushort adc2; /// ADC output 2
-		public ushort adc3; /// ADC output 3
-		public ushort adc4; /// ADC output 4
-		public ushort adc5; /// ADC output 5
-		public ushort adc6; /// ADC output 6
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=15)]
-	public struct mavlink_digicam_configure_t
-	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public byte mode; /// Mode enumeration from 1 to N //P, TV, AV, M, Etc (0 means ignore)
-		public ushort shutter_speed; /// Divisor number //e.g. 1000 means 1/1000 (0 means ignore)
-		public byte aperture; /// F stop number x 10 //e.g. 28 means 2.8 (0 means ignore)
-		public byte iso; /// ISO enumeration from 1 to N //e.g. 80, 100, 200, Etc (0 means ignore)
-		public byte exposure_type; /// Exposure type enumeration from 1 to N (0 means ignore)
-		public byte command_id; /// Command Identity (incremental loop: 0 to 255)//A command sent multiple times will be executed or pooled just once
-		public byte engine_cut_off; /// Main engine cut-off time before camera trigger in seconds/10 (0 means no cut-off)
-		public byte extra_param; /// Extra parameters enumeration (0 means ignore)
-		public float extra_value; /// Correspondent value to given extra_param
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=13)]
-	public struct mavlink_digicam_control_t
-	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public byte session; /// 0: stop, 1: start or keep it up //Session control e.g. show/hide lens
-		public byte zoom_pos; /// 1 to N //Zoom's absolute position (0 means ignore)
-		public byte zoom_step; /// -100 to 100 //Zooming step value to offset zoom from the current position
-		public byte focus_lock; /// 0: unlock focus or keep unlocked, 1: lock focus or keep locked, 3: re-lock focus
-		public byte shot; /// 0: ignore, 1: shot or start filming
-		public byte command_id; /// Command Identity (incremental loop: 0 to 255)//A command sent multiple times will be executed or pooled just once
-		public byte extra_param; /// Extra parameters enumeration (0 means ignore)
-		public float extra_value; /// Correspondent value to given extra_param
+		public ushort watchdog_id; /// Watchdog ID
+		public ushort process_id; /// Process ID
+		public byte state; /// Is running / finished / suspended / crashed
+		public byte muted; /// Is muted
+		public int pid; /// PID
+		public ushort crashes; /// Number of crashes
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=6)]
-	public struct mavlink_mount_configure_t
+	public struct mavlink_watchdog_command_t
 	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public byte mount_mode; /// mount operating mode (see MAV_MOUNT_MODE enum)
-		public byte stab_roll; /// (1 = yes, 0 = no)
-		public byte stab_pitch; /// (1 = yes, 0 = no)
-		public byte stab_yaw; /// (1 = yes, 0 = no)
+		public byte target_system_id; /// Target system ID
+		public ushort watchdog_id; /// Watchdog ID
+		public ushort process_id; /// Process ID
+		public byte command_id; /// Command ID
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=15)]
-	public struct mavlink_mount_control_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=7)]
+	public struct mavlink_pattern_detected_t
 	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public int input_a; /// pitch(deg*100) or lat, depending on mount mode
-		public int input_b; /// roll(deg*100) or lon depending on mount mode
-		public int input_c; /// yaw(deg*100) or alt (in cm) depending on mount mode
-		public byte save_position; /// if "1" it will save current trimmed position on EEPROM (just valid for NEUTRAL and LANDING)
+		public byte type; /// 0: Pattern, 1: Letter
+		public float confidence; /// Confidence of detection
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=100)]
+		public byte[] file; /// Pattern file name
+		public byte detected; /// Accepted as true detection, 0 no, 1 yes
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=14)]
-	public struct mavlink_mount_status_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=18)]
+	public struct mavlink_point_of_interest_t
 	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public int pointing_a; /// pitch(deg*100) or lat, depending on mount mode
-		public int pointing_b; /// roll(deg*100) or lon depending on mount mode
-		public int pointing_c; /// yaw(deg*100) or alt (in cm) depending on mount mode
+		public byte type; /// 0: Notice, 1: Warning, 2: Critical, 3: Emergency, 4: Debug
+		public byte color; /// 0: blue, 1: yellow, 2: red, 3: orange, 4: green, 5: magenta
+		public byte coordinate_system; /// 0: global, 1:local
+		public ushort timeout; /// 0: no timeout, >1: timeout in seconds
+		public float x; /// X Position
+		public float y; /// Y Position
+		public float z; /// Z Position
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=26)]
+		public byte[] name; /// POI name
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=12)]
-	public struct mavlink_fence_point_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=30)]
+	public struct mavlink_point_of_interest_connection_t
 	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public byte idx; /// point index (first point is 1, 0 is for return point)
-		public byte count; /// total number of points (for sanity checking)
-		public float lat; /// Latitude of point
-		public float lng; /// Longitude of point
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
-	public struct mavlink_fence_fetch_point_t
-	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public byte idx; /// point index (first point is 1, 0 is for return point)
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=8)]
-	public struct mavlink_fence_status_t
-	{
-		public byte breach_status; /// 0 if currently inside fence, 1 if outside
-		public ushort breach_count; /// number of fence breaches
-		public byte breach_type; /// last breach type (see FENCE_BREACH_* enum)
-		public uint breach_time; /// time of last breach in milliseconds since boot
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=28)]
-	public struct mavlink_ahrs_t
-	{
-		public float omegaIx; /// X gyro drift estimate rad/s
-		public float omegaIy; /// Y gyro drift estimate rad/s
-		public float omegaIz; /// Z gyro drift estimate rad/s
-		public float accel_weight; /// average accel_weight
-		public float renorm_val; /// average renormalisation value
-		public float error_rp; /// average error_roll_pitch value
-		public float error_yaw; /// average error_yaw value
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=44)]
-	public struct mavlink_simstate_t
-	{
-		public float roll; /// Roll angle (rad)
-		public float pitch; /// Pitch angle (rad)
-		public float yaw; /// Yaw angle (rad)
-		public float xacc; /// X acceleration m/s/s
-		public float yacc; /// Y acceleration m/s/s
-		public float zacc; /// Z acceleration m/s/s
-		public float xgyro; /// Angular speed around X axis rad/s
-		public float ygyro; /// Angular speed around Y axis rad/s
-		public float zgyro; /// Angular speed around Z axis rad/s
-		public int lat; /// Latitude in degrees * 1E7
-		public int lng; /// Longitude in degrees * 1E7
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
-	public struct mavlink_hwstatus_t
-	{
-		public ushort Vcc; /// board voltage (mV)
-		public byte I2Cerr; /// I2C error count
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=9)]
-	public struct mavlink_radio_t
-	{
-		public byte rssi; /// local signal strength
-		public byte remrssi; /// remote signal strength
-		public byte txbuf; /// how full the tx buffer is as a percentage
-		public byte noise; /// background noise level
-		public byte remnoise; /// remote background noise level
-		public ushort rxerrors; /// receive errors
-		public ushort fixed; /// count of error corrected packets
+		public byte type; /// 0: Notice, 1: Warning, 2: Critical, 3: Emergency, 4: Debug
+		public byte color; /// 0: blue, 1: yellow, 2: red, 3: orange, 4: green, 5: magenta
+		public byte coordinate_system; /// 0: global, 1:local
+		public ushort timeout; /// 0: no timeout, >1: timeout in seconds
+		public float xp1; /// X1 Position
+		public float yp1; /// Y1 Position
+		public float zp1; /// Z1 Position
+		public float xp2; /// X2 Position
+		public float yp2; /// Y2 Position
+		public float zp2; /// Z2 Position
+		[MarshalAs(
+			UnmanagedType.ByValArray,
+			SizeConst=26)]
+		public byte[] name; /// POI connection name
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=22)]
-	public struct mavlink_limits_status_t
+	public struct mavlink_brief_feature_t
 	{
-		public byte limits_state; /// state of AP_Limits, (see enum LimitState, LIMITS_STATE)
-		public uint last_trigger; /// time of last breach in milliseconds since boot
-		public uint last_action; /// time of last recovery action in milliseconds since boot
-		public uint last_recovery; /// time of last successful recovery in milliseconds since boot
-		public uint last_clear; /// time of last all-clear in milliseconds since boot
-		public ushort breach_count; /// number of fence breaches
-		public byte mods_enabled; /// AP_Limit_Module bitfield of enabled modules, (see enum moduleid or LIMIT_MODULE)
-		public byte mods_required; /// AP_Limit_Module bitfield of required modules, (see enum moduleid or LIMIT_MODULE)
-		public byte mods_triggered; /// AP_Limit_Module bitfield of triggered modules, (see enum moduleid or LIMIT_MODULE)
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=12)]
-	public struct mavlink_wind_t
-	{
-		public float direction; /// wind direction that wind is coming from (degrees)
-		public float speed; /// wind speed in ground plane (m/s)
-		public float speed_z; /// vertical wind speed (m/s)
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
-	public struct mavlink_data16_t
-	{
-		public byte type; /// data type
-		public byte len; /// data length
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=16)]
-		public byte[] data; /// raw data
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
-	public struct mavlink_data32_t
-	{
-		public byte type; /// data type
-		public byte len; /// data length
+		public float x; /// x position in m
+		public float y; /// y position in m
+		public float z; /// z position in m
+		public byte orientation_assignment; /// Orientation assignment 0: false, 1:true
+		public ushort size; /// Size in pixels
+		public ushort orientation; /// Orientation
 		[MarshalAs(
 			UnmanagedType.ByValArray,
 			SizeConst=32)]
-		public byte[] data; /// raw data
+		public byte[] descriptor; /// Descriptor
+		public float response; /// Harris operator response at this location
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
-	public struct mavlink_data64_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=21)]
+	public struct mavlink_attitude_control_t
 	{
-		public byte type; /// data type
-		public byte len; /// data length
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=64)]
-		public byte[] data; /// raw data
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
-	public struct mavlink_data96_t
-	{
-		public byte type; /// data type
-		public byte len; /// data length
-		[MarshalAs(
-			UnmanagedType.ByValArray,
-			SizeConst=96)]
-		public byte[] data; /// raw data
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=8)]
-	public struct mavlink_rangefinder_t
-	{
-		public float distance; /// distance in meters
-		public float voltage; /// raw voltage if available, zero otherwise
+		public byte target; /// The system to be controlled
+		public float roll; /// roll
+		public float pitch; /// pitch
+		public float yaw; /// yaw
+		public float thrust; /// thrust
+		public byte roll_manual; /// roll control enabled auto:0, manual:1
+		public byte pitch_manual; /// pitch auto:0, manual:1
+		public byte yaw_manual; /// yaw auto:0, manual:1
+		public byte thrust_manual; /// thrust auto:0, manual:1
 	};
 
 	[StructLayout(LayoutKind.Sequential,Pack=1, Size=48)]
-	public struct mavlink_airspeed_autocal_t
+	public struct mavlink_detection_stats_t
 	{
-		public float vx; /// GPS velocity north m/s
-		public float vy; /// GPS velocity east m/s
-		public float vz; /// GPS velocity down m/s
-		public float diff_pressure; /// Differential pressure pascals
-		public float EAS2TAS; /// Estimated to true airspeed ratio
-		public float ratio; /// Airspeed ratio
-		public float state_x; /// EKF state x
-		public float state_y; /// EKF state y
-		public float state_z; /// EKF state z
-		public float Pax; /// EKF Pax
-		public float Pby; /// EKF Pby
-		public float Pcz; /// EKF Pcz
+		public uint detections; /// Number of detections
+		public uint cluster_iters; /// Number of cluster iterations
+		public float best_score; /// Best score
+		public int best_lat; /// Latitude of the best detection * 1E7
+		public int best_lon; /// Longitude of the best detection * 1E7
+		public int best_alt; /// Altitude of the best detection * 1E3
+		public uint best_detection_id; /// Best detection ID
+		public uint best_cluster_id; /// Best cluster ID
+		public uint best_cluster_iter_id; /// Best cluster ID
+		public uint images_done; /// Number of images already processed
+		public uint images_todo; /// Number of images still to process
+		public float fps; /// Average images per seconds processed
 	};
 
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=19)]
-	public struct mavlink_rally_point_t
+	[StructLayout(LayoutKind.Sequential,Pack=1, Size=39)]
+	public struct mavlink_onboard_health_t
 	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public byte idx; /// point index (first point is 0)
-		public byte count; /// total number of points (for sanity checking)
-		public int lat; /// Latitude of point in degrees * 1E7
-		public int lng; /// Longitude of point in degrees * 1E7
-		public short alt; /// Transit / loiter altitude in meters relative to home
-		public short break_alt; /// Break altitude in meters relative to home
-		public ushort land_dir; /// Heading to aim for when landing. In centi-degrees.
-		public byte flags; /// See RALLY_FLAGS enum for definition of the bitmask.
-	};
-
-	[StructLayout(LayoutKind.Sequential,Pack=1, Size=3)]
-	public struct mavlink_rally_fetch_point_t
-	{
-		public byte target_system; /// System ID
-		public byte target_component; /// Component ID
-		public byte idx; /// point index (first point is 0)
+		public uint uptime; /// Uptime of system
+		public ushort cpu_freq; /// CPU frequency
+		public byte cpu_load; /// CPU load in percent
+		public byte ram_usage; /// RAM usage in percent
+		public float ram_total; /// RAM size in GiB
+		public byte swap_usage; /// Swap usage in percent
+		public float swap_total; /// Swap size in GiB
+		public byte disk_health; /// Disk health (-1: N/A, 0: ERR, 1: RO, 2: RW)
+		public byte disk_usage; /// Disk usage in percent
+		public float disk_total; /// Disk total in GiB
+		public float temp; /// Temperature
+		public float voltage; /// Supply voltage V
+		public float network_load_in; /// Network load inbound KiB/s
+		public float network_load_out; /// Network load outbound in KiB/s 
 	};
 
 	public static readonly Type[] MAVLINK_MESSAGE_INFO = new Type[] {
@@ -1564,22 +1829,22 @@
 			typeof( mavlink_mission_ack_t),			// message 47
 			typeof( mavlink_set_gps_global_origin_t),			// message 48
 			typeof( mavlink_gps_global_origin_t),			// message 49
-			typeof( mavlink_set_local_position_setpoint_t),			// message 50
-			typeof( mavlink_local_position_setpoint_t),			// message 51
-			typeof( mavlink_global_position_setpoint_int_t),			// message 52
-			typeof( mavlink_set_global_position_setpoint_int_t),			// message 53
+			typeof( mavlink_param_map_rc_t),			// message 50
+			null,			 //message 51
+			null,			 //message 52
+			null,			 //message 53
 			typeof( mavlink_safety_set_allowed_area_t),			// message 54
 			typeof( mavlink_safety_allowed_area_t),			// message 55
-			typeof( mavlink_set_roll_pitch_yaw_thrust_t),			// message 56
-			typeof( mavlink_set_roll_pitch_yaw_speed_thrust_t),			// message 57
-			typeof( mavlink_roll_pitch_yaw_thrust_setpoint_t),			// message 58
-			typeof( mavlink_roll_pitch_yaw_speed_thrust_setpoint_t),			// message 59
-			typeof( mavlink_set_quad_motors_setpoint_t),			// message 60
-			typeof( mavlink_set_quad_swarm_roll_pitch_yaw_thrust_t),			// message 61
+			null,			 //message 56
+			null,			 //message 57
+			null,			 //message 58
+			null,			 //message 59
+			null,			 //message 60
+			typeof( mavlink_attitude_quaternion_cov_t),			// message 61
 			typeof( mavlink_nav_controller_output_t),			// message 62
-			typeof( mavlink_set_quad_swarm_led_roll_pitch_yaw_thrust_t),			// message 63
-			typeof( mavlink_state_correction_t),			// message 64
-			null,			 //message 65
+			typeof( mavlink_global_position_int_cov_t),			// message 63
+			typeof( mavlink_local_position_ned_cov_t),			// message 64
+			typeof( mavlink_rc_channels_t),			// message 65
 			typeof( mavlink_request_data_stream_t),			// message 66
 			typeof( mavlink_data_stream_t),			// message 67
 			null,			 //message 68
@@ -1587,21 +1852,21 @@
 			typeof( mavlink_rc_channels_override_t),			// message 70
 			null,			 //message 71
 			null,			 //message 72
-			null,			 //message 73
+			typeof( mavlink_mission_item_int_t),			// message 73
 			typeof( mavlink_vfr_hud_t),			// message 74
-			null,			 //message 75
+			typeof( mavlink_command_int_t),			// message 75
 			typeof( mavlink_command_long_t),			// message 76
 			typeof( mavlink_command_ack_t),			// message 77
 			null,			 //message 78
 			null,			 //message 79
-			typeof( mavlink_roll_pitch_yaw_rates_thrust_setpoint_t),			// message 80
+			null,			 //message 80
 			typeof( mavlink_manual_setpoint_t),			// message 81
-			null,			 //message 82
-			null,			 //message 83
-			null,			 //message 84
-			null,			 //message 85
-			null,			 //message 86
-			null,			 //message 87
+			typeof( mavlink_set_attitude_target_t),			// message 82
+			typeof( mavlink_attitude_target_t),			// message 83
+			typeof( mavlink_set_position_target_local_ned_t),			// message 84
+			typeof( mavlink_position_target_local_ned_t),			// message 85
+			typeof( mavlink_set_position_target_global_int_t),			// message 86
+			typeof( mavlink_position_target_global_int_t),			// message 87
 			null,			 //message 88
 			typeof( mavlink_local_position_ned_system_global_offset_t),			// message 89
 			typeof( mavlink_hil_state_t),			// message 90
@@ -1620,13 +1885,13 @@
 			typeof( mavlink_vision_speed_estimate_t),			// message 103
 			typeof( mavlink_vicon_position_estimate_t),			// message 104
 			typeof( mavlink_highres_imu_t),			// message 105
-			typeof( mavlink_omnidirectional_flow_t),			// message 106
+			typeof( mavlink_optical_flow_rad_t),			// message 106
 			typeof( mavlink_hil_sensor_t),			// message 107
 			typeof( mavlink_sim_state_t),			// message 108
 			typeof( mavlink_radio_status_t),			// message 109
-			typeof( mavlink_file_transfer_start_t),			// message 110
-			typeof( mavlink_file_transfer_dir_list_t),			// message 111
-			typeof( mavlink_file_transfer_res_t),			// message 112
+			typeof( mavlink_file_transfer_protocol_t),			// message 110
+			typeof( mavlink_timesync_t),			// message 111
+			null,			 //message 112
 			typeof( mavlink_hil_gps_t),			// message 113
 			typeof( mavlink_hil_optical_flow_t),			// message 114
 			typeof( mavlink_hil_state_quaternion_t),			// message 115
@@ -1637,24 +1902,24 @@
 			typeof( mavlink_log_data_t),			// message 120
 			typeof( mavlink_log_erase_t),			// message 121
 			typeof( mavlink_log_request_end_t),			// message 122
-			null,			 //message 123
-			null,			 //message 124
-			null,			 //message 125
-			null,			 //message 126
-			null,			 //message 127
-			null,			 //message 128
-			null,			 //message 129
-			null,			 //message 130
-			null,			 //message 131
-			null,			 //message 132
-			null,			 //message 133
-			null,			 //message 134
-			null,			 //message 135
-			null,			 //message 136
-			null,			 //message 137
-			null,			 //message 138
-			null,			 //message 139
-			null,			 //message 140
+			typeof( mavlink_gps_inject_data_t),			// message 123
+			typeof( mavlink_gps2_raw_t),			// message 124
+			typeof( mavlink_power_status_t),			// message 125
+			typeof( mavlink_serial_control_t),			// message 126
+			typeof( mavlink_gps_rtk_t),			// message 127
+			typeof( mavlink_gps2_rtk_t),			// message 128
+			typeof( mavlink_scaled_imu3_t),			// message 129
+			typeof( mavlink_data_transmission_handshake_t),			// message 130
+			typeof( mavlink_encapsulated_data_t),			// message 131
+			typeof( mavlink_distance_sensor_t),			// message 132
+			typeof( mavlink_terrain_request_t),			// message 133
+			typeof( mavlink_terrain_data_t),			// message 134
+			typeof( mavlink_terrain_check_t),			// message 135
+			typeof( mavlink_terrain_report_t),			// message 136
+			typeof( mavlink_scaled_pressure2_t),			// message 137
+			typeof( mavlink_att_pos_mocap_t),			// message 138
+			typeof( mavlink_set_actuator_control_target_t),			// message 139
+			typeof( mavlink_actuator_control_target_t),			// message 140
 			null,			 //message 141
 			null,			 //message 142
 			null,			 //message 143
@@ -1662,65 +1927,65 @@
 			null,			 //message 145
 			null,			 //message 146
 			typeof( mavlink_battery_status_t),			// message 147
-			typeof( mavlink_setpoint_8dof_t),			// message 148
-			typeof( mavlink_setpoint_6dof_t),			// message 149
-			typeof( mavlink_sensor_offsets_t),			// message 150
-			typeof( mavlink_set_mag_offsets_t),			// message 151
-			typeof( mavlink_meminfo_t),			// message 152
-			typeof( mavlink_ap_adc_t),			// message 153
-			typeof( mavlink_digicam_configure_t),			// message 154
-			typeof( mavlink_digicam_control_t),			// message 155
-			typeof( mavlink_mount_configure_t),			// message 156
-			typeof( mavlink_mount_control_t),			// message 157
-			typeof( mavlink_mount_status_t),			// message 158
+			typeof( mavlink_autopilot_version_t),			// message 148
+			null,			 //message 149
+			null,			 //message 150
+			typeof( mavlink_set_cam_shutter_t),			// message 151
+			typeof( mavlink_image_triggered_t),			// message 152
+			typeof( mavlink_image_trigger_control_t),			// message 153
+			typeof( mavlink_image_available_t),			// message 154
+			null,			 //message 155
+			null,			 //message 156
+			null,			 //message 157
+			null,			 //message 158
 			null,			 //message 159
-			typeof( mavlink_fence_point_t),			// message 160
-			typeof( mavlink_fence_fetch_point_t),			// message 161
-			typeof( mavlink_fence_status_t),			// message 162
-			typeof( mavlink_ahrs_t),			// message 163
-			typeof( mavlink_simstate_t),			// message 164
-			typeof( mavlink_hwstatus_t),			// message 165
-			typeof( mavlink_radio_t),			// message 166
-			typeof( mavlink_limits_status_t),			// message 167
-			typeof( mavlink_wind_t),			// message 168
-			typeof( mavlink_data16_t),			// message 169
-			typeof( mavlink_data32_t),			// message 170
-			typeof( mavlink_data64_t),			// message 171
-			typeof( mavlink_data96_t),			// message 172
-			typeof( mavlink_rangefinder_t),			// message 173
-			typeof( mavlink_airspeed_autocal_t),			// message 174
-			typeof( mavlink_rally_point_t),			// message 175
-			typeof( mavlink_rally_fetch_point_t),			// message 176
+			typeof( mavlink_set_position_control_offset_t),			// message 160
+			null,			 //message 161
+			null,			 //message 162
+			null,			 //message 163
+			null,			 //message 164
+			null,			 //message 165
+			null,			 //message 166
+			null,			 //message 167
+			null,			 //message 168
+			null,			 //message 169
+			typeof( mavlink_position_control_setpoint_t),			// message 170
+			typeof( mavlink_marker_t),			// message 171
+			typeof( mavlink_raw_aux_t),			// message 172
+			null,			 //message 173
+			null,			 //message 174
+			null,			 //message 175
+			null,			 //message 176
 			null,			 //message 177
 			null,			 //message 178
 			null,			 //message 179
-			null,			 //message 180
-			null,			 //message 181
-			null,			 //message 182
-			null,			 //message 183
+			typeof( mavlink_watchdog_heartbeat_t),			// message 180
+			typeof( mavlink_watchdog_process_info_t),			// message 181
+			typeof( mavlink_watchdog_process_status_t),			// message 182
+			typeof( mavlink_watchdog_command_t),			// message 183
 			null,			 //message 184
 			null,			 //message 185
 			null,			 //message 186
 			null,			 //message 187
 			null,			 //message 188
 			null,			 //message 189
-			null,			 //message 190
-			null,			 //message 191
-			null,			 //message 192
+			typeof( mavlink_pattern_detected_t),			// message 190
+			typeof( mavlink_point_of_interest_t),			// message 191
+			typeof( mavlink_point_of_interest_connection_t),			// message 192
 			null,			 //message 193
 			null,			 //message 194
-			null,			 //message 195
+			typeof( mavlink_brief_feature_t),			// message 195
 			null,			 //message 196
 			null,			 //message 197
 			null,			 //message 198
 			null,			 //message 199
-			null,			 //message 200
+			typeof( mavlink_attitude_control_t),			// message 200
 			null,			 //message 201
 			null,			 //message 202
 			null,			 //message 203
 			null,			 //message 204
-			null,			 //message 205
-			null,			 //message 206
+			typeof( mavlink_detection_stats_t),			// message 205
+			typeof( mavlink_onboard_health_t),			// message 206
 			null,			 //message 207
 			null,			 //message 208
 			null,			 //message 209
@@ -1762,7 +2027,7 @@
 			null,			 //message 245
 			null,			 //message 246
 			null,			 //message 247
-			null,			 //message 248
+			typeof( mavlink_v2_extension_t),			// message 248
 			typeof( mavlink_memory_vect_t),			// message 249
 			typeof( mavlink_debug_vect_t),			// message 250
 			typeof( mavlink_named_value_float_t),			// message 251

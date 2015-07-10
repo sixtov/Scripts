@@ -4,7 +4,7 @@
 %%~ loop simulations.
 function p = encodeValues_HIL_STATE_QUATERNION_v1_0(time_usec,attitude_quaternion,rollspeed,pitchspeed,yawspeed,lat,lon,alt,vx,vy,vz,ind_airspeed,true_airspeed,xacc,yacc,zacc)
 	S.time_usec = typecast(uint64(time_usec),'uint64');		% Timestamp (microseconds since UNIX epoch or microseconds since system boot)
-	S.attitude_quaternion = typecast(single(attitude_quaternion),'single');		% Vehicle attitude expressed as normalized quaternion
+	S.attitude_quaternion = typecast(single(attitude_quaternion),'single');		% Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
 	S.rollspeed = typecast(single(rollspeed),'single');		% Body frame roll / phi angular speed (rad/s)
 	S.pitchspeed = typecast(single(pitchspeed),'single');		% Body frame pitch / theta angular speed (rad/s)
 	S.yawspeed = typecast(single(yawspeed),'single');		% Body frame yaw / psi angular speed (rad/s)

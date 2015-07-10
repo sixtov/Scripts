@@ -10,14 +10,13 @@ typedef struct __mavlink_nav_controller_output_t
   float alt_error;  ///< Current altitude error in meters
   float aspd_error;  ///< Current airspeed error in meters/second
   float xtrack_error;  ///< Current crosstrack error on x-y plane in meters
-  float nav_wptrad;  ///< Navigation waypoint radius in meters
   int16_t nav_bearing;  ///< Current desired heading in degrees
   int16_t target_bearing;  ///< Bearing to current MISSION/target in degrees
   uint16_t wp_dist;  ///< Distance to active MISSION in meters
 } mavlink_nav_controller_output_t;
 
-#define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN 30
-#define MAVLINK_MSG_ID_62_LEN 30
+#define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN 26
+#define MAVLINK_MSG_ID_62_LEN 26
 
 #define MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_CRC 0
 #define MAVLINK_MSG_ID_62_CRC 0
@@ -25,17 +24,16 @@ typedef struct __mavlink_nav_controller_output_t
 #define MAVLINK_MESSAGE_INFO_NAV_CONTROLLER_OUTPUT \
 { \
   "NAV_CONTROLLER_OUTPUT", \
-  9, \
+  8, \
   { \
     { "nav_roll", NULL, MAVLINK_TYPE_FLOAT, 0, 0, offsetof(mavlink_nav_controller_output_t, nav_roll) }, \
     { "nav_pitch", NULL, MAVLINK_TYPE_FLOAT, 0, 4, offsetof(mavlink_nav_controller_output_t, nav_pitch) }, \
     { "alt_error", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_nav_controller_output_t, alt_error) }, \
     { "aspd_error", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_nav_controller_output_t, aspd_error) }, \
     { "xtrack_error", NULL, MAVLINK_TYPE_FLOAT, 0, 16, offsetof(mavlink_nav_controller_output_t, xtrack_error) }, \
-    { "nav_wptrad", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_nav_controller_output_t, nav_wptrad) }, \
-    { "nav_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 24, offsetof(mavlink_nav_controller_output_t, nav_bearing) }, \
-    { "target_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 26, offsetof(mavlink_nav_controller_output_t, target_bearing) }, \
-    { "wp_dist", NULL, MAVLINK_TYPE_UINT16_T, 0, 28, offsetof(mavlink_nav_controller_output_t, wp_dist) }, \
+    { "nav_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 20, offsetof(mavlink_nav_controller_output_t, nav_bearing) }, \
+    { "target_bearing", NULL, MAVLINK_TYPE_INT16_T, 0, 22, offsetof(mavlink_nav_controller_output_t, target_bearing) }, \
+    { "wp_dist", NULL, MAVLINK_TYPE_UINT16_T, 0, 24, offsetof(mavlink_nav_controller_output_t, wp_dist) }, \
   } \
 }
 
@@ -53,7 +51,6 @@ typedef struct __mavlink_nav_controller_output_t
  * @param alt_error Current altitude error in meters
  * @param aspd_error Current airspeed error in meters/second
  * @param xtrack_error Current crosstrack error on x-y plane in meters
- * @param nav_wptrad Navigation waypoint radius in meters
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_nav_controller_output_pack(
@@ -68,7 +65,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack(
 	,float alt_error
 	,float aspd_error
 	,float xtrack_error
-	,float nav_wptrad
 	)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
@@ -78,10 +74,9 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack(
 	_mav_put_float(buf, 8, alt_error);
 	_mav_put_float(buf, 12, aspd_error);
 	_mav_put_float(buf, 16, xtrack_error);
-	_mav_put_float(buf, 20, nav_wptrad);
-	_mav_put_int16_t(buf, 24, nav_bearing);
-	_mav_put_int16_t(buf, 26, target_bearing);
-	_mav_put_uint16_t(buf, 28, wp_dist);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #else
@@ -91,7 +86,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack(
 	packet.alt_error = alt_error;
 	packet.aspd_error = aspd_error;
 	packet.xtrack_error = xtrack_error;
-	packet.nav_wptrad = nav_wptrad;
 	packet.nav_bearing = nav_bearing;
 	packet.target_bearing = target_bearing;
 	packet.wp_dist = wp_dist;
@@ -122,7 +116,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack(
  * @param alt_error Current altitude error in meters
  * @param aspd_error Current airspeed error in meters/second
  * @param xtrack_error Current crosstrack error on x-y plane in meters
- * @param nav_wptrad Navigation waypoint radius in meters
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_nav_controller_output_pack_chan(
@@ -138,7 +131,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack_chan(
 	,float alt_error
 	,float aspd_error
 	,float xtrack_error
-	,float nav_wptrad
 	)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
@@ -148,10 +140,9 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack_chan(
 	_mav_put_float(buf, 8, alt_error);
 	_mav_put_float(buf, 12, aspd_error);
 	_mav_put_float(buf, 16, xtrack_error);
-	_mav_put_float(buf, 20, nav_wptrad);
-	_mav_put_int16_t(buf, 24, nav_bearing);
-	_mav_put_int16_t(buf, 26, target_bearing);
-	_mav_put_uint16_t(buf, 28, wp_dist);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #else
@@ -164,7 +155,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_pack_chan(
 	packet.alt_error = alt_error;
 	packet.aspd_error = aspd_error;
 	packet.xtrack_error = xtrack_error;
-	packet.nav_wptrad = nav_wptrad;
 
 	memcpy(_MAV_PAYLOAD_NON_CONST(msg), &packet, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #endif
@@ -204,7 +194,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_encode(
 	,nav_controller_output->alt_error
 	,nav_controller_output->aspd_error
 	,nav_controller_output->xtrack_error
-	,nav_controller_output->nav_wptrad
 	);
 }
 
@@ -238,7 +227,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_encode_chan(
 	,nav_controller_output->alt_error
 	,nav_controller_output->aspd_error
 	,nav_controller_output->xtrack_error
-	,nav_controller_output->nav_wptrad
 	);
 }
 
@@ -254,7 +242,6 @@ static inline uint16_t mavlink_msg_nav_controller_output_encode_chan(
  * @param alt_error Current altitude error in meters
  * @param aspd_error Current airspeed error in meters/second
  * @param xtrack_error Current crosstrack error on x-y plane in meters
- * @param nav_wptrad Navigation waypoint radius in meters
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
@@ -268,7 +255,6 @@ static inline void mavlink_msg_nav_controller_output_send(
 	,float alt_error
 	,float aspd_error
 	,float xtrack_error
-	,float nav_wptrad
 	)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
@@ -278,10 +264,9 @@ static inline void mavlink_msg_nav_controller_output_send(
 	_mav_put_float(buf, 8, alt_error);
 	_mav_put_float(buf, 12, aspd_error);
 	_mav_put_float(buf, 16, xtrack_error);
-	_mav_put_float(buf, 20, nav_wptrad);
-	_mav_put_int16_t(buf, 24, nav_bearing);
-	_mav_put_int16_t(buf, 26, target_bearing);
-	_mav_put_uint16_t(buf, 28, wp_dist);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT, buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_CRC);
@@ -299,7 +284,6 @@ static inline void mavlink_msg_nav_controller_output_send(
 	packet.alt_error = alt_error;
 	packet.aspd_error = aspd_error;
 	packet.xtrack_error = xtrack_error;
-	packet.nav_wptrad = nav_wptrad;
 #if MAVLINK_CRC_EXTRA
 
 	_mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT, (const char*)&packet, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_CRC);
@@ -322,7 +306,6 @@ static inline void mavlink_msg_wID_nav_controller_output_send(
 	,float alt_error
 	,float aspd_error
 	,float xtrack_error
-	,float nav_wptrad
 	)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
@@ -332,10 +315,9 @@ static inline void mavlink_msg_wID_nav_controller_output_send(
 	_mav_put_float(buf, 8, alt_error);
 	_mav_put_float(buf, 12, aspd_error);
 	_mav_put_float(buf, 16, xtrack_error);
-	_mav_put_float(buf, 20, nav_wptrad);
-	_mav_put_int16_t(buf, 24, nav_bearing);
-	_mav_put_int16_t(buf, 26, target_bearing);
-	_mav_put_uint16_t(buf, 28, wp_dist);
+	_mav_put_int16_t(buf, 20, nav_bearing);
+	_mav_put_int16_t(buf, 22, target_bearing);
+	_mav_put_uint16_t(buf, 24, wp_dist);
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT, buf, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_CRC);
@@ -353,7 +335,6 @@ static inline void mavlink_msg_wID_nav_controller_output_send(
 	packet.alt_error = alt_error;
 	packet.aspd_error = aspd_error;
 	packet.xtrack_error = xtrack_error;
-	packet.nav_wptrad = nav_wptrad;
 #if MAVLINK_CRC_EXTRA
 
 	_mav_wID_finalize_message_chan_send(chan, sID, cID, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT, (const char*)&packet, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN, MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_CRC);
@@ -449,16 +430,6 @@ static inline float mavlink_msg_nav_controller_output_get_xtrack_error(const mav
 }
 
 /**
- * @brief Get field nav_wptrad from nav_controller_output message
- *
- * @return Navigation waypoint radius in meters
- */
-static inline float mavlink_msg_nav_controller_output_get_nav_wptrad(const mavlink_message_t* msg)
-{
-	return _MAV_RETURN_float(msg,26);
-}
-
-/**
  * @brief Decode a nav_controller_output message into a struct
  *
  * @param msg The message to decode
@@ -475,7 +446,6 @@ static inline void mavlink_msg_nav_controller_output_decode(const mavlink_messag
 	nav_controller_output->alt_error = mavlink_msg_nav_controller_output_get_alt_error(msg);
 	nav_controller_output->aspd_error = mavlink_msg_nav_controller_output_get_aspd_error(msg);
 	nav_controller_output->xtrack_error = mavlink_msg_nav_controller_output_get_xtrack_error(msg);
-	nav_controller_output->nav_wptrad = mavlink_msg_nav_controller_output_get_nav_wptrad(msg);
 #else
 	memcpy(nav_controller_output, _MAV_PAYLOAD(msg), MAVLINK_MSG_ID_NAV_CONTROLLER_OUTPUT_LEN);
 #endif

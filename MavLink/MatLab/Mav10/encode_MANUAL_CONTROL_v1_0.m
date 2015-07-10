@@ -3,6 +3,17 @@
 %%~ joystick axes nomenclature, along with a joystick-like input device. Unused axes 
 %%~ can be disabled an buttons are also transmit as boolean values of their 
 function p = encode_MANUAL_CONTROL_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(11);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(69);
 	name = [ ...
 		{'target'}	 ... %% The system to be controlled.
 		{'x'}		 ... %% X-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid. Generally corresponds to forward(1000)-backward(-1000) movement on a joystick and the pitch of a vehicle.
@@ -14,7 +25,7 @@ function p = encode_MANUAL_CONTROL_v1_0(S)
 	byte = [ 1 2 2 2 2 2 ];
 	type = [ {'uint8'} {'int16'} {'int16'} {'int16'} {'int16'} {'uint16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode target data field
 	val = typecast(S.target,'uint8');
 	val = reshape(val,1,length(val));
@@ -45,4 +56,5 @@ function p = encode_MANUAL_CONTROL_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

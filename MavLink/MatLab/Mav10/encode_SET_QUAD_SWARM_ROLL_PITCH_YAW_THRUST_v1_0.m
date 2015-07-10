@@ -1,6 +1,17 @@
 %%  case: 61
 %%~ Setpoint for up to four quadrotors in a group / wing
 function p = encode_SET_QUAD_SWARM_ROLL_PITCH_YAW_THRUST_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(34);
+	sysid = uint8(S.sysid);
+	id = uint8(S.id);
+	messid = uint8(61);
 	name = [ ...
 		{'group'}	 ... %% ID of the quadrotor group (0 - 255, up to 256 groups supported)
 		{'mode'}	 ... %% ID of the flight mode (0 - 255, up to 256 modes supported)
@@ -12,7 +23,7 @@ function p = encode_SET_QUAD_SWARM_ROLL_PITCH_YAW_THRUST_v1_0(S)
 	byte = [ 1 1 8 8 8 8 ];
 	type = [ {'uint8'} {'uint8'} {'int16'} {'int16'} {'int16'} {'uint16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode group data field
 	val = typecast(S.group,'uint8');
 	val = reshape(val,1,length(val));
@@ -43,4 +54,5 @@ function p = encode_SET_QUAD_SWARM_ROLL_PITCH_YAW_THRUST_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

@@ -19,7 +19,7 @@ public class HIL_GPS_class //implements Loggable
 	public short	 fix_type;			 	// 0-1: no fix, 2: 2D fix, 3: 3D fix. Some applications will not use the value of this field unless it is at least two, so always correctly fill in the fix.
 	public int		 lat;					 	// Latitude (WGS84), in degrees * 1E7
 	public int		 lon;					 	// Longitude (WGS84), in degrees * 1E7
-	public int		 alt;					 	// Altitude (WGS84), in meters * 1000 (positive for up)
+	public int		 alt;					 	// Altitude (AMSL, not WGS84), in meters * 1000 (positive for up)
 	public int		 eph;					 	// GPS HDOP horizontal dilution of position in cm (m*100). If unknown, set to: 65535
 	public int		 epv;					 	// GPS VDOP vertical dilution of position in cm (m*100). If unknown, set to: 65535
 	public int		 vel;					 	// GPS ground speed (m/s * 100). If unknown, set to: 65535

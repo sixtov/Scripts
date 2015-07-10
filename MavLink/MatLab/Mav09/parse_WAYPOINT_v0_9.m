@@ -3,7 +3,7 @@
 %%~ of a waypoint and to set a waypoint on the system. The waypoint can be either 
 %%~ in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, 
 %%~ right handed, global frame is Z-up, right handed
-function S = parse_WAYPOINT_v0_9(S,p)
+function S = parse_WAYPOINT_v0_9(p)
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'target_component'} ... %% Component ID
@@ -22,9 +22,12 @@ function S = parse_WAYPOINT_v0_9(S,p)
 		];
 	byte = [ 1 1 2 1 1 1 1 4 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'uint8'} {'uint16'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

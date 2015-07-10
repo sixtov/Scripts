@@ -2,7 +2,7 @@
 %%~ The RAW values of the RC channels received. The standard PPM modulation is as follows: 
 %%~ 1000 microseconds: 0%, 2000 microseconds: 100%. Individual receivers/transmitters 
 %%~ might violate this specification.
-function S = parse_RC_CHANNELS_RAW_v0_9(S,p)
+function S = parse_RC_CHANNELS_RAW_v0_9(p)
 	name = [ ...
 		{'chan1_raw'}	 ... %% RC channel 1 value, in microseconds
 		{'chan2_raw'}	 ... %% RC channel 2 value, in microseconds
@@ -16,9 +16,12 @@ function S = parse_RC_CHANNELS_RAW_v0_9(S,p)
 		];
 	byte = [ 2 2 2 2 2 2 2 2 1 ];
 	type = [ {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint8'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

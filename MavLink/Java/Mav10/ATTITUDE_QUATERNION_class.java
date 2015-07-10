@@ -7,17 +7,18 @@
 Message ID: ATTITUDE_QUATERNION(31)
 --------------------------------------
 %%~ The attitude in the aeronautical frame (right-handed, Z-down, X-front, Y-right), 
-%%~ expressed as quaternion.
+%%~ expressed as quaternion. Quaternion order is w, x, y, z and a zero rotation would 
+%%~ be expressed as (1 0 0 0).
 --------------------------------------
 */
 public class ATTITUDE_QUATERNION_class //implements Loggable
 {
 	public static final int msgID = 31;
 	public long	 time_boot_ms; 	// Timestamp (milliseconds since system boot)
-	public float	 q1;			 	// Quaternion component 1
-	public float	 q2;			 	// Quaternion component 2
-	public float	 q3;			 	// Quaternion component 3
-	public float	 q4;			 	// Quaternion component 4
+	public float	 q1;			 	// Quaternion component 1, w (1 in null-rotation)
+	public float	 q2;			 	// Quaternion component 2, x (0 in null-rotation)
+	public float	 q3;			 	// Quaternion component 3, y (0 in null-rotation)
+	public float	 q4;			 	// Quaternion component 4, z (0 in null-rotation)
 	public float	 rollspeed;	 	// Roll angular speed (rad/s)
 	public float	 pitchspeed;	 	// Pitch angular speed (rad/s)
 	public float	 yawspeed;	 	// Yaw angular speed (rad/s)

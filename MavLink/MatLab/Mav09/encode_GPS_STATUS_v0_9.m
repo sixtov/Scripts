@@ -4,6 +4,17 @@
 %%~ for the global position estimate. This message can contain information 
 %%~ for up to 20 satellites.
 function p = encode_GPS_STATUS_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(101);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(27);
 	name = [ ...
 		{'satellites_visible'}	 ... %% Number of satellites visible
 		{'satellite_prn'}		 ... %% Global satellite ID
@@ -15,7 +26,7 @@ function p = encode_GPS_STATUS_v0_9(S)
 	byte = [ 1 20 20 20 20 20 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode satellites_visible data field
 	val = typecast(S.satellites_visible,'uint8');
 	val = reshape(val,1,length(val));
@@ -46,4 +57,5 @@ function p = encode_GPS_STATUS_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

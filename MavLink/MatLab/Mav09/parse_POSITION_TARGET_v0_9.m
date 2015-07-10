@@ -1,7 +1,7 @@
 %%  case: 63
 %%~ The goal position of the system. This position is the input to any navigation or 
 %%~ path planning algorithm and does NOT represent the current controller setpoint.
-function S = parse_POSITION_TARGET_v0_9(S,p)
+function S = parse_POSITION_TARGET_v0_9(p)
 	name = [ ...
 		{'x'}	 ... %% x position
 		{'y'}	 ... %% y position
@@ -10,9 +10,12 @@ function S = parse_POSITION_TARGET_v0_9(S,p)
 		];
 	byte = [ 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

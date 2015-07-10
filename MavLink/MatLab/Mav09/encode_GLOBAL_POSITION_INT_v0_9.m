@@ -2,6 +2,17 @@
 %%~ The filtered global position (e.g. fused GPS and accelerometers). The position is 
 %%~ in GPS-frame (right-handed, Z-up)
 function p = encode_GLOBAL_POSITION_INT_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(18);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(73);
 	name = [ ...
 		{'lat'}	 ... %% Latitude, expressed as * 1E7
 		{'lon'}	 ... %% Longitude, expressed as * 1E7
@@ -13,7 +24,7 @@ function p = encode_GLOBAL_POSITION_INT_v0_9(S)
 	byte = [ 4 4 4 2 2 2 ];
 	type = [ {'int32'} {'int32'} {'int32'} {'int16'} {'int16'} {'int16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode lat data field
 	val = typecast(S.lat,'int32');
 	val = reshape(val,1,length(val));
@@ -44,4 +55,5 @@ function p = encode_GLOBAL_POSITION_INT_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

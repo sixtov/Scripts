@@ -3,9 +3,20 @@
 %%~ This packet is useful for high throughput applications such as hardware in the 
 %%~ loop simulations.
 function p = encode_HIL_STATE_QUATERNION_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(64);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(115);
 	name = [ ...
 		{'time_usec'}			 ... %% Timestamp (microseconds since UNIX epoch or microseconds since system boot)
-		{'attitude_quaternion'}	 ... %% Vehicle attitude expressed as normalized quaternion
+		{'attitude_quaternion'}	 ... %% Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
 		{'rollspeed'}			 ... %% Body frame roll / phi angular speed (rad/s)
 		{'pitchspeed'}			 ... %% Body frame pitch / theta angular speed (rad/s)
 		{'yawspeed'}			 ... %% Body frame yaw / psi angular speed (rad/s)
@@ -24,7 +35,7 @@ function p = encode_HIL_STATE_QUATERNION_v1_0(S)
 	byte = [ 8 16 4 4 4 4 4 4 2 2 2 2 2 2 2 2 ];
 	type = [ {'uint64'} {'single'} {'single'} {'single'} {'single'} {'int32'} {'int32'} {'int32'} {'int16'} {'int16'} {'int16'} {'uint16'} {'uint16'} {'int16'} {'int16'} {'int16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode time_usec data field
 	val = typecast(S.time_usec,'uint64');
 	val = reshape(val,1,length(val));
@@ -105,4 +116,5 @@ function p = encode_HIL_STATE_QUATERNION_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

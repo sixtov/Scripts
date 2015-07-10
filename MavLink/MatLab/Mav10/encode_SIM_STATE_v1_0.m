@@ -1,11 +1,22 @@
 %%  case: 108
 %%~ Status of simulation environment, if used
 function p = encode_SIM_STATE_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(84);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(108);
 	name = [ ...
-		{'q1'}			 ... %% True attitude quaternion component 1
-		{'q2'}			 ... %% True attitude quaternion component 2
-		{'q3'}			 ... %% True attitude quaternion component 3
-		{'q4'}			 ... %% True attitude quaternion component 4
+		{'q1'}			 ... %% True attitude quaternion component 1, w (1 in null-rotation)
+		{'q2'}			 ... %% True attitude quaternion component 2, x (0 in null-rotation)
+		{'q3'}			 ... %% True attitude quaternion component 3, y (0 in null-rotation)
+		{'q4'}			 ... %% True attitude quaternion component 4, z (0 in null-rotation)
 		{'roll'}		 ... %% Attitude roll expressed as Euler angles, not recommended except for human-readable outputs
 		{'pitch'}		 ... %% Attitude pitch expressed as Euler angles, not recommended except for human-readable outputs
 		{'yaw'}			 ... %% Attitude yaw expressed as Euler angles, not recommended except for human-readable outputs
@@ -27,7 +38,7 @@ function p = encode_SIM_STATE_v1_0(S)
 	byte = [ 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode q1 data field
 	val = typecast(S.q1,'single');
 	val = reshape(val,1,length(val));
@@ -133,4 +144,5 @@ function p = encode_SIM_STATE_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

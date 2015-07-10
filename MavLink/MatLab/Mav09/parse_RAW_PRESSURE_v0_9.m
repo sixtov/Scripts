@@ -2,7 +2,7 @@
 %%~ The RAW pressure readings for the typical setup of one absolute pressure and one 
 %%~ differential pressure sensor. The sensor values should be the raw, UNSCALED ADC 
 %%~ values.
-function S = parse_RAW_PRESSURE_v0_9(S,p)
+function S = parse_RAW_PRESSURE_v0_9(p)
 	name = [ ...
 		{'usec'}		 ... %% Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		{'press_abs'}	 ... %% Absolute pressure (raw)
@@ -12,9 +12,12 @@ function S = parse_RAW_PRESSURE_v0_9(S,p)
 		];
 	byte = [ 8 2 2 2 2 ];
 	type = [ {'uint64'} {'int16'} {'int16'} {'int16'} {'int16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

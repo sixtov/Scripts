@@ -1,6 +1,17 @@
 %%  case: 111
 %%~ analog channels raw (counts from ADC 0-1024)
 function p = encode_ANALOG_RAW_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(40);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(111);
 	name = [ ...
 		{'chan01'}	 ... %% adc channel_01
 		{'chan02'}	 ... %% adc channel_02
@@ -23,7 +34,7 @@ function p = encode_ANALOG_RAW_v0_9(S)
 	byte = [ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 8 ];
 	type = [ {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint64'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode chan01 data field
 	val = typecast(S.chan01,'uint16');
 	val = reshape(val,1,length(val));
@@ -109,4 +120,5 @@ function p = encode_ANALOG_RAW_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

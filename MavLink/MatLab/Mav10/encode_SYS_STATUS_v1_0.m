@@ -12,6 +12,17 @@
 %%~ occured it should first move from active to critical to allow manual intervention 
 %%~ and then move to emergency after a certain timeout.
 function p = encode_SYS_STATUS_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(31);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(1);
 	name = [ ...
 		{'onboard_control_sensors_present'}	 ... %% Bitmask showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1: present. Indices defined by ENUM MAV_SYS_STATUS_SENSOR
 		{'onboard_control_sensors_enabled'}	 ... %% Bitmask showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSOR
@@ -30,7 +41,7 @@ function p = encode_SYS_STATUS_v1_0(S)
 	byte = [ 4 4 4 2 2 2 1 2 2 2 2 2 2 ];
 	type = [ {'uint32'} {'uint32'} {'uint32'} {'uint16'} {'uint16'} {'int16'} {'int8'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode onboard_control_sensors_present data field
 	val = typecast(S.onboard_control_sensors_present,'uint32');
 	val = reshape(val,1,length(val));
@@ -96,4 +107,5 @@ function p = encode_SYS_STATUS_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

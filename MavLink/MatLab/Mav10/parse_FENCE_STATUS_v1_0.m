@@ -1,6 +1,6 @@
 %%  case: 162
 %%~ Status of geo-fencing. Sent in extended      status stream when fencing enabled
-function S = parse_FENCE_STATUS_v1_0(S,p)
+function S = parse_FENCE_STATUS_v1_0(p)
 	name = [ ...
 		{'breach_status'}	 ... %% 0 if currently inside fence, 1 if outside
 		{'breach_count'}	 ... %% number of fence breaches
@@ -9,9 +9,12 @@ function S = parse_FENCE_STATUS_v1_0(S,p)
 		];
 	byte = [ 1 2 1 4 ];
 	type = [ {'uint8'} {'uint16'} {'uint8'} {'uint32'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

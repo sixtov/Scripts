@@ -1,6 +1,6 @@
 %%  case: 118
 %%~ Reply to LOG_REQUEST_LIST
-function S = parse_LOG_ENTRY_v1_0(S,p)
+function S = parse_LOG_ENTRY_v1_0(p)
 	name = [ ...
 		{'id'}			 ... %% Log id
 		{'num_logs'}	 ... %% Total number of logs
@@ -10,9 +10,12 @@ function S = parse_LOG_ENTRY_v1_0(S,p)
 		];
 	byte = [ 2 2 2 4 4 ];
 	type = [ {'uint16'} {'uint16'} {'uint16'} {'uint32'} {'uint32'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

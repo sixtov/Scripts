@@ -1,6 +1,17 @@
 %%  case: 121
 %%~ Message that provides Battery Current, Voltage, RPM, and an alert status
 function p = encode_BHM_CURRENT_VOLTAGE_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(48);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(121);
 	name = [ ...
 		{'fwd_mtr_cur'}	 ... %% Fwd Motor Current (A)
 		{'aft_mtr_cur'}	 ... %% Aft Motor Current (A)
@@ -18,7 +29,7 @@ function p = encode_BHM_CURRENT_VOLTAGE_v0_9(S)
 	byte = [ 4 4 4 4 4 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode fwd_mtr_cur data field
 	val = typecast(S.fwd_mtr_cur,'single');
 	val = reshape(val,1,length(val));
@@ -79,4 +90,5 @@ function p = encode_BHM_CURRENT_VOLTAGE_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

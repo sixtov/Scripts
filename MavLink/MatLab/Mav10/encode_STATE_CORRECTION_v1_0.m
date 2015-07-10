@@ -2,6 +2,17 @@
 %%~ Corrects the systems state by adding an error correction term to the position and 
 %%~ velocity, and by rotating the attitude by a correction angle.
 function p = encode_STATE_CORRECTION_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(36);
+	sysid = uint8(S.sysid);
+	id = uint8(S.id);
+	messid = uint8(64);
 	name = [ ...
 		{'xErr'}	 ... %% x position error
 		{'yErr'}	 ... %% y position error
@@ -16,7 +27,7 @@ function p = encode_STATE_CORRECTION_v1_0(S)
 	byte = [ 4 4 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode xErr data field
 	val = typecast(S.xErr,'single');
 	val = reshape(val,1,length(val));
@@ -62,4 +73,5 @@ function p = encode_STATE_CORRECTION_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

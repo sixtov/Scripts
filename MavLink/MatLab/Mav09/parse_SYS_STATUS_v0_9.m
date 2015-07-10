@@ -11,7 +11,7 @@
 %%~ to be active, but should start emergency procedures autonomously. After a failure 
 %%~ occured it should first move from active to critical to allow manual intervention 
 %%~ and then move to emergency after a certain timeout.
-function S = parse_SYS_STATUS_v0_9(S,p)
+function S = parse_SYS_STATUS_v0_9(p)
 	name = [ ...
 		{'mode'}				 ... %% System mode, see MAV_MODE ENUM in mavlink/include/mavlink_types.h
 		{'nav_mode'}			 ... %% Navigation mode, see MAV_NAV_MODE ENUM
@@ -23,9 +23,12 @@ function S = parse_SYS_STATUS_v0_9(S,p)
 		];
 	byte = [ 1 1 1 2 2 2 2 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

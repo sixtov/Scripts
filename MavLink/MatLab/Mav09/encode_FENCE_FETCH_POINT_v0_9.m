@@ -1,6 +1,17 @@
 %%  case: 161
 %%~ Request a current fence point from MAV
 function p = encode_FENCE_FETCH_POINT_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(3);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(161);
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'target_component'} ... %% Component ID
@@ -9,7 +20,7 @@ function p = encode_FENCE_FETCH_POINT_v0_9(S)
 	byte = [ 1 1 1 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode target_system data field
 	val = typecast(S.target_system,'uint8');
 	val = reshape(val,1,length(val));
@@ -25,4 +36,5 @@ function p = encode_FENCE_FETCH_POINT_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

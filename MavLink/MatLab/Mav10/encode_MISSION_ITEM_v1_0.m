@@ -5,6 +5,17 @@
 %%~ Local frame is Z-down, right handed (NED), global frame is Z-up, right 
 %%~ handed (ENU). See also http://qgroundcontrol.org/mavlink/waypoint_protocol.
 function p = encode_MISSION_ITEM_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(37);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(39);
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'target_component'} ... %% Component ID
@@ -13,18 +24,18 @@ function p = encode_MISSION_ITEM_v1_0(S)
 		{'command'}			 ... %% The scheduled action for the MISSION. see MAV_CMD in common.xml MAVLink specs
 		{'current'}			 ... %% false:0, true:1
 		{'autocontinue'}	 ... %% autocontinue to next wp
-		{'param1'}			 ... %% PARAM1 / For NAV command MISSIONs: Radius in which the MISSION is accepted as reached, in meters
-		{'param2'}			 ... %% PARAM2 / For NAV command MISSIONs: Time that the MAV should stay inside the PARAM1 radius before advancing, in milliseconds
-		{'param3'}			 ... %% PARAM3 / For LOITER command MISSIONs: Orbit to circle around the MISSION, in meters. If positive the orbit direction should be clockwise, if negative the orbit direction should be counter-clockwise.
-		{'param4'}			 ... %% PARAM4 / For NAV and LOITER command MISSIONs: Yaw orientation in degrees, [0..360] 0 = NORTH
+		{'param1'}			 ... %% PARAM1, see MAV_CMD enum
+		{'param2'}			 ... %% PARAM2, see MAV_CMD enum
+		{'param3'}			 ... %% PARAM3, see MAV_CMD enum
+		{'param4'}			 ... %% PARAM4, see MAV_CMD enum
 		{'x'}				 ... %% PARAM5 / local: x position, global: latitude
 		{'y'}				 ... %% PARAM6 / y position: global: longitude
-		{'z'}				 ... %% PARAM7 / z position: global: altitude
+		{'z'}				 ... %% PARAM7 / z position: global: altitude (relative or absolute, depending on frame.
 		];
 	byte = [ 1 1 2 1 2 1 1 4 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'uint8'} {'uint16'} {'uint8'} {'uint16'} {'uint8'} {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode target_system data field
 	val = typecast(S.target_system,'uint8');
 	val = reshape(val,1,length(val));
@@ -95,4 +106,5 @@ function p = encode_MISSION_ITEM_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

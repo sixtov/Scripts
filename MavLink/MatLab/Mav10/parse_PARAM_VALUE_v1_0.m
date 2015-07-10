@@ -2,7 +2,7 @@
 %%~ Emit the value of a onboard parameter. The inclusion of param_count and param_index 
 %%~ in the message allows the recipient to keep track of received parameters and 
 %%~ allows him to re-request missing parameters after a loss or timeout.
-function S = parse_PARAM_VALUE_v1_0(S,p)
+function S = parse_PARAM_VALUE_v1_0(p)
 	name = [ ...
 		{'param_id'}	 ... %% Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
 		{'param_value'}	 ... %% Onboard parameter value
@@ -12,9 +12,12 @@ function S = parse_PARAM_VALUE_v1_0(S,p)
 		];
 	byte = [ 16 4 1 2 2 ];
 	type = [ {'uint8'} {'single'} {'uint8'} {'uint16'} {'uint16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

@@ -4,6 +4,17 @@
 %%~ from this system appropriate (e.g. by laying out the user interface based on 
 %%~ the autopilot).
 function p = encode_HEARTBEAT_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(5);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(0);
 	name = [ ...
 		{'type'}			 ... %% Type of the MAV (quadrotor, helicopter, etc., up to 15 types, defined in MAV_TYPE ENUM)
 		{'autopilot'}		 ... %% Type of the Autopilot: 0: Generic, 1: PIXHAWK, 2: SLUGS, 3: Ardupilot (up to 15 types), defined in MAV_AUTOPILOT_TYPE ENUM
@@ -14,7 +25,7 @@ function p = encode_HEARTBEAT_v0_9(S)
 	byte = [ 1 1 1 1 1 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode type data field
 	val = typecast(S.type,'uint8');
 	val = reshape(val,1,length(val));
@@ -40,4 +51,5 @@ function p = encode_HEARTBEAT_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

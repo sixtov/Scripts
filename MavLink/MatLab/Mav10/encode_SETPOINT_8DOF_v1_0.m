@@ -1,6 +1,17 @@
 %%  case: 148
 %%~ Set the 8 DOF setpoint for a controller.
 function p = encode_SETPOINT_8DOF_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(33);
+	sysid = uint8(S.sysid);
+	id = uint8(S.id);
+	messid = uint8(148);
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'val1'}			 ... %% Value 1
@@ -15,7 +26,7 @@ function p = encode_SETPOINT_8DOF_v1_0(S)
 	byte = [ 1 4 4 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode target_system data field
 	val = typecast(S.target_system,'uint8');
 	val = reshape(val,1,length(val));
@@ -61,4 +72,5 @@ function p = encode_SETPOINT_8DOF_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

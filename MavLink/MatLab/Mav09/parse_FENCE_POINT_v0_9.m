@@ -1,7 +1,7 @@
 %%  case: 160
 %%~ A fence point. Used to set a point when from        GCS -> MAV. Also used to return 
 %%~ a point from MAV -> GCS
-function S = parse_FENCE_POINT_v0_9(S,p)
+function S = parse_FENCE_POINT_v0_9(p)
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'target_component'} ... %% Component ID
@@ -12,9 +12,12 @@ function S = parse_FENCE_POINT_v0_9(S,p)
 		];
 	byte = [ 1 1 1 1 4 4 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

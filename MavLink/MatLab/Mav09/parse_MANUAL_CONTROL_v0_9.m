@@ -1,5 +1,5 @@
 %%  case: 69
-function S = parse_MANUAL_CONTROL_v0_9(S,p)
+function S = parse_MANUAL_CONTROL_v0_9(p)
 	name = [ ...
 		{'target'}			 ... %% The system to be controlled
 		{'roll'}			 ... %% roll
@@ -13,9 +13,12 @@ function S = parse_MANUAL_CONTROL_v0_9(S,p)
 		];
 	byte = [ 1 4 4 4 4 1 1 1 1 ];
 	type = [ {'uint8'} {'single'} {'single'} {'single'} {'single'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

@@ -7,6 +7,6 @@ function p = encodeValues_SET_GPS_GLOBAL_ORIGIN_v1_0(target_system,latitude,long
 	S.target_system = typecast(uint8(target_system),'uint8');		% System ID
 	S.latitude = typecast(int32(latitude),'int32');		% Latitude (WGS84), in degrees * 1E7
 	S.longitude = typecast(int32(longitude),'int32');		% Longitude (WGS84, in degrees * 1E7
-	S.altitude = typecast(int32(altitude),'int32');		% Altitude (WGS84), in meters * 1000 (positive for up)
+	S.altitude = typecast(int32(altitude),'int32');		% Altitude (AMSL), in meters * 1000 (positive for up)
 	p = encode_SET_GPS_GLOBAL_ORIGIN_v1_0(S);
 return

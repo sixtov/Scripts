@@ -15,7 +15,7 @@ public class HIL_STATE_QUATERNION_class //implements Loggable
 {
 	public static final int msgID = 115;
 	public long	 time_usec;			 	// Timestamp (microseconds since UNIX epoch or microseconds since system boot)
-	public float[]	 attitude_quaternion = new float[16];		// Vehicle attitude expressed as normalized quaternion
+	public float[]	 attitude_quaternion = new float[16];		// Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
 	public float	 rollspeed;			 	// Body frame roll / phi angular speed (rad/s)
 	public float	 pitchspeed;			 	// Body frame pitch / theta angular speed (rad/s)
 	public float	 yawspeed;			 	// Body frame yaw / psi angular speed (rad/s)

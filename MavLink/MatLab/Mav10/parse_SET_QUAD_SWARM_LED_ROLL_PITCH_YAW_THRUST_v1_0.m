@@ -1,6 +1,6 @@
 %%  case: 63
 %%~ Setpoint for up to four quadrotors in a group / wing
-function S = parse_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_v1_0(S,p)
+function S = parse_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_v1_0(p)
 	name = [ ...
 		{'group'}		 ... %% ID of the quadrotor group (0 - 255, up to 256 groups supported)
 		{'mode'}		 ... %% ID of the flight mode (0 - 255, up to 256 modes supported)
@@ -14,9 +14,12 @@ function S = parse_SET_QUAD_SWARM_LED_ROLL_PITCH_YAW_THRUST_v1_0(S,p)
 		];
 	byte = [ 1 1 4 4 4 8 8 8 8 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'int16'} {'int16'} {'int16'} {'uint16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

@@ -6,7 +6,7 @@
 %%~ This will also ensure that multiple GCS all have an up-to-date list of all parameters. 
 %%~ If the sending GCS did not receive a PARAM_VALUE message within its timeout 
 %%~ time, it should re-send the PARAM_SET message.
-function S = parse_PARAM_SET_v0_9(S,p)
+function S = parse_PARAM_SET_v0_9(p)
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'target_component'} ... %% Component ID
@@ -15,9 +15,12 @@ function S = parse_PARAM_SET_v0_9(S,p)
 		];
 	byte = [ 1 1 15 4 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

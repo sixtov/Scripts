@@ -2,6 +2,17 @@
 %%~ This packet is useful for high throughput                 applications such as hardware 
 %%~ in the loop simulations.             
 function p = encode_HIL_STATE_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(56);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(67);
 	name = [ ...
 		{'usec'}		 ... %% Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		{'roll'}		 ... %% Roll angle (rad)
@@ -23,7 +34,7 @@ function p = encode_HIL_STATE_v0_9(S)
 	byte = [ 8 4 4 4 4 4 4 4 4 4 2 2 2 2 2 2 ];
 	type = [ {'uint64'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'int32'} {'int32'} {'int32'} {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode usec data field
 	val = typecast(S.usec,'uint64');
 	val = reshape(val,1,length(val));
@@ -104,4 +115,5 @@ function p = encode_HIL_STATE_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

@@ -1,6 +1,17 @@
 %%  case: 54
 %%~ Read out the safety zone the MAV currently assumes.
 function p = encode_SAFETY_ALLOWED_AREA_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(25);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(54);
 	name = [ ...
 		{'frame'}	 ... %% Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.
 		{'p1x'}		 ... %% x position 1 / Latitude 1
@@ -13,7 +24,7 @@ function p = encode_SAFETY_ALLOWED_AREA_v0_9(S)
 	byte = [ 1 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode frame data field
 	val = typecast(S.frame,'uint8');
 	val = reshape(val,1,length(val));
@@ -49,4 +60,5 @@ function p = encode_SAFETY_ALLOWED_AREA_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

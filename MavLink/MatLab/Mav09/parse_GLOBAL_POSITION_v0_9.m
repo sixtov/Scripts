@@ -1,7 +1,7 @@
 %%  case: 33
 %%~ The filtered global position (e.g. fused GPS and accelerometers). Coordinate frame 
 %%~ is right-handed, Z-axis up (GPS frame)
-function S = parse_GLOBAL_POSITION_v0_9(S,p)
+function S = parse_GLOBAL_POSITION_v0_9(p)
 	name = [ ...
 		{'usec'} ... %% Timestamp (microseconds since unix epoch)
 		{'lat'}	 ... %% Latitude, in degrees
@@ -13,9 +13,12 @@ function S = parse_GLOBAL_POSITION_v0_9(S,p)
 		];
 	byte = [ 8 4 4 4 4 4 4 ];
 	type = [ {'uint64'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

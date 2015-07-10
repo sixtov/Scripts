@@ -1,6 +1,17 @@
 %%  case: 53
 %%~ Set the current global position setpoint.
 function p = encode_SET_GLOBAL_POSITION_SETPOINT_INT_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(15);
+	sysid = uint8(S.sysid);
+	id = uint8(S.id);
+	messid = uint8(53);
 	name = [ ...
 		{'coordinate_frame'} ... %% Coordinate frame - valid values are only MAV_FRAME_GLOBAL or MAV_FRAME_GLOBAL_RELATIVE_ALT
 		{'latitude'}		 ... %% Latitude (WGS84), in degrees * 1E7
@@ -11,7 +22,7 @@ function p = encode_SET_GLOBAL_POSITION_SETPOINT_INT_v1_0(S)
 	byte = [ 1 4 4 4 2 ];
 	type = [ {'uint8'} {'int32'} {'int32'} {'int32'} {'int16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode coordinate_frame data field
 	val = typecast(S.coordinate_frame,'uint8');
 	val = reshape(val,1,length(val));
@@ -37,4 +48,5 @@ function p = encode_SET_GLOBAL_POSITION_SETPOINT_INT_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

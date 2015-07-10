@@ -1,13 +1,11 @@
 %%%%  case: 147
-%%~ Transmitte battery informations for a accu pack.
-function p = encodeValues_BATTERY_STATUS_v1_0(accu_id,voltage_cell_1,voltage_cell_2,voltage_cell_3,voltage_cell_4,voltage_cell_5,voltage_cell_6,current_battery,current_consumed,energy_consumed,battery_remaining)
-	S.accu_id = typecast(uint8(accu_id),'uint8');		% Accupack ID
-	S.voltage_cell_1 = typecast(uint16(voltage_cell_1),'uint16');		% Battery voltage of cell 1, in millivolts (1 = 1 millivolt)
-	S.voltage_cell_2 = typecast(uint16(voltage_cell_2),'uint16');		% Battery voltage of cell 2, in millivolts (1 = 1 millivolt), -1: no cell
-	S.voltage_cell_3 = typecast(uint16(voltage_cell_3),'uint16');		% Battery voltage of cell 3, in millivolts (1 = 1 millivolt), -1: no cell
-	S.voltage_cell_4 = typecast(uint16(voltage_cell_4),'uint16');		% Battery voltage of cell 4, in millivolts (1 = 1 millivolt), -1: no cell
-	S.voltage_cell_5 = typecast(uint16(voltage_cell_5),'uint16');		% Battery voltage of cell 5, in millivolts (1 = 1 millivolt), -1: no cell
-	S.voltage_cell_6 = typecast(uint16(voltage_cell_6),'uint16');		% Battery voltage of cell 6, in millivolts (1 = 1 millivolt), -1: no cell
+%%~ Battery information
+function p = encodeValues_BATTERY_STATUS_v1_0(id,battery_function,type,temperature,voltages,current_battery,current_consumed,energy_consumed,battery_remaining)
+	S.id = typecast(uint8(id),'uint8');		% Battery ID
+	S.battery_function = typecast(uint8(battery_function),'uint8');		% Function of the battery
+	S.type = typecast(uint8(type),'uint8');		% Type (chemistry) of the battery
+	S.temperature = typecast(int16(temperature),'int16');		% Temperature of the battery in centi-degrees celsius. INT16_MAX for unknown temperature.
+	S.voltages = typecast(uint16(voltages),'uint16');		% Battery voltage of cells, in millivolts (1 = 1 millivolt)
 	S.current_battery = typecast(int16(current_battery),'int16');		% Battery current, in 10*milliamperes (1 = 10 milliampere), -1: autopilot does not measure the current
 	S.current_consumed = typecast(int32(current_consumed),'int32');		% Consumed charge, in milliampere hours (1 = 1 mAh), -1: autopilot does not provide mAh consumption estimate
 	S.energy_consumed = typecast(int32(energy_consumed),'int32');		% Consumed energy, in 100*Joules (intergrated U*I*dt)  (1 = 100 Joule), -1: autopilot does not provide energy consumption estimate

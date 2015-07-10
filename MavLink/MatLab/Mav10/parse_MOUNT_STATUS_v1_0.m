@@ -1,6 +1,6 @@
 %%  case: 158
 %%~ Message with some status from APM to GCS about camera or antenna mount
-function S = parse_MOUNT_STATUS_v1_0(S,p)
+function S = parse_MOUNT_STATUS_v1_0(p)
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'target_component'} ... %% Component ID
@@ -10,9 +10,12 @@ function S = parse_MOUNT_STATUS_v1_0(S,p)
 		];
 	byte = [ 1 1 4 4 4 ];
 	type = [ {'uint8'} {'uint8'} {'int32'} {'int32'} {'int32'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

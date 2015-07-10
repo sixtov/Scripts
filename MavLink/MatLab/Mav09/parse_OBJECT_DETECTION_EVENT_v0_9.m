@@ -1,6 +1,6 @@
 %%  case: 140
 %%~ Object has been detected
-function S = parse_OBJECT_DETECTION_EVENT_v0_9(S,p)
+function S = parse_OBJECT_DETECTION_EVENT_v0_9(p)
 	name = [ ...
 		{'time'}		 ... %% Timestamp in milliseconds since system boot
 		{'object_id'}	 ... %% Object ID
@@ -12,9 +12,12 @@ function S = parse_OBJECT_DETECTION_EVENT_v0_9(S,p)
 		];
 	byte = [ 4 2 1 20 1 4 4 ];
 	type = [ {'uint32'} {'uint16'} {'uint8'} {'uint8'} {'uint8'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

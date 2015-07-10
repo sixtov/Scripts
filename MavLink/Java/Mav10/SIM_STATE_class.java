@@ -12,10 +12,10 @@ Message ID: SIM_STATE(108)
 public class SIM_STATE_class //implements Loggable
 {
 	public static final int msgID = 108;
-	public float	 q1;			 	// True attitude quaternion component 1
-	public float	 q2;			 	// True attitude quaternion component 2
-	public float	 q3;			 	// True attitude quaternion component 3
-	public float	 q4;			 	// True attitude quaternion component 4
+	public float	 q1;			 	// True attitude quaternion component 1, w (1 in null-rotation)
+	public float	 q2;			 	// True attitude quaternion component 2, x (0 in null-rotation)
+	public float	 q3;			 	// True attitude quaternion component 3, y (0 in null-rotation)
+	public float	 q4;			 	// True attitude quaternion component 4, z (0 in null-rotation)
 	public float	 roll;		 	// Attitude roll expressed as Euler angles, not recommended except for human-readable outputs
 	public float	 pitch;		 	// Attitude pitch expressed as Euler angles, not recommended except for human-readable outputs
 	public float	 yaw;			 	// Attitude yaw expressed as Euler angles, not recommended except for human-readable outputs

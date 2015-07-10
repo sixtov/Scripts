@@ -15,7 +15,7 @@ public class GPS_GLOBAL_ORIGIN_class //implements Loggable
 	public static final int msgID = 49;
 	public int	 latitude;	 	// Latitude (WGS84), in degrees * 1E7
 	public int	 longitude;	 	// Longitude (WGS84), in degrees * 1E7
-	public int	 altitude;	 	// Altitude (WGS84), in meters * 1000 (positive for up)
+	public int	 altitude;	 	// Altitude (AMSL), in meters * 1000 (positive for up)
 
 	private packet rcvPacket;
 	private packet sndPacket;

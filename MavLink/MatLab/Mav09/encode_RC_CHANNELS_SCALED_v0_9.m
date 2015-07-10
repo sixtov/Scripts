@@ -2,6 +2,17 @@
 %%~ The scaled values of the RC channels received. (-100%) -10000, (0%) 0, (100%) 
 %%~ 10000
 function p = encode_RC_CHANNELS_SCALED_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(17);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(36);
 	name = [ ...
 		{'chan1_scaled'} ... %% RC channel 1 value scaled, (-100%) -10000, (0%) 0, (100%) 10000
 		{'chan2_scaled'} ... %% RC channel 2 value scaled, (-100%) -10000, (0%) 0, (100%) 10000
@@ -16,7 +27,7 @@ function p = encode_RC_CHANNELS_SCALED_v0_9(S)
 	byte = [ 2 2 2 2 2 2 2 2 1 ];
 	type = [ {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} {'uint8'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode chan1_scaled data field
 	val = typecast(S.chan1_scaled,'int16');
 	val = reshape(val,1,length(val));
@@ -62,4 +73,5 @@ function p = encode_RC_CHANNELS_SCALED_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

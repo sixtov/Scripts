@@ -1,11 +1,11 @@
 %%  case: 108
 %%~ Status of simulation environment, if used
-function S = parse_SIM_STATE_v1_0(S,p)
+function S = parse_SIM_STATE_v1_0(p)
 	name = [ ...
-		{'q1'}			 ... %% True attitude quaternion component 1
-		{'q2'}			 ... %% True attitude quaternion component 2
-		{'q3'}			 ... %% True attitude quaternion component 3
-		{'q4'}			 ... %% True attitude quaternion component 4
+		{'q1'}			 ... %% True attitude quaternion component 1, w (1 in null-rotation)
+		{'q2'}			 ... %% True attitude quaternion component 2, x (0 in null-rotation)
+		{'q3'}			 ... %% True attitude quaternion component 3, y (0 in null-rotation)
+		{'q4'}			 ... %% True attitude quaternion component 4, z (0 in null-rotation)
 		{'roll'}		 ... %% Attitude roll expressed as Euler angles, not recommended except for human-readable outputs
 		{'pitch'}		 ... %% Attitude pitch expressed as Euler angles, not recommended except for human-readable outputs
 		{'yaw'}			 ... %% Attitude yaw expressed as Euler angles, not recommended except for human-readable outputs
@@ -26,9 +26,12 @@ function S = parse_SIM_STATE_v1_0(S,p)
 		];
 	byte = [ 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

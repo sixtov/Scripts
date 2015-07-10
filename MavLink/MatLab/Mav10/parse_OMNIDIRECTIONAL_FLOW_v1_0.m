@@ -1,6 +1,6 @@
 %%  case: 106
 %%~ Optical flow from an omnidirectional flow sensor (e.g. PX4FLOW with wide angle lens)
-function S = parse_OMNIDIRECTIONAL_FLOW_v1_0(S,p)
+function S = parse_OMNIDIRECTIONAL_FLOW_v1_0(p)
 	name = [ ...
 		{'time_usec'}		 ... %% Timestamp (microseconds, synced to UNIX time or since system boot)
 		{'sensor_id'}		 ... %% Sensor ID
@@ -11,9 +11,12 @@ function S = parse_OMNIDIRECTIONAL_FLOW_v1_0(S,p)
 		];
 	byte = [ 8 1 20 20 1 4 ];
 	type = [ {'uint64'} {'uint8'} {'int16'} {'int16'} {'uint8'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

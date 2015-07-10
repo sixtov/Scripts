@@ -1,6 +1,6 @@
 %%  case: 163
 %%~ Status of DCM attitude estimator
-function S = parse_AHRS_v1_0(S,p)
+function S = parse_AHRS_v1_0(p)
 	name = [ ...
 		{'omegaIx'}		 ... %% X gyro drift estimate rad/s
 		{'omegaIy'}		 ... %% Y gyro drift estimate rad/s
@@ -12,9 +12,12 @@ function S = parse_AHRS_v1_0(S,p)
 		];
 	byte = [ 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

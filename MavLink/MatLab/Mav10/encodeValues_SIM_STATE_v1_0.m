@@ -1,10 +1,10 @@
 %%%%  case: 108
 %%~ Status of simulation environment, if used
 function p = encodeValues_SIM_STATE_v1_0(q1,q2,q3,q4,roll,pitch,yaw,xacc,yacc,zacc,xgyro,ygyro,zgyro,lat,lon,alt,std_dev_horz,std_dev_vert,vn,ve,vd)
-	S.q1 = typecast(single(q1),'single');		% True attitude quaternion component 1
-	S.q2 = typecast(single(q2),'single');		% True attitude quaternion component 2
-	S.q3 = typecast(single(q3),'single');		% True attitude quaternion component 3
-	S.q4 = typecast(single(q4),'single');		% True attitude quaternion component 4
+	S.q1 = typecast(single(q1),'single');		% True attitude quaternion component 1, w (1 in null-rotation)
+	S.q2 = typecast(single(q2),'single');		% True attitude quaternion component 2, x (0 in null-rotation)
+	S.q3 = typecast(single(q3),'single');		% True attitude quaternion component 3, y (0 in null-rotation)
+	S.q4 = typecast(single(q4),'single');		% True attitude quaternion component 4, z (0 in null-rotation)
 	S.roll = typecast(single(roll),'single');		% Attitude roll expressed as Euler angles, not recommended except for human-readable outputs
 	S.pitch = typecast(single(pitch),'single');		% Attitude pitch expressed as Euler angles, not recommended except for human-readable outputs
 	S.yaw = typecast(single(yaw),'single');		% Attitude yaw expressed as Euler angles, not recommended except for human-readable outputs

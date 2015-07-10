@@ -1,6 +1,6 @@
 %%  case: 74
 %%~ Metrics typically displayed on a HUD for fixed wing aircraft
-function S = parse_VFR_HUD_v1_0(S,p)
+function S = parse_VFR_HUD_v1_0(p)
 	name = [ ...
 		{'airspeed'}	 ... %% Current airspeed in m/s
 		{'groundspeed'}	 ... %% Current ground speed in m/s
@@ -11,9 +11,12 @@ function S = parse_VFR_HUD_v1_0(S,p)
 		];
 	byte = [ 4 4 2 2 4 4 ];
 	type = [ {'single'} {'single'} {'int16'} {'uint16'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

@@ -17,7 +17,7 @@ public class GLOBAL_POSITION_INT_class //implements Loggable
 	public long	 time_boot_ms; 	// Timestamp (milliseconds since system boot)
 	public int		 lat;			 	// Latitude, expressed as * 1E7
 	public int		 lon;			 	// Longitude, expressed as * 1E7
-	public int		 alt;			 	// Altitude in meters, expressed as * 1000 (millimeters), above MSL
+	public int		 alt;			 	// Altitude in meters, expressed as * 1000 (millimeters), AMSL (not WGS84 - note that virtually all GPS modules provide the AMSL as well)
 	public int		 relative_alt; 	// Altitude above ground in meters, expressed as * 1000 (millimeters)
 	public short	 vx;			 	// Ground X Speed (Latitude), expressed as m/s * 100
 	public short	 vy;			 	// Ground Y Speed (Longitude), expressed as m/s * 100

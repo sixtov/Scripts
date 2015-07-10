@@ -1,6 +1,17 @@
 %%  case: 117
 %%~ Message that provides information about the state of the aircraft
 function p = encode_STATE_DATA_AUG_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(12);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(117);
 	name = [ ...
 		{'num'}		 ... %% Vehicle number, e.g. 1 for R1, 2 for R2, 3 for R3
 		{'atloiter'} ... %% if 0, vehicle is not currently loitering, if 1, vehicle is loitering
@@ -11,7 +22,7 @@ function p = encode_STATE_DATA_AUG_v0_9(S)
 	byte = [ 1 1 1 1 8 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint64'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode num data field
 	val = typecast(S.num,'uint8');
 	val = reshape(val,1,length(val));
@@ -37,4 +48,5 @@ function p = encode_STATE_DATA_AUG_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

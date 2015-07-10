@@ -3,6 +3,17 @@
 %%~ messages). The standard PPM modulation is as follows: 1000 microseconds: 
 %%~ 0%, 2000 microseconds: 100%.
 function p = encode_SERVO_OUTPUT_RAW_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(21);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(36);
 	name = [ ...
 		{'time_usec'}	 ... %% Timestamp (microseconds since system boot)
 		{'port'}		 ... %% Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows to encode more than 8 servos.
@@ -18,7 +29,7 @@ function p = encode_SERVO_OUTPUT_RAW_v1_0(S)
 	byte = [ 4 1 2 2 2 2 2 2 2 2 ];
 	type = [ {'uint32'} {'uint8'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode time_usec data field
 	val = typecast(S.time_usec,'uint32');
 	val = reshape(val,1,length(val));
@@ -69,4 +80,5 @@ function p = encode_SERVO_OUTPUT_RAW_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

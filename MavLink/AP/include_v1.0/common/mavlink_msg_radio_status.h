@@ -5,13 +5,13 @@
 
 typedef struct __mavlink_radio_status_t 
 { 
-  uint16_t rxerrors;  ///< receive errors
-  uint16_t fixed;  ///< count of error corrected packets
-  uint8_t rssi;  ///< local signal strength
-  uint8_t remrssi;  ///< remote signal strength
-  uint8_t txbuf;  ///< how full the tx buffer is as a percentage
-  uint8_t noise;  ///< background noise level
-  uint8_t remnoise;  ///< remote background noise level
+  uint16_t rxerrors;  ///< Receive errors
+  uint16_t fixed;  ///< Count of error corrected packets
+  uint8_t rssi;  ///< Local signal strength
+  uint8_t remrssi;  ///< Remote signal strength
+  uint8_t txbuf;  ///< Remaining free buffer space in percent.
+  uint8_t noise;  ///< Background noise level
+  uint8_t remnoise;  ///< Remote background noise level
 } mavlink_radio_status_t;
 
 #define MAVLINK_MSG_ID_RADIO_STATUS_LEN 9
@@ -41,13 +41,13 @@ typedef struct __mavlink_radio_status_t
  * @param component_id ID of this component (e.g. 200 for IMU)
  * @param msg The MAVLink message to compress the data into
  *
- * @param rssi local signal strength
- * @param remrssi remote signal strength
- * @param txbuf how full the tx buffer is as a percentage
- * @param noise background noise level
- * @param remnoise remote background noise level
- * @param rxerrors receive errors
- * @param fixed count of error corrected packets
+ * @param rssi Local signal strength
+ * @param remrssi Remote signal strength
+ * @param txbuf Remaining free buffer space in percent.
+ * @param noise Background noise level
+ * @param remnoise Remote background noise level
+ * @param rxerrors Receive errors
+ * @param fixed Count of error corrected packets
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_radio_status_pack(
@@ -102,13 +102,13 @@ static inline uint16_t mavlink_msg_radio_status_pack(
  * @param chan The MAVLink channel this message was sent over
  * @param msg The MAVLink message to compress the data into
  *
- * @param rssi local signal strength
- * @param remrssi remote signal strength
- * @param txbuf how full the tx buffer is as a percentage
- * @param noise background noise level
- * @param remnoise remote background noise level
- * @param rxerrors receive errors
- * @param fixed count of error corrected packets
+ * @param rssi Local signal strength
+ * @param remrssi Remote signal strength
+ * @param txbuf Remaining free buffer space in percent.
+ * @param noise Background noise level
+ * @param remnoise Remote background noise level
+ * @param rxerrors Receive errors
+ * @param fixed Count of error corrected packets
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_radio_status_pack_chan(
@@ -222,13 +222,13 @@ static inline uint16_t mavlink_msg_radio_status_encode_chan(
  * @brief Send a radio_status message
  * @param chan The MAVLink channel to send this message
  *
- * @param rssi local signal strength
- * @param remrssi remote signal strength
- * @param txbuf how full the tx buffer is as a percentage
- * @param noise background noise level
- * @param remnoise remote background noise level
- * @param rxerrors receive errors
- * @param fixed count of error corrected packets
+ * @param rssi Local signal strength
+ * @param remrssi Remote signal strength
+ * @param txbuf Remaining free buffer space in percent.
+ * @param noise Background noise level
+ * @param remnoise Remote background noise level
+ * @param rxerrors Receive errors
+ * @param fixed Count of error corrected packets
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
@@ -333,7 +333,7 @@ static inline void mavlink_msg_wID_radio_status_send(
 /**
  * @brief Get field rssi from radio_status message
  *
- * @return local signal strength
+ * @return Local signal strength
  */
 static inline uint8_t mavlink_msg_radio_status_get_rssi(const mavlink_message_t* msg)
 {
@@ -343,7 +343,7 @@ static inline uint8_t mavlink_msg_radio_status_get_rssi(const mavlink_message_t*
 /**
  * @brief Get field remrssi from radio_status message
  *
- * @return remote signal strength
+ * @return Remote signal strength
  */
 static inline uint8_t mavlink_msg_radio_status_get_remrssi(const mavlink_message_t* msg)
 {
@@ -353,7 +353,7 @@ static inline uint8_t mavlink_msg_radio_status_get_remrssi(const mavlink_message
 /**
  * @brief Get field txbuf from radio_status message
  *
- * @return how full the tx buffer is as a percentage
+ * @return Remaining free buffer space in percent.
  */
 static inline uint8_t mavlink_msg_radio_status_get_txbuf(const mavlink_message_t* msg)
 {
@@ -363,7 +363,7 @@ static inline uint8_t mavlink_msg_radio_status_get_txbuf(const mavlink_message_t
 /**
  * @brief Get field noise from radio_status message
  *
- * @return background noise level
+ * @return Background noise level
  */
 static inline uint8_t mavlink_msg_radio_status_get_noise(const mavlink_message_t* msg)
 {
@@ -373,7 +373,7 @@ static inline uint8_t mavlink_msg_radio_status_get_noise(const mavlink_message_t
 /**
  * @brief Get field remnoise from radio_status message
  *
- * @return remote background noise level
+ * @return Remote background noise level
  */
 static inline uint8_t mavlink_msg_radio_status_get_remnoise(const mavlink_message_t* msg)
 {
@@ -383,7 +383,7 @@ static inline uint8_t mavlink_msg_radio_status_get_remnoise(const mavlink_messag
 /**
  * @brief Get field rxerrors from radio_status message
  *
- * @return receive errors
+ * @return Receive errors
  */
 static inline uint16_t mavlink_msg_radio_status_get_rxerrors(const mavlink_message_t* msg)
 {
@@ -393,7 +393,7 @@ static inline uint16_t mavlink_msg_radio_status_get_rxerrors(const mavlink_messa
 /**
  * @brief Get field fixed from radio_status message
  *
- * @return count of error corrected packets
+ * @return Count of error corrected packets
  */
 static inline uint16_t mavlink_msg_radio_status_get_fixed(const mavlink_message_t* msg)
 {

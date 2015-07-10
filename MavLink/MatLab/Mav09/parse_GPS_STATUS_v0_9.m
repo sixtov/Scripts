@@ -3,7 +3,7 @@
 %%~ status information about each satellite visible to the receiver. See message GLOBAL_POSITION 
 %%~ for the global position estimate. This message can contain information 
 %%~ for up to 20 satellites.
-function S = parse_GPS_STATUS_v0_9(S,p)
+function S = parse_GPS_STATUS_v0_9(p)
 	name = [ ...
 		{'satellites_visible'}	 ... %% Number of satellites visible
 		{'satellite_prn'}		 ... %% Global satellite ID
@@ -14,9 +14,12 @@ function S = parse_GPS_STATUS_v0_9(S,p)
 		];
 	byte = [ 1 20 20 20 20 20 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

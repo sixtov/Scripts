@@ -6,7 +6,7 @@
 typedef struct __mavlink_hil_state_quaternion_t 
 { 
   uint64_t time_usec;  ///< Timestamp (microseconds since UNIX epoch or microseconds since system boot)
-  float attitude_quaternion[4];  ///< Vehicle attitude expressed as normalized quaternion
+  float attitude_quaternion[4];  ///< Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
   float rollspeed;  ///< Body frame roll / phi angular speed (rad/s)
   float pitchspeed;  ///< Body frame pitch / theta angular speed (rad/s)
   float yawspeed;  ///< Body frame yaw / psi angular speed (rad/s)
@@ -60,7 +60,7 @@ typedef struct __mavlink_hil_state_quaternion_t
  * @param msg The MAVLink message to compress the data into
  *
  * @param time_usec Timestamp (microseconds since UNIX epoch or microseconds since system boot)
- * @param attitude_quaternion Vehicle attitude expressed as normalized quaternion
+ * @param attitude_quaternion Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
  * @param rollspeed Body frame roll / phi angular speed (rad/s)
  * @param pitchspeed Body frame pitch / theta angular speed (rad/s)
  * @param yawspeed Body frame yaw / psi angular speed (rad/s)
@@ -157,7 +157,7 @@ static inline uint16_t mavlink_msg_hil_state_quaternion_pack(
  * @param msg The MAVLink message to compress the data into
  *
  * @param time_usec Timestamp (microseconds since UNIX epoch or microseconds since system boot)
- * @param attitude_quaternion Vehicle attitude expressed as normalized quaternion
+ * @param attitude_quaternion Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
  * @param rollspeed Body frame roll / phi angular speed (rad/s)
  * @param pitchspeed Body frame pitch / theta angular speed (rad/s)
  * @param yawspeed Body frame yaw / psi angular speed (rad/s)
@@ -331,7 +331,7 @@ static inline uint16_t mavlink_msg_hil_state_quaternion_encode_chan(
  * @param chan The MAVLink channel to send this message
  *
  * @param time_usec Timestamp (microseconds since UNIX epoch or microseconds since system boot)
- * @param attitude_quaternion Vehicle attitude expressed as normalized quaternion
+ * @param attitude_quaternion Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
  * @param rollspeed Body frame roll / phi angular speed (rad/s)
  * @param pitchspeed Body frame pitch / theta angular speed (rad/s)
  * @param yawspeed Body frame yaw / psi angular speed (rad/s)
@@ -514,7 +514,7 @@ static inline uint64_t mavlink_msg_hil_state_quaternion_get_time_usec(const mavl
 /**
  * @brief Get field attitude_quaternion from hil_state_quaternion message
  *
- * @return Vehicle attitude expressed as normalized quaternion
+ * @return Vehicle attitude expressed as normalized quaternion in w, x, y, z order (with 1 0 0 0 being the null-rotation)
  */
 static inline float mavlink_msg_hil_state_quaternion_get_attitude_quaternion(const mavlink_message_t* msg, float* attitude_quaternion)
 {

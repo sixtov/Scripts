@@ -17,7 +17,7 @@ public class HEARTBEAT_class //implements Loggable
 	public static final int msgID = 0;
 	public short	 type;			 	// Type of the MAV (quadrotor, helicopter, etc., up to 15 types, defined in MAV_TYPE ENUM)
 	public short	 autopilot;		 	// Autopilot type / class. defined in MAV_AUTOPILOT ENUM
-	public short	 base_mode;		 	// System mode bitfield, see MAV_MODE_FLAGS ENUM in mavlink/include/mavlink_types.h
+	public short	 base_mode;		 	// System mode bitfield, see MAV_MODE_FLAG ENUM in mavlink/include/mavlink_types.h
 	public long	 custom_mode;		 	// A bitfield for use for autopilot-specific flags.
 	public short	 system_status;	 	// System status flag, see MAV_STATE ENUM
 	public short	 mavlink_version;	 	// MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version

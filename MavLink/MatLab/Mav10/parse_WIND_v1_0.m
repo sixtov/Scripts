@@ -1,6 +1,6 @@
 %%  case: 168
 %%~ Wind estimation
-function S = parse_WIND_v1_0(S,p)
+function S = parse_WIND_v1_0(p)
 	name = [ ...
 		{'direction'}	 ... %% wind direction that wind is coming from (degrees)
 		{'speed'}		 ... %% wind speed in ground plane (m/s)
@@ -8,9 +8,12 @@ function S = parse_WIND_v1_0(S,p)
 		];
 	byte = [ 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

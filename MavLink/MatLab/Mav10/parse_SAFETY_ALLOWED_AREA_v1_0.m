@@ -1,6 +1,6 @@
 %%  case: 55
 %%~ Read out the safety zone the MAV currently assumes.
-function S = parse_SAFETY_ALLOWED_AREA_v1_0(S,p)
+function S = parse_SAFETY_ALLOWED_AREA_v1_0(p)
 	name = [ ...
 		{'frame'}	 ... %% Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.
 		{'p1x'}		 ... %% x position 1 / Latitude 1
@@ -12,9 +12,12 @@ function S = parse_SAFETY_ALLOWED_AREA_v1_0(S,p)
 		];
 	byte = [ 1 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

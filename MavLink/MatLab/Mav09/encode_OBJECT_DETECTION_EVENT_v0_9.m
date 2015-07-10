@@ -1,6 +1,17 @@
 %%  case: 140
 %%~ Object has been detected
 function p = encode_OBJECT_DETECTION_EVENT_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(36);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(140);
 	name = [ ...
 		{'time'}		 ... %% Timestamp in milliseconds since system boot
 		{'object_id'}	 ... %% Object ID
@@ -13,7 +24,7 @@ function p = encode_OBJECT_DETECTION_EVENT_v0_9(S)
 	byte = [ 4 2 1 20 1 4 4 ];
 	type = [ {'uint32'} {'uint16'} {'uint8'} {'uint8'} {'uint8'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode time data field
 	val = typecast(S.time,'uint32');
 	val = reshape(val,1,length(val));
@@ -49,4 +60,5 @@ function p = encode_OBJECT_DETECTION_EVENT_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

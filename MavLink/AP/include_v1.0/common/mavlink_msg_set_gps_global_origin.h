@@ -7,7 +7,7 @@ typedef struct __mavlink_set_gps_global_origin_t
 { 
   int32_t latitude;  ///< Latitude (WGS84), in degrees * 1E7
   int32_t longitude;  ///< Longitude (WGS84, in degrees * 1E7
-  int32_t altitude;  ///< Altitude (WGS84), in meters * 1000 (positive for up)
+  int32_t altitude;  ///< Altitude (AMSL), in meters * 1000 (positive for up)
   uint8_t target_system;  ///< System ID
 } mavlink_set_gps_global_origin_t;
 
@@ -38,7 +38,7 @@ typedef struct __mavlink_set_gps_global_origin_t
  * @param target_system System ID
  * @param latitude Latitude (WGS84), in degrees * 1E7
  * @param longitude Longitude (WGS84, in degrees * 1E7
- * @param altitude Altitude (WGS84), in meters * 1000 (positive for up)
+ * @param altitude Altitude (AMSL), in meters * 1000 (positive for up)
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_set_gps_global_origin_pack(
@@ -87,7 +87,7 @@ static inline uint16_t mavlink_msg_set_gps_global_origin_pack(
  * @param target_system System ID
  * @param latitude Latitude (WGS84), in degrees * 1E7
  * @param longitude Longitude (WGS84, in degrees * 1E7
- * @param altitude Altitude (WGS84), in meters * 1000 (positive for up)
+ * @param altitude Altitude (AMSL), in meters * 1000 (positive for up)
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_set_gps_global_origin_pack_chan(
@@ -189,7 +189,7 @@ static inline uint16_t mavlink_msg_set_gps_global_origin_encode_chan(
  * @param target_system System ID
  * @param latitude Latitude (WGS84), in degrees * 1E7
  * @param longitude Longitude (WGS84, in degrees * 1E7
- * @param altitude Altitude (WGS84), in meters * 1000 (positive for up)
+ * @param altitude Altitude (AMSL), in meters * 1000 (positive for up)
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
@@ -306,7 +306,7 @@ static inline int32_t mavlink_msg_set_gps_global_origin_get_longitude(const mavl
 /**
  * @brief Get field altitude from set_gps_global_origin message
  *
- * @return Altitude (WGS84), in meters * 1000 (positive for up)
+ * @return Altitude (AMSL), in meters * 1000 (positive for up)
  */
 static inline int32_t mavlink_msg_set_gps_global_origin_get_altitude(const mavlink_message_t* msg)
 {

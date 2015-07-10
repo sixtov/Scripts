@@ -1,7 +1,7 @@
 %%  case: 112
 %%~ analog channels EU (Raw counts converted to engineering units, e.g. feet, meters, 
 %%~ Amps, degrees, etc)
-function S = parse_ANALOG_EU_v0_9(S,p)
+function S = parse_ANALOG_EU_v0_9(p)
 	name = [ ...
 		{'chan01'}	 ... %% adc channel_01
 		{'chan02'}	 ... %% adc channel_02
@@ -23,9 +23,12 @@ function S = parse_ANALOG_EU_v0_9(S,p)
 		];
 	byte = [ 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 8 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'uint64'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

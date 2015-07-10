@@ -1,6 +1,6 @@
 %%  case: 76
 %%~ Send a command with up to seven parameters to the MAV
-function S = parse_COMMAND_LONG_v1_0(S,p)
+function S = parse_COMMAND_LONG_v1_0(p)
 	name = [ ...
 		{'target_system'}	 ... %% System which should execute the command
 		{'target_component'} ... %% Component which should execute the command, 0 for all components
@@ -16,9 +16,12 @@ function S = parse_COMMAND_LONG_v1_0(S,p)
 		];
 	byte = [ 1 1 2 1 4 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'uint8'} {'uint16'} {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

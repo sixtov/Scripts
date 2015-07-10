@@ -1,6 +1,6 @@
 %%  case: 117
 %%~ Message that provides information about the state of the aircraft
-function S = parse_STATE_DATA_AUG_v0_9(S,p)
+function S = parse_STATE_DATA_AUG_v0_9(p)
 	name = [ ...
 		{'num'}		 ... %% Vehicle number, e.g. 1 for R1, 2 for R2, 3 for R3
 		{'atloiter'} ... %% if 0, vehicle is not currently loitering, if 1, vehicle is loitering
@@ -10,9 +10,12 @@ function S = parse_STATE_DATA_AUG_v0_9(S,p)
 		];
 	byte = [ 1 1 1 1 8 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint64'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

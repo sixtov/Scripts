@@ -1,7 +1,7 @@
 %%  case: 64
 %%~ Corrects the systems state by adding an error correction term to the position and 
 %%~ velocity, and by rotating the attitude by a correction angle.
-function S = parse_STATE_CORRECTION_v1_0(S,p)
+function S = parse_STATE_CORRECTION_v1_0(p)
 	name = [ ...
 		{'xErr'}	 ... %% x position error
 		{'yErr'}	 ... %% y position error
@@ -15,9 +15,12 @@ function S = parse_STATE_CORRECTION_v1_0(S,p)
 		];
 	byte = [ 4 4 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

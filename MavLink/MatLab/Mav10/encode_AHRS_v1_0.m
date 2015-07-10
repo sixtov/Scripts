@@ -1,6 +1,17 @@
 %%  case: 163
 %%~ Status of DCM attitude estimator
 function p = encode_AHRS_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(28);
+	sysid = uint8(S.sysid);
+	id = uint8(S.id);
+	messid = uint8(163);
 	name = [ ...
 		{'omegaIx'}		 ... %% X gyro drift estimate rad/s
 		{'omegaIy'}		 ... %% Y gyro drift estimate rad/s
@@ -13,7 +24,7 @@ function p = encode_AHRS_v1_0(S)
 	byte = [ 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode omegaIx data field
 	val = typecast(S.omegaIx,'single');
 	val = reshape(val,1,length(val));
@@ -49,4 +60,5 @@ function p = encode_AHRS_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

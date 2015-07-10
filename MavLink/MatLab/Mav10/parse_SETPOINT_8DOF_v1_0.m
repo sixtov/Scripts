@@ -1,6 +1,6 @@
 %%  case: 148
 %%~ Set the 8 DOF setpoint for a controller.
-function S = parse_SETPOINT_8DOF_v1_0(S,p)
+function S = parse_SETPOINT_8DOF_v1_0(p)
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'val1'}			 ... %% Value 1
@@ -14,9 +14,12 @@ function S = parse_SETPOINT_8DOF_v1_0(S,p)
 		];
 	byte = [ 1 4 4 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

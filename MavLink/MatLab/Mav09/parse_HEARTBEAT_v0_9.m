@@ -3,7 +3,7 @@
 %%~ the MAV and Autopilot hardware allow the receiving system to treat further messages 
 %%~ from this system appropriate (e.g. by laying out the user interface based on 
 %%~ the autopilot).
-function S = parse_HEARTBEAT_v0_9(S,p)
+function S = parse_HEARTBEAT_v0_9(p)
 	name = [ ...
 		{'type'}			 ... %% Type of the MAV (quadrotor, helicopter, etc., up to 15 types, defined in MAV_TYPE ENUM)
 		{'autopilot'}		 ... %% Type of the Autopilot: 0: Generic, 1: PIXHAWK, 2: SLUGS, 3: Ardupilot (up to 15 types), defined in MAV_AUTOPILOT_TYPE ENUM
@@ -13,9 +13,12 @@ function S = parse_HEARTBEAT_v0_9(S,p)
 		];
 	byte = [ 1 1 1 1 1 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

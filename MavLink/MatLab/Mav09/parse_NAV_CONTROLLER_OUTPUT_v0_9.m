@@ -2,7 +2,7 @@
 %%~ Outputs of the APM navigation controller. The primary use of this message is to 
 %%~ check the response and signs of the controller before actual flight and to assist 
 %%~ with tuning controller parameters 
-function S = parse_NAV_CONTROLLER_OUTPUT_v0_9(S,p)
+function S = parse_NAV_CONTROLLER_OUTPUT_v0_9(p)
 	name = [ ...
 		{'nav_roll'}		 ... %% Current desired roll in degrees
 		{'nav_pitch'}		 ... %% Current desired pitch in degrees
@@ -15,9 +15,12 @@ function S = parse_NAV_CONTROLLER_OUTPUT_v0_9(S,p)
 		];
 	byte = [ 4 4 2 2 2 4 4 4 ];
 	type = [ {'single'} {'single'} {'int16'} {'int16'} {'uint16'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

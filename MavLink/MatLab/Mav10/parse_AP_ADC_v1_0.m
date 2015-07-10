@@ -1,6 +1,6 @@
 %%  case: 153
 %%~ raw ADC output
-function S = parse_AP_ADC_v1_0(S,p)
+function S = parse_AP_ADC_v1_0(p)
 	name = [ ...
 		{'adc1'} ... %% ADC output 1
 		{'adc2'} ... %% ADC output 2
@@ -11,9 +11,12 @@ function S = parse_AP_ADC_v1_0(S,p)
 		];
 	byte = [ 2 2 2 2 2 2 ];
 	type = [ {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

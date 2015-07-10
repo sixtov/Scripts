@@ -4,6 +4,17 @@
 %%~ in x, y, z meters (type: LOCAL) or x:lat, y:lon, z:altitude. Local frame is Z-down, 
 %%~ right handed, global frame is Z-up, right handed
 function p = encode_WAYPOINT_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(36);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(39);
 	name = [ ...
 		{'target_system'}	 ... %% System ID
 		{'target_component'} ... %% Component ID
@@ -23,7 +34,7 @@ function p = encode_WAYPOINT_v0_9(S)
 	byte = [ 1 1 2 1 1 1 1 4 4 4 4 4 4 4 ];
 	type = [ {'uint8'} {'uint8'} {'uint16'} {'uint8'} {'uint8'} {'uint8'} {'uint8'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode target_system data field
 	val = typecast(S.target_system,'uint8');
 	val = reshape(val,1,length(val));
@@ -94,4 +105,5 @@ function p = encode_WAYPOINT_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

@@ -2,7 +2,7 @@
 %%~ Send raw controller memory. The use of this message is discouraged for normal packets, 
 %%~ but a quite efficient way for testing new messages and getting experimental 
 %%~ debug output.
-function S = parse_MEMORY_VECT_v1_0(S,p)
+function S = parse_MEMORY_VECT_v1_0(p)
 	name = [ ...
 		{'address'}	 ... %% Starting address of the debug variables
 		{'ver'}		 ... %% Version code of the type variable. 0=unknown, type ignored and assumed int16_t. 1=as below
@@ -11,9 +11,12 @@ function S = parse_MEMORY_VECT_v1_0(S,p)
 		];
 	byte = [ 2 1 1 32 ];
 	type = [ {'uint16'} {'uint8'} {'uint8'} {'int8'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

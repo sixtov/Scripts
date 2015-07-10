@@ -1,6 +1,17 @@
 %%  case: 162
 %%~ Status of geo-fencing. Sent in extended      status stream when fencing enabled
 function p = encode_FENCE_STATUS_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(8);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(162);
 	name = [ ...
 		{'breach_status'}	 ... %% 0 if currently inside fence, 1 if outside
 		{'breach_count'}	 ... %% number of fence breaches
@@ -10,7 +21,7 @@ function p = encode_FENCE_STATUS_v0_9(S)
 	byte = [ 1 2 1 4 ];
 	type = [ {'uint8'} {'uint16'} {'uint8'} {'uint32'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode breach_status data field
 	val = typecast(S.breach_status,'uint8');
 	val = reshape(val,1,length(val));
@@ -31,4 +42,5 @@ function p = encode_FENCE_STATUS_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

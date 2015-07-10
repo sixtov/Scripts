@@ -11,7 +11,7 @@
 %%~ to be active, but should start emergency procedures autonomously. After a failure 
 %%~ occured it should first move from active to critical to allow manual intervention 
 %%~ and then move to emergency after a certain timeout.
-function S = parse_SYS_STATUS_v1_0(S,p)
+function S = parse_SYS_STATUS_v1_0(p)
 	name = [ ...
 		{'onboard_control_sensors_present'}	 ... %% Bitmask showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1: present. Indices defined by ENUM MAV_SYS_STATUS_SENSOR
 		{'onboard_control_sensors_enabled'}	 ... %% Bitmask showing which onboard controllers and sensors are enabled:  Value of 0: not enabled. Value of 1: enabled. Indices defined by ENUM MAV_SYS_STATUS_SENSOR
@@ -29,9 +29,12 @@ function S = parse_SYS_STATUS_v1_0(S,p)
 		];
 	byte = [ 4 4 4 2 2 2 1 2 2 2 2 2 2 ];
 	type = [ {'uint32'} {'uint32'} {'uint32'} {'uint16'} {'uint16'} {'int16'} {'int8'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

@@ -3,6 +3,17 @@
 %%~ check the response and signs of the controller before actual flight and to assist 
 %%~ with tuning controller parameters.
 function p = encode_NAV_CONTROLLER_OUTPUT_v1_0(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(254);
+	len = uint8(26);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(62);
 	name = [ ...
 		{'nav_roll'}		 ... %% Current desired roll in degrees
 		{'nav_pitch'}		 ... %% Current desired pitch in degrees
@@ -12,12 +23,11 @@ function p = encode_NAV_CONTROLLER_OUTPUT_v1_0(S)
 		{'alt_error'}		 ... %% Current altitude error in meters
 		{'aspd_error'}		 ... %% Current airspeed error in meters/second
 		{'xtrack_error'}	 ... %% Current crosstrack error on x-y plane in meters
-		{'nav_wptrad'}		 ... %% Navigation waypoint radius in meters
 		];
-	byte = [ 4 4 2 2 2 4 4 4 4 ];
-	type = [ {'single'} {'single'} {'int16'} {'int16'} {'uint16'} {'single'} {'single'} {'single'} {'single'} ];
+	byte = [ 4 4 2 2 2 4 4 4 ];
+	type = [ {'single'} {'single'} {'int16'} {'int16'} {'uint16'} {'single'} {'single'} {'single'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode nav_roll data field
 	val = typecast(S.nav_roll,'single');
 	val = reshape(val,1,length(val));
@@ -58,9 +68,5 @@ function p = encode_NAV_CONTROLLER_OUTPUT_v1_0(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
-	%% Encode nav_wptrad data field
-	val = typecast(S.nav_wptrad,'single');
-	val = reshape(val,1,length(val));
-	p = [p typecast(val,'uint8')];
-
+	p = [p typecast(checksum_v1_0(p(2:end)'),'uint8')];
 return

@@ -3,7 +3,7 @@
 %%~ Euler angles. Please use HIL_STATE_QUATERNION instead. Sent from simulation to 
 %%~ autopilot. This packet is useful for high throughput applications such as hardware 
 %%~ in the loop simulations.
-function S = parse_HIL_STATE_v1_0(S,p)
+function S = parse_HIL_STATE_v1_0(p)
 	name = [ ...
 		{'time_usec'}	 ... %% Timestamp (microseconds since UNIX epoch or microseconds since system boot)
 		{'roll'}		 ... %% Roll angle (rad)
@@ -24,9 +24,12 @@ function S = parse_HIL_STATE_v1_0(S,p)
 		];
 	byte = [ 8 4 4 4 4 4 4 4 4 4 2 2 2 2 2 2 ];
 	type = [ {'uint64'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'int32'} {'int32'} {'int32'} {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} {'int16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

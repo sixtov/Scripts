@@ -22,7 +22,6 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
 	public float	 alt_error;		 	// Current altitude error in meters
 	public float	 aspd_error;		 	// Current airspeed error in meters/second
 	public float	 xtrack_error;	 	// Current crosstrack error on x-y plane in meters
-	public float	 nav_wptrad;		 	// Navigation waypoint radius in meters
 
 	private packet rcvPacket;
 	private packet sndPacket;
@@ -43,7 +42,6 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
 		alt_error = o.alt_error;
 		aspd_error = o.aspd_error;
 		xtrack_error = o.xtrack_error;
-		nav_wptrad = o.nav_wptrad;
 	}
 
 	public boolean parse(byte[] b)
@@ -60,8 +58,8 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
 		{
 			rcvPacket.updateSeqNum();
 
-			// int[] mavLen = {4, 4, 2, 2, 2, 4, 4, 4, 4};
-			// int[] javLen = {4, 4, 2, 2, 4, 4, 4, 4, 4};
+			// int[] mavLen = {4, 4, 2, 2, 2, 4, 4, 4};
+			// int[] javLen = {4, 4, 2, 2, 4, 4, 4, 4};
 
 			nav_roll			= rcvPacket.getFloat();
 			nav_pitch		= rcvPacket.getFloat();
@@ -71,7 +69,6 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
 			alt_error		= rcvPacket.getFloat();
 			aspd_error		= rcvPacket.getFloat();
 			xtrack_error		= rcvPacket.getFloat();
-			nav_wptrad		= rcvPacket.getFloat();
 		}
 		return(pstatus);
 	}
@@ -87,7 +84,6 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
 					 ,alt_error
 					 ,aspd_error
 					 ,xtrack_error
-					 ,nav_wptrad
 					 );
 	}
 
@@ -100,11 +96,10 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
 						,float v_alt_error
 						,float v_aspd_error
 						,float v_xtrack_error
-						,float v_nav_wptrad
 						)
 	{
-		// int[] mavLen = {4, 4, 2, 2, 2, 4, 4, 4, 4};
-		// int[] javLen = {4, 4, 2, 2, 4, 4, 4, 4, 4};
+		// int[] mavLen = {4, 4, 2, 2, 2, 4, 4, 4};
+		// int[] javLen = {4, 4, 2, 2, 4, 4, 4, 4};
 
 		sndPacket.setSndSeq();
 
@@ -117,7 +112,6 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
 		sndPacket.putFloat(v_alt_error);	// Add "alt_error" parameter
 		sndPacket.putFloat(v_aspd_error);	// Add "aspd_error" parameter
 		sndPacket.putFloat(v_xtrack_error);	// Add "xtrack_error" parameter
-		sndPacket.putFloat(v_nav_wptrad);	// Add "nav_wptrad" parameter
 
 		// encode the checksum
 
@@ -138,7 +132,6 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
  				+ ", NAV_CONTROLLER_OUTPUT_alt_error"
  				+ ", NAV_CONTROLLER_OUTPUT_aspd_error"
  				+ ", NAV_CONTROLLER_OUTPUT_xtrack_error"
- 				+ ", NAV_CONTROLLER_OUTPUT_nav_wptrad"
 				);
 		return param;
 	}
@@ -155,7 +148,6 @@ public class NAV_CONTROLLER_OUTPUT_class //implements Loggable
  				+ ", " + alt_error
  				+ ", " + aspd_error
  				+ ", " + xtrack_error
- 				+ ", " + nav_wptrad
 				);
 		return param;
 	}

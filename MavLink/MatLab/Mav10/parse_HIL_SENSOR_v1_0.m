@@ -1,6 +1,6 @@
 %%  case: 107
 %%~ The IMU readings in SI units in NED body frame
-function S = parse_HIL_SENSOR_v1_0(S,p)
+function S = parse_HIL_SENSOR_v1_0(p)
 	name = [ ...
 		{'time_usec'}		 ... %% Timestamp (microseconds, synced to UNIX time or since system boot)
 		{'xacc'}			 ... %% X acceleration (m/s^2)
@@ -20,9 +20,12 @@ function S = parse_HIL_SENSOR_v1_0(S,p)
 		];
 	byte = [ 8 4 4 4 4 4 4 4 4 4 4 4 4 4 4 ];
 	type = [ {'uint64'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'uint32'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

@@ -12,6 +12,17 @@
 %%~ occured it should first move from active to critical to allow manual intervention 
 %%~ and then move to emergency after a certain timeout.
 function p = encode_SYS_STATUS_v0_9(S)
+	global pnum;
+	if (isempty(pnum))
+		pnum = 1;
+	else
+		pnum = uint8(mod(pnum+1,256));
+	end
+	head = uint8(85);
+	len = uint8(11);
+	sysid = uint8(S.h_sysid);
+	id = uint8(S.h_id);
+	messid = uint8(34);
 	name = [ ...
 		{'mode'}				 ... %% System mode, see MAV_MODE ENUM in mavlink/include/mavlink_types.h
 		{'nav_mode'}			 ... %% Navigation mode, see MAV_NAV_MODE ENUM
@@ -24,7 +35,7 @@ function p = encode_SYS_STATUS_v0_9(S)
 	byte = [ 1 1 1 2 2 2 2 ];
 	type = [ {'uint8'} {'uint8'} {'uint8'} {'uint16'} {'uint16'} {'uint16'} {'uint16'} ];
 
-	p = [];
+	p = [head len pnum sysid id messid];
 	%% Encode mode data field
 	val = typecast(S.mode,'uint8');
 	val = reshape(val,1,length(val));
@@ -60,4 +71,5 @@ function p = encode_SYS_STATUS_v0_9(S)
 	val = reshape(val,1,length(val));
 	p = [p typecast(val,'uint8')];
 
+	p = [p typecast(checksum_v0_9(p(2:end)'),'uint8')];
 return

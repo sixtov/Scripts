@@ -1,7 +1,7 @@
 %%  case: 120
 %%~ Message that provides Battery End-Of-Discharge(EOD), Remaining-Useful-Life(RUL), 
 %%~ and State-Of-Charge(SOC) information
-function S = parse_BHM_SOC_EOD_RUL_v0_9(S,p)
+function S = parse_BHM_SOC_EOD_RUL_v0_9(p)
 	name = [ ...
 		{'ura_eod'}	 ... %% Upper Right Aft Motor EOD (seconds)
 		{'ura_rul'}	 ... %% Upper Right Aft Motor RUL (seconds
@@ -18,9 +18,12 @@ function S = parse_BHM_SOC_EOD_RUL_v0_9(S,p)
 		];
 	byte = [ 4 4 4 4 4 4 4 4 4 4 4 4 ];
 	type = [ {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} {'single'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return

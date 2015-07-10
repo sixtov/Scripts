@@ -2,7 +2,7 @@
 %%~ This message provides an API for manually controlling the vehicle using standard 
 %%~ joystick axes nomenclature, along with a joystick-like input device. Unused axes 
 %%~ can be disabled an buttons are also transmit as boolean values of their 
-function S = parse_MANUAL_CONTROL_v1_0(S,p)
+function S = parse_MANUAL_CONTROL_v1_0(p)
 	name = [ ...
 		{'target'}	 ... %% The system to be controlled.
 		{'x'}		 ... %% X-axis, normalized to the range [-1000,1000]. A value of INT16_MAX indicates that this axis is invalid. Generally corresponds to forward(1000)-backward(-1000) movement on a joystick and the pitch of a vehicle.
@@ -13,9 +13,12 @@ function S = parse_MANUAL_CONTROL_v1_0(S,p)
 		];
 	byte = [ 1 2 2 2 2 2 ];
 	type = [ {'uint8'} {'int16'} {'int16'} {'int16'} {'int16'} {'uint16'} ];
-	if (sum(byte) == p.len)
-		S = buildStruct(S,byte,name,type,p);
+
+	len = p(2);
+	if (sum(byte) == len)
+		S = buildStruct(byte,name,type,p);
 	else
+		S = [];
 		disp('bytes in packet did not match structure size')
 	end
 return
