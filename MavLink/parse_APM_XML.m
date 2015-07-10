@@ -199,6 +199,32 @@ function genScript(Mess)
     fclose(fp);
 
     for i=1:K
+        N = size(Mess(i).fields.name,1);
+        fpm = fopen(sprintf('%s\\encodeValues_%s_%s.m',dDir,Mess(i).name,vtag),'w');
+        fprintf(fpm,'%%%%%%%%  case: %s\n',Mess(i).id);
+        fprintf(fpm,sprintf('%s',Mess(i).fdesc));
+        fprintf(fpm,'function p = encodeValues_%s_%s(',Mess(i).name,vtag);
+        for j=1:N-1
+            fprintf(fpm,'%s,',Mess(i).fields.name{j});
+        end
+        fprintf(fpm,'%s)\n',Mess(i).fields.name{N});
+
+        %% name member
+        for j=1:N
+            fprintf(fpm,'\tS.%s = typecast(%s(%s),''%s'');',Mess(i).fields.name{j},Mess(i).fields.matType{j},Mess(i).fields.name{j},Mess(i).fields.matType{j});
+            if ~isempty(Mess(i).fields.desc{j})
+                fprintf(fpm,'\t\t%% ');
+                fprintf(fpm,Mess(i).fields.desc{j});
+            end
+            fprintf(fpm,'\n');
+        end
+        fprintf(fpm,sprintf('\tp = encode_%s_%s(S);\n',Mess(i).name,vtag));
+        fprintf(fpm,'return\n');
+
+        fclose(fpm);
+    end
+
+    for i=1:K
         fpm = fopen(sprintf('%s\\encode_%s_%s.m',dDir,Mess(i).name,vtag),'w');
         fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
         fprintf(fpm,sprintf('%s',Mess(i).fdesc));
