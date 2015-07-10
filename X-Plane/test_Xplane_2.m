@@ -52,7 +52,7 @@ load('XPlane_Data.mat');
 %     ];
 
 
-latOff =   0;   %37.458103 - a11(1,1);
+latOff =   -0.3394749958;   %37.458103 - a11(1,1);
 a1(:,1)  = a1(:,1) +latOff;
 a2(:,1)  = a2(:,1) +latOff;
 a3(:,1)  = a3(:,1) +latOff;
@@ -73,7 +73,7 @@ a17(:,1) = a17(:,1)+latOff;
 a18(:,1) = a18(:,1)+latOff;
 a19(:,1) = a19(:,1)+latOff;
 
-lonOff = 0; %-122.112061  - a11(1,2);
+lonOff = 0.558049678; %-122.112061  - a11(1,2);
 a1(:,2)  = a1(:,2) +lonOff;
 a2(:,2)  = a2(:,2) +lonOff;
 a3(:,2)  = a3(:,2) +lonOff;
@@ -93,6 +93,28 @@ a16(:,2) = a16(:,2)+lonOff;
 a17(:,2) = a17(:,2)+lonOff;
 a18(:,2) = a18(:,2)+lonOff;
 a19(:,2) = a19(:,2)+lonOff;
+
+
+altScale = 3.19; %-122.112061  - a11(1,2);
+a1(:,3)  = a1(:,3) * altScale;
+a2(:,3)  = a2(:,3) * altScale;
+a3(:,3)  = a3(:,3) * altScale;
+a4(:,3)  = a4(:,3) * altScale;
+a5(:,3)  = a5(:,3) * altScale;
+a6(:,3)  = a6(:,3) * altScale;
+a7(:,3)  = a7(:,3) * altScale;
+a8(:,3)  = a8(:,3) * altScale;
+a9(:,3)  = a9(:,3) * altScale;
+a10(:,3) = a10(:,3)* altScale;
+a11(:,3) = a11(:,3)* altScale;
+a12(:,3) = a12(:,3)* altScale;
+a13(:,3) = a13(:,3)* altScale;
+a14(:,3) = a14(:,3)* altScale;
+a15(:,3) = a15(:,3)* altScale;
+a16(:,3) = a16(:,3)* altScale;
+a17(:,3) = a17(:,3)* altScale;
+a18(:,3) = a18(:,3)* altScale;
+a19(:,3) = a19(:,3)* altScale;
 
 hdgOff = 0; %330 - a11(1,6);
 a1(:,6)  = a1(:,6) +hdgOff;
@@ -158,7 +180,7 @@ A(18,1:N(18),:) = a18;
 A(19,1:N(19),:) = a19;
 
 %%
-list = [1];
+list = [3 5];
 ownship = 1;
 Nmax = max(N(list));
 while 1
@@ -197,12 +219,12 @@ while 1
                     A(list(j),i,6), ...
                     oFlag,type);
                 fwrite(uXPLANE, d, 'uint8');
-                %pause(0.01)
+                pause(0.1)
                 %fwrite(uAPM, d, 'uint8');
             end
         end
         disp(sprintf('Frame %d/%d',i,Nmax))
-        pause(0.1)
+        %pause(0.25)
     end
 end
 
