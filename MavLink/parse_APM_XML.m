@@ -55,8 +55,10 @@ function genScript(Mess)
     switch (VERSION)
         case 0.9
             dDir = 'MatLab\\Mav09';
+            vtag = 'v0_9';
         case 1.0
             dDir = 'MatLab\\Mav10';
+            vtag = 'v1_0';
         otherwise
             disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
             return
@@ -66,14 +68,43 @@ function genScript(Mess)
     end
 
     
+%% Message Lengths
+    switch (VERSION)
+        case 0.9
+            fp = fopen(sprintf('%s\\getMavLinkMessageLengthArray_%s.m',dDir,vtag),'w');
+            fprintf(fp,'function K = getMavLinkMessageLengthArray_%s()\n',vtag);
+        case 1.0
+            fp = fopen(sprintf('%s\\getMavLinkMessageLengthArray_%s.m',dDir,vtag),'w');
+            fprintf(fp,'function K = getMavLinkMessageLengthArray_%s()\n',vtag);
+        otherwise
+            disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
+            return
+    end
+    fprintf(fp,'\tK = zeros(1,256);\n');
+    K = length(Mess);
+    for i=1:K
+        N = size(Mess(i).fields.name,1);
+
+        %% byte member
+        sum = 0;
+        for j=1:N
+            sum = sum + Mess(i).fields.matByte{j};
+        end
+        fprintf(fp,'\tK(%3.3d) = %3.3d;\t%%%%  case: %s\n',i,sum,Mess(i).id);
+
+    end
+    fprintf(fp,'return\n\n');
+    fclose(fp);
+
+
 %% Decode Messages
     switch (VERSION)
         case 0.9
-            fp = fopen(sprintf('%s\\parseMavLink_0_9_Packet.m',dDir),'w');
-            fprintf(fp,'function S = parseMavLink_0_9_Packet(S,p)\n');
+            fp = fopen(sprintf('%s\\parseMavLink_%s_Packet.m',dDir,vtag),'w');
+            fprintf(fp,'function S = parseMavLink_%s_Packet(S,p)\n',vtag);
         case 1.0
-            fp = fopen(sprintf('%s\\parseMavLink_1_0_Packet.m',dDir),'w');
-            fprintf(fp,'function S = parseMavLink_1_0_Packet(S,p)\n');
+            fp = fopen(sprintf('%s\\parseMavLink_%s_Packet.m',dDir,vtag),'w');
+            fprintf(fp,'function S = parseMavLink_%s_Packet(S,p)\n',vtag);
         otherwise
             disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
             return
@@ -83,7 +114,7 @@ function genScript(Mess)
     for i=1:K
         fprintf(fp,sprintf('\t\tcase %s\n',Mess(i).id));
         fprintf(fp,sprintf('%s',Mess(i).cdesc));
-        fprintf(fp,sprintf('\t\t\tS.%s = parse_%s(S.%s,p);\n\n',Mess(i).name,Mess(i).name,Mess(i).name));
+        fprintf(fp,sprintf('\t\t\tS.%s = parse_%s_%s(S.%s,p);\n\n',Mess(i).name,Mess(i).name,vtag,Mess(i).name));
     end
     fprintf(fp,'\t\totherwise\n');
     fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',p.messid))\n');
@@ -92,10 +123,10 @@ function genScript(Mess)
     fclose(fp);
 
     for i=1:K
-        fpm = fopen(sprintf('%s\\parse_%s.m',dDir,Mess(i).name),'w');
+        fpm = fopen(sprintf('%s\\parse_%s_%s.m',dDir,Mess(i).name,vtag),'w');
         fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
         fprintf(fpm,sprintf('%s',Mess(i).fdesc));
-        fprintf(fpm,sprintf('function S = parse_%s(S,p)\n',Mess(i).name));
+        fprintf(fpm,sprintf('function S = parse_%s_%s(S,p)\n',Mess(i).name,vtag));
         N = size(Mess(i).fields.name,1);
 
         %% name member
@@ -145,11 +176,11 @@ function genScript(Mess)
 %% Encode Messages
     switch (VERSION)
         case 0.9
-            fp = fopen(sprintf('%s\\encodeMavLink_0_9_Packet.m',dDir),'w');
-            fprintf(fp,'function p = encodeMavLink_0_9_Packet(ID,S)\n');
+            fp = fopen(sprintf('%s\\encodeMavLink_%s_Packet.m',dDir,vtag),'w');
+            fprintf(fp,'function p = encodeMavLink_%s_Packet(ID,S)\n',vtag);
         case 1.0
-            fp = fopen(sprintf('%s\\encodeMavLink_1_0_Packet.m',dDir),'w');
-            fprintf(fp,'function p = encodeMavLink_1_0_Packet(ID,S)\n');
+            fp = fopen(sprintf('%s\\encodeMavLink_%s_Packet.m',dDir,vtag),'w');
+            fprintf(fp,'function p = encodeMavLink_%s_Packet(ID,S)\n',vtag);
         otherwise
             disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
             return
@@ -159,7 +190,7 @@ function genScript(Mess)
     for i=1:K
         fprintf(fp,sprintf('\t\tcase %s\n',Mess(i).id));
         fprintf(fp,sprintf('%s',Mess(i).cdesc));
-        fprintf(fp,sprintf('\t\t\tp = encode_%s(S);\n\n',Mess(i).name));
+        fprintf(fp,sprintf('\t\t\tp = encode_%s_%s(S.%s);\n\n',Mess(i).name,vtag,Mess(i).name));
     end
     fprintf(fp,'\t\totherwise\n');
     fprintf(fp,'\t\t\tdisp(sprintf(''Unknown Message: id[%%d]'',p.messid))\n');
@@ -168,10 +199,10 @@ function genScript(Mess)
     fclose(fp);
 
     for i=1:K
-        fpm = fopen(sprintf('%s\\encode_%s.m',dDir,Mess(i).name),'w');
+        fpm = fopen(sprintf('%s\\encode_%s_%s.m',dDir,Mess(i).name,vtag),'w');
         fprintf(fpm,sprintf('%%%%%%%%  case: %s\n',Mess(i).id));
         fprintf(fpm,sprintf('%s',Mess(i).fdesc));
-        fprintf(fpm,sprintf('function p = encode_%s(S)\n',Mess(i).name));
+        fprintf(fpm,sprintf('function p = encode_%s_%s(S)\n',Mess(i).name,vtag));
         N = size(Mess(i).fields.name,1);
 
         %% name member
@@ -208,7 +239,8 @@ function genScript(Mess)
         end
         fprintf(fpm,'];\n\n');
         
-        p = [];
+        fprintf(fpm,'\tp = [];\n');
+        
         REM = '%%';
         for j=1:N
             fprintf(fpm,'\t%s Encode %s data field\n',REM,Mess(i).fields.name{j});
@@ -223,11 +255,11 @@ function genScript(Mess)
     %% initMavLink
     switch (VERSION)
         case 0.9
-            fp = fopen(sprintf('%s\\initMavLink_0_9.m',dDir),'w');
-            fprintf(fp,'function MavLink = initMavLink_0_9()\n');
+            fp = fopen(sprintf('%s\\initMavLink_%s.m',dDir,vtag),'w');
+            fprintf(fp,'function MavLink = initMavLink_%s()\n',vtag);
         case 1.0
-            fp = fopen(sprintf('%s\\initMavLink_1_0.m',dDir),'w');
-            fprintf(fp,'function MavLink = initMavLink_1_0()\n');
+            fp = fopen(sprintf('%s\\initMavLink_%s.m',dDir,vtag),'w');
+            fprintf(fp,'function MavLink = initMavLink_%s()\n',vtag);
         otherwise
             disp('Invalid MavLink version: valid cases are 0.9 and 1.0');
             return
