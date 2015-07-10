@@ -1,0 +1,125 @@
+<?xml version='1.0'?>
+<mavlink>
+     <include>common.xml</include>
+     <!-- note that APM specific messages should use the command id
+      range from 150 to 250, to leave plenty of room for growth
+      of common.xml 
+
+      If you prototype a message here, then you should consider if it
+      is general enough to move into common.xml later
+    -->
+     <messages>
+          <message id="111" name="ANALOG_RAW">
+               <description>analog channels raw (counts from ADC 0-1024)</description>
+               <field type="uint16_t" name="chan01">adc channel_01</field>
+               <field type="uint16_t" name="chan02">adc channel_02</field>
+               <field type="uint16_t" name="chan03">adc channel_03</field>
+               <field type="uint16_t" name="chan04">adc channel_04</field>
+               <field type="uint16_t" name="chan05">adc channel_05</field>
+               <field type="uint16_t" name="chan06">adc channel_06</field>
+               <field type="uint16_t" name="chan07">adc channel_07</field>
+               <field type="uint16_t" name="chan08">adc channel_08</field>
+               <field type="uint16_t" name="chan09">adc channel_09</field>
+               <field type="uint16_t" name="chan10">adc channel_10</field>
+               <field type="uint16_t" name="chan11">adc channel_11</field>
+               <field type="uint16_t" name="chan12">adc channel_12</field>
+               <field type="uint16_t" name="chan13">adc channel_13</field>
+               <field type="uint16_t" name="chan14">adc channel_14</field>
+               <field type="uint16_t" name="chan15">adc channel_15</field>
+               <field type="uint16_t" name="chan16">adc channel_16</field>
+               <field type="uint64_t" name="usec">time</field>
+          </message>
+          <message id="112" name="ANALOG_EU">
+               <description>analog channels EU (Raw counts converted to engineering units, e.g. feet, meters, Amps, degrees, etc)</description>
+               <field type="float" name="chan01">adc channel_01</field>
+               <field type="float" name="chan02">adc channel_02</field>
+               <field type="float" name="chan03">adc channel_03</field>
+               <field type="float" name="chan04">adc channel_04</field>
+               <field type="float" name="chan05">adc channel_05</field>
+               <field type="float" name="chan06">adc channel_06</field>
+               <field type="float" name="chan07">adc channel_07</field>
+               <field type="float" name="chan08">adc channel_08</field>
+               <field type="float" name="chan09">adc channel_09</field>
+               <field type="float" name="chan10">adc channel_10</field>
+               <field type="float" name="chan11">adc channel_11</field>
+               <field type="float" name="chan12">adc channel_12</field>
+               <field type="float" name="chan13">adc channel_13</field>
+               <field type="float" name="chan14">adc channel_14</field>
+               <field type="float" name="chan15">adc channel_15</field>
+               <field type="float" name="chan16">adc channel_16</field>
+               <field type="uint64_t" name="usec">time</field>
+          </message>
+          <message id="113" name="CDNR_CONTROLLER">
+               <description>Message from Conflict Detection and Resolution monitor to aircraft. This is a command to resolve conflicts and includes flags and values for heading,altitude,and speed changes as well as a max time duration</description>
+               <field type="int8_t"  name="h_flag"      >enables/disables new heading command</field>
+               <field type="int8_t"  name="s_flag"      >enables/disables new airspeed command</field>
+               <field type="int8_t"  name="a_flag"      >enables/disables new altitude command</field>
+               <field type="int8_t"  name="t_flag"      >enables/disables max time command</field>
+               <field type="int16_t" name="new_heading" >value for new heading</field>
+               <field type="int16_t" name="new_airspeed">value for new airspeed</field>
+               <field type="int16_t" name="new_altitude">value for new altitude</field>
+               <field type="int16_t" name="max_time"    >maximum time to hold this command</field>
+          </message>
+          <message id="114" name="TRAFFIC_DATA">
+               <description>Message that provides 6 dof position data about other traffic. This includes: Vehicle number, latitud (deg), longitud (deg), altitud(meters), roll (deg), pitch (deg), heading(deg)</description>
+               <field type="char[8]" name="ID"		       >vehicle ID</field>
+               <field type="float"   name="lat"      	   >latitude (deg)</field>
+               <field type="float"   name="lon"      	   >longitude (deg)</field>
+               <field type="float"   name="alt"      	   >altitude (meters)</field>
+               <field type="float"   name="roll" 	       >roll (deg)</field>
+               <field type="float"   name="pitch"	       >pitch (deg)</field>
+               <field type="float"   name="heading"	     >heading (deg)</field>
+               <field type="uint8_t" name="ownship_flag" >identifies whether the aircraft is ownship (1) or not (0)</field>
+          </message>
+          <message id="115" name="STATE_DATA">
+               <description>Message that provides information about the state of the aircraft</description>
+               <field type="uint8_t"    name="num"		>Vehicle number, e.g. 1 for R1, 2 for R2, 3 for R3</field>
+               <field type="uint8_t"    name="atloiter" >if 0, vehicle is not currently loitering, if 1, vehicle is loitering</field>
+               <field type="uint8_t"    name="mode"     >mode: MANUAL=0, CIRCLE=1, STABILIZE=2, FLY_BY_WIRE_A=5, FLY_BY_WIRE_B=6, FLY_BY_WIRE_C=7, AUTO=10, RTL=11, LOITER=12, GUIDED=15, INITIALISING=16</field>
+               <field type="uint64_t"   name="usec"     >time</field>
+          </message>
+          <message id="116" name="TRAFFIC_SIM_TIMING">
+               <description>Message that provides timing information about the traffic simulation</description>
+               <field type="float"    name="sim_time"		>Traffic simulation absolute time</field>
+               <field type="float"    name="time_to_wpt" >Absolute time to reach the next waypoint</field>
+          </message>
+          <message id="117" name="STATE_DATA_AUG">
+               <description>Message that provides information about the state of the aircraft</description>
+               <field type="uint8_t"    name="num"		>Vehicle number, e.g. 1 for R1, 2 for R2, 3 for R3</field>
+               <field type="uint8_t"    name="atloiter" >if 0, vehicle is not currently loitering, if 1, vehicle is loitering</field>
+               <field type="uint8_t"    name="mode"     >mode: MANUAL=0, CIRCLE=1, STABILIZE=2, FLY_BY_WIRE_A=5, FLY_BY_WIRE_B=6, FLY_BY_WIRE_C=7, AUTO=10, RTL=11, LOITER=12, GUIDED=15, INITIALISING=16</field>
+               <field type="uint8_t"    name="RC_state" >state: OFF=0, ON=1, FAILSAFE=255</field>
+               <field type="uint64_t"   name="usec"     >time</field>
+          </message>
+          <message id="120" name="BHM_SOC_EOD_RUL">
+               <description>Message that provides Battery End-Of-Discharge(EOD), Remaining-Useful-Life(RUL), and State-Of-Charge(SOC) information</description>
+               <field type="float"	name="ura_eod"	>Upper Right Aft Motor EOD (seconds)</field>
+               <field type="float"	name="ura_rul"	>Upper Right Aft Motor RUL (seconds</field>
+               <field type="float"	name="ura_soc"	>Upper Right Aft Motor SOC (percent)</field>
+               <field type="float"	name="lrf_eod"	>Lower Right Fwd Motor EOD (seconds)</field>
+               <field type="float"	name="lrf_rul"	>Lower Right Fwd Motor RUL (seconds</field>
+               <field type="float"	name="lrf_soc"	>Lower Right Fwd Motor SOC (percent)</field>
+               <field type="float"	name="ula_eod"	>Upper Left Aft Motor EOD (seconds)</field>
+               <field type="float"	name="ula_rul"	>Upper Left Aft Motor RUL (seconds</field>
+               <field type="float"	name="ula_soc"	>Upper Left Aft Motor SOC (percent)</field>
+               <field type="float"	name="llf_eod"	>Lower Left Fwd Motor EOD (seconds)</field>
+               <field type="float"	name="llf_rul"	>Lower Left Fwd Motor RUL (seconds</field>
+               <field type="float"	name="llf_soc"	>Lower Left Fwd Motor SOC (percent)</field>
+          </message>
+          <message id="121" name="BHM_CURRENT_VOLTAGE">
+               <description>Message that provides Battery Current, Voltage, RPM, and an alert status</description>
+               <field type="float"	name="fwd_mtr_cur"	>Fwd Motor Current (A)</field>
+               <field type="float"	name="aft_mtr_cur"	>Aft Motor Current (A)</field>
+               <field type="float"	name="RPM"	>Revolutions. Per Minute</field>
+               <field type="float"	name="llf20v"	>Lower Left Fwd Mtr 20-Volt Battery Voltage (V)</field>
+               <field type="float"	name="ula20v"	>Upper Left Aft Mtr 20-Volt Battery Voltage (V)</field>
+               <field type="float"	name="lrf40v"	>Lower Right Fwd Mtr 40-Volt Battery Voltage (V)</field>
+               <field type="float"	name="ura40v"	>Upper Right Aft Mtr 40-Volt Battery Voltage (V)</field>
+               <field type="float"	name="llf20c"	>Lower Left Fwd Mtr 20-Volt Battery Current (A)</field>
+               <field type="float"	name="ula20c"	>Upper Left Aft Mtr 20-Volt Battery Current (A)</field>
+               <field type="float"	name="lrf40c"	>Lower Right Fwd Mtr 40-Volt Battery Current (A)</field>
+               <field type="float"	name="ura40c"	>Upper Right Aft Mtr 40-Volt Battery Current (A)</field>
+               <field type="float"	name="alert"	>Alert Flag (boolean)</field>
+          </message>
+     </messages>
+</mavlink>

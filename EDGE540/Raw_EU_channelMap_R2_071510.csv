@@ -1,0 +1,73 @@
+1,ADC1,LWOBSTRN,Left Wing Outboard Strain,0.002,-0.001612
+2,ADC2,LWCTRSTRN,Left Wing Center Strain,0.002,-0.009545
+3,ADC3,LWIBSTRN,Left Wing Inboard Strain,0.002,-0.003664
+4,ADC4,CTRLSTRN,Wing Tube Left Strain,0.002,-0.003235
+5,ADC5,CTRCSTRN,Wing Tube Center Strain,0.002,-0.009665
+6,ADC6,CTRRSTRN,Wing Tube Right Strain,0.002,-0.01215
+7,ADC7,RWIBSTRN,Right Wing Inboard Strain,0.002,0.005975
+8,ADC8,RWCTRSTRN,Right Wing Center Strain,0.002,-0.004685
+9,ADC9,RWOBSTRN,Right Wing Outboard Strain,0.002,-0.001766
+10,ADC10,CTRTBACCLX,Center Tube Accelerometer X axis,-3.3686,4.9826
+11,ADC11,CTRTBACCLY,Center Tube Accelerometer Y axis,-3.3246,5.0283
+12,ADC12,CTRTBACCLZ,Center Tube Accelerometer Z axis,-3.3691,4.9701
+13,ADC13,MTRMNTACCLX,Motor Mount Accelerometer X axis,-3.3523,4.9682
+14,ADC14,MTRMNTACCLY,Motor Mount Accelerometer Y axis,-3.3064,4.9238
+15,ADC15,MTRMNTACCLZ,Motor Mount Accelerometer Z axis,-3.3787,5.3396
+16,ADC16,AFTMTRCUR,Aft Motor Current,52.6316,-131.5789
+17,ADC17,FWDMTRCUR,Forward Motor Current,52.6316,-131.5789
+18,ADC18,LWOBACCLX,Left Wing Outboard Accelerometer X axis,-3.3261,4.7607
+19,ADC19,LWOBACCLY,Left Wing Outboard Accelerometer Y axis,-3.3375,4.9243
+20,ADC20,LWOBACCLZ,Left Wing Outboard Accelerometer Z axis,-3.3503,5.0846
+21,ADC21,LWIBACCLX,Left Wing Inboard Accelerometer X axis,-3.377,5.0507
+22,ADC22,LWIBACCLY,Left Wing Inboard Accelerometer Y axis,-3.3334,5.0138
+23,ADC23,LWIBACCLZ,Left Wing Inboard Accelerometer Z axis,-3.5615,5.4822
+24,ADC24,LTBOBACCLX,Left Tube Outboard Accelerometer X axis,-3.3744,4.9663
+25,ADC25,LTBOBACCLY,Left Tube Outboard Accelerometer Y axis,-3.3318,4.9859
+26,ADC26,LTBOBACCLZ,Left Tube Outboard Accelerometer Z axis,-3.382,5.1096
+27,ADC27,RTBOBACCLX,Right Tube Outboard Accelerometer X axis,-3.2941,4.9067
+28,ADC28,RTBOBACCLY,Right Tube Outboard Accelerometer Y axis,-3.2266,4.8655
+29,ADC29,RTBOBACCLZ,Right Tube Outboard Accelerometer Z axis,-3.4082,5.1263
+30,ADC30,CTRACCLX,Center Wing Accelerometer X axis,-3.3834,4.9996
+31,ADC31,CTRACCLY,Center Wing Accelerometer Y axis,-3.3728,5.0516
+32,ADC32,CTRACCLZ,Center Wing Accelerometer Z axis,-3.3841,5.0779
+33,ADC33,AILL,Left Aileron,7.9294,-44.329
+34,ADC34,FLAPL,Left Flap,8.6793,-47.3877
+35,ADC35,ELR,Right Elevator,-10.8697,61.4691
+36,ADC36,ELL,Left Elevator,10.5867,-55.8742
+37,ADC37,FLAPR,Right Flap,-8.032,42.9339
+38,ADC38,AILR,Right Aileron,-7.6178,41.8298
+39,ADC39,RUD,Rudder,-16.445,85.7319
+40,ADC40,ALPHAR,Right Alpha Vane,89.5708,-232.4835
+41,ADC41,BETAR,Right Beta Vane,1,0
+42,ADC42,PDR,Right Differential Pressure,0.145,-0.0725
+43,ADC43,PSR,Right Static Pressure,3.2222,0.3061
+44,ADC44,RPM,Motor RPM,1429.9,0
+45,ADC45,FWDMTR40VBATTCUR,Forward Motor 40 V Battery Current,52.6316,-131.5789
+46,ADC46,FWDMTR20VBATTCUR,Forward Motor 20 V Battery Current,52.6316,-131.5789
+47,ADC47,AFTMTR40VBATTCUR,Aft Motor 40 V Battery Current,52.6316,-131.5789
+48,ADC48,AFTMTR20VBATTCUR,Aft Motor 20 V Battery Current,52.6316,-131.5789
+49,ADC49,FWDMTRUPR40VBATTV,Forward Motor Upper 40 V Battery Voltage,4.2761,-0.4006
+50,ADC50,FWDMTRLWR20VBATTV,Forward Motor Lower 20 V Battery Voltage,2.1003,-0.0879
+51,ADC51,AFTMTRUPR40VBATTV,Aft Motor Upper 40 V Battery Voltage,4.2478,0.1529
+52,ADC52,AFTMTRLWR20VBATTV,Aft Motor Lower 20 V Battery Voltage,2.1256,0.0172
+53,ADC53,RWIBACCLX,Right Wing Inboard Accelerometer X axis,-3.3433,4.9853
+54,ADC54,RWIBACCLY,Right Wing Inboard Accelerometer Y axis,-3.3697,5.0067
+55,ADC55,RWIBACCLZ,Right Wing Inboard Accelerometer Z axis,-3.3397,4.9959
+56,ADC56,RWOBACCLX,Right Wing Outboard Accelerometer X axis,-3.3631,5.0288
+57,ADC57,RWOBACCLY,Right Wing Outboard Accelerometer Y axis,-3.3608,4.9786
+58,ADC58,RWOBACCLZ,Right Wing Outboard Accelerometer Z axis,-3.3598,5.0294
+59,ADC59,MTRMOUNTTEMP,Motor Mount Temperature,92.88,40.06
+60,ADC60,MTRAIRTEMP,Motor Exit Air Temperature,63.18,48.92
+61,ADC61,LFTOPBATTEMP,Left Top Battery Temperature,83.99,37.32
+62,ADC62,LFBOTBATTEMP,Left Bottom Battery Temperature,72.35,41.19
+63,ADC63,RTTOPBATTEMP,Right Top Battery Temperature,80.34,39.61
+64,ADC64,RTBOTBATTEMP,Right Bottom Battery Temperature,99.15,35.7
+65,FastSine,FastSine,Fast Sync Sinewave,1,0
+66,SlowSine,SlowSine,Slow Sync Sinewave,1,0
+67,E1,E1,Event Marker 1,1,0
+68,DIG02,DIG02,Spare Digital,1,0
+69,DIG03,DIG03,Spare Digital,1,0
+70,DIG04,DIG04,Spare Digital,1,0
+71,DIG05,DIG05,Spare Digital,1,0
+72,DIG06,DIG06,Spare Digital,1,0
+73,time,time,time vector for data,1,0

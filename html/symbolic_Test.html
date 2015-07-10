@@ -1,0 +1,232 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>symbolic_Test</title>
+      <meta name="generator" content="MATLAB 7.5">
+      <meta name="date" content="2009-04-23">
+      <meta name="m-file" content="symbolic_Test"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Evaluate case0 for parameter calibration</a></li>
+               <li><a href="#2">Collect Indicators for selected cases</a></li>
+               <li><a href="#3">Combine the Indicators</a></li>
+               <li><a href="#4">Show Results</a></li>
+            </ul>
+         </div>
+         <h2>Evaluate case0 for parameter calibration<a name="1"></a></h2><pre>Selected the 500, 1000, 1500, 2000, 2500, and 3000
+gram load cases</pre><pre class="codeinput">st0500 = symbolicPanelCharaterization(<span class="string">'case0_500g'</span>);
+st1000 = symbolicPanelCharaterization(<span class="string">'case0_1000g'</span>);
+st1500 = symbolicPanelCharaterization(<span class="string">'case0_1500g'</span>);
+st2000 = symbolicPanelCharaterization(<span class="string">'case0_2000g'</span>);
+st2500 = symbolicPanelCharaterization(<span class="string">'case0_2500g'</span>);
+st3000 = symbolicPanelCharaterization(<span class="string">'case0_3000g'</span>);
+</pre><pre class="codeoutput">No BASELINE file found in "case0_500g"!
+case0_500g
+Load = [525 558 638 307 ] avg 507
+Load = [-20 12 93 -238 ] avg -38
+Load = 545(grams)    range [469 636](grams)
+No BASELINE file found in "case0_1000g"!
+case0_1000g
+Load = [999 1397 970 1216 ] avg 1145
+Load = [-248 150 -277 -31 ] avg -101
+Load = 1247(grams)    range [1085 1433](grams)
+No BASELINE file found in "case0_1500g"!
+case0_1500g
+Load = [1458 1529 1503 1638 ] avg 1532
+Load = [-44 27 1 136 ] avg 30
+Load = 1502(grams)    range [1292 1753](grams)
+No BASELINE file found in "case0_2000g"!
+case0_2000g
+Load = [1946 1635 1997 2148 ] avg 1931
+Load = [193 -118 244 396 ] avg 179
+Load = 1752(grams)    range [1494 2070](grams)
+No BASELINE file found in "case0_2500g"!
+case0_2500g
+Load = [2557 2163 2262 2524 ] avg 2376
+Load = [246 -148 -50 212 ] avg 65
+Load = 2312(grams)    range [1971 2730](grams)
+No BASELINE file found in "case0_3000g"!
+case0_3000g
+Load = [2949 2359 2547 2984 ] avg 2710
+Load = [368 -223 -34 402 ] avg 128
+Load = 2581(grams)    range [2196 3058](grams)
+</pre><h2>Collect Indicators for selected cases<a name="2"></a></h2><pre>Divide each indicator by corresponding load in Kg
+this results in a per unit load indicator
+The indicators consist of a strain-based and a displacement-based
+load indicators for both the left and right sides</pre><pre class="codeinput">st0500Indicators = [st0500.l.sPindicator <span class="keyword">...</span>
+                    st0500.r.sPindicator <span class="keyword">...</span>
+                    st0500.l.dPindicator <span class="keyword">...</span>
+                    st0500.r.dPindicator]/0.5;
+st1000Indicators = [st1000.l.sPindicator <span class="keyword">...</span>
+                    st1000.r.sPindicator <span class="keyword">...</span>
+                    st1000.l.dPindicator <span class="keyword">...</span>
+                    st1000.r.dPindicator]/1.0;
+st1500Indicators = [st1500.l.sPindicator <span class="keyword">...</span>
+                    st1500.r.sPindicator <span class="keyword">...</span>
+                    st1500.l.dPindicator <span class="keyword">...</span>
+                    st1500.r.dPindicator]/1.5;
+st2000Indicators = [st2000.l.sPindicator <span class="keyword">...</span>
+                    st2000.r.sPindicator <span class="keyword">...</span>
+                    st2000.l.dPindicator <span class="keyword">...</span>
+                    st2000.r.dPindicator]/2.0;
+st2500Indicators = [st2500.l.sPindicator <span class="keyword">...</span>
+                    st2500.r.sPindicator <span class="keyword">...</span>
+                    st2500.l.dPindicator <span class="keyword">...</span>
+                    st2500.r.dPindicator]/2.5;
+st3000Indicators = [st3000.l.sPindicator <span class="keyword">...</span>
+                    st3000.r.sPindicator <span class="keyword">...</span>
+                    st3000.l.dPindicator <span class="keyword">...</span>
+                    st3000.r.dPindicator]/3.0;
+</pre><h2>Combine the Indicators<a name="3"></a></h2><pre>Group all indicators to determine basic statistics such as
+average and standard deviation</pre><pre class="codeinput">indicators       = [st0500Indicators; <span class="keyword">...</span>
+                    st1000Indicators; <span class="keyword">...</span>
+                    st1500Indicators; <span class="keyword">...</span>
+                    st2000Indicators; <span class="keyword">...</span>
+                    st2500Indicators; <span class="keyword">...</span>
+                    st3000Indicators];
+</pre><h2>Show Results<a name="4"></a></h2><pre>Display the average values and the standard deviations</pre><pre class="codeinput">disp(<span class="string">' '</span>)
+disp(sprintf(<span class="string">'%%Mean Indicators\navgIndicator = [%s];'</span>,sprintf(<span class="string">'%f; '</span>,mean(indicators))))
+disp(sprintf(<span class="string">'%%Stdv Indicators\nstdIndicator = [%s];'</span>,sprintf(<span class="string">'%f; '</span>, std(indicators))))
+disp(<span class="string">' '</span>)
+disp(<span class="string">' '</span>)
+</pre><pre class="codeoutput"> 
+%Mean Indicators
+avgIndicator = [82.018614; 105.577908; 4.654702; 3.969522; ];
+%Stdv Indicators
+stdIndicator = [2.560698; 24.467357; 0.687447; 0.813067; ];
+ 
+ 
+</pre><p class="footer"><br>
+            Published with MATLAB&reg; 7.5<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Evaluate case0 for parameter calibration
+%  Selected the 500, 1000, 1500, 2000, 2500, and 3000 
+%  gram load cases
+st0500 = symbolicPanelCharaterization('case0_500g');
+st1000 = symbolicPanelCharaterization('case0_1000g');
+st1500 = symbolicPanelCharaterization('case0_1500g');
+st2000 = symbolicPanelCharaterization('case0_2000g');
+st2500 = symbolicPanelCharaterization('case0_2500g');
+st3000 = symbolicPanelCharaterization('case0_3000g');
+
+%% Collect Indicators for selected cases
+%  Divide each indicator by corresponding load in Kg
+%  this results in a per unit load indicator
+%  The indicators consist of a strain-based and a displacement-based
+%  load indicators for both the left and right sides
+st0500Indicators = [st0500.l.sPindicator ...
+                    st0500.r.sPindicator ...
+                    st0500.l.dPindicator ...
+                    st0500.r.dPindicator]/0.5;
+st1000Indicators = [st1000.l.sPindicator ...
+                    st1000.r.sPindicator ...
+                    st1000.l.dPindicator ...
+                    st1000.r.dPindicator]/1.0;
+st1500Indicators = [st1500.l.sPindicator ...
+                    st1500.r.sPindicator ...
+                    st1500.l.dPindicator ...
+                    st1500.r.dPindicator]/1.5;
+st2000Indicators = [st2000.l.sPindicator ...
+                    st2000.r.sPindicator ...
+                    st2000.l.dPindicator ...
+                    st2000.r.dPindicator]/2.0;
+st2500Indicators = [st2500.l.sPindicator ...
+                    st2500.r.sPindicator ...
+                    st2500.l.dPindicator ...
+                    st2500.r.dPindicator]/2.5;
+st3000Indicators = [st3000.l.sPindicator ...
+                    st3000.r.sPindicator ...
+                    st3000.l.dPindicator ...
+                    st3000.r.dPindicator]/3.0;
+
+%% Combine the Indicators
+%  Group all indicators to determine basic statistics such as
+%  average and standard deviation
+indicators       = [st0500Indicators; ...
+                    st1000Indicators; ...
+                    st1500Indicators; ...
+                    st2000Indicators; ...
+                    st2500Indicators; ...
+                    st3000Indicators];
+
+%% Show Results
+%  Display the average values and the standard deviations
+disp(' ')
+disp(sprintf('%%Mean Indicators\navgIndicator = [%s];',sprintf('%f; ',mean(indicators))))
+disp(sprintf('%%Stdv Indicators\nstdIndicator = [%s];',sprintf('%f; ', std(indicators))))
+disp(' ')
+disp(' ')
+
+##### SOURCE END #####
+-->
+   </body>
+</html>
